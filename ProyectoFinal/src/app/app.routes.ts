@@ -9,9 +9,9 @@ import { CrearCuentaComponent } from './crear-cuenta/crear-cuenta.component';
 export const routes: Routes = [
     { path: 'Home', component: HomeComponent }, 
     { path: 'Registro', component: CrearCuentaComponent },
-    { path: 'CrearPerfil', component: CrearPerfilComponent },
     { path: 'CrearJefe', component: CrearPerfilJefeComponent },  
     { path: 'Venta', component: RealizarVentaComponent },
     { path: 'Perfiles', component: SeccionPerfilesComponent },
+    { path: 'CrearPerfil', component: CrearPerfilComponent },
     { path: '', redirectTo: 'Home', pathMatch: 'full' }
 ];
