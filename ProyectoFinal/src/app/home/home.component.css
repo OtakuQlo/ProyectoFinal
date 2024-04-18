@@ -24,7 +24,7 @@
 #card hr {
     width: 100%; /* Establece el ancho al 100% del contenedor */
     height: 1px; /* Establece la altura de la línea */
-    background-color: #000; /* Color de la línea */
+    background-color: #ffffff; /* Color de la línea */
     margin: 10px 0; /* Margen superior e inferior para separar del contenido */
     border: none; /* Elimina cualquier borde */
 }
