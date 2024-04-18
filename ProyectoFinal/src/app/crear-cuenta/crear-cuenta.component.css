@@ -1,0 +1,92 @@
+.titulo{
+    background-color: #1D313C;
+    border-radius: 7px;
+    padding: 20px;
+    height: 100px;
+}
+
+.letra{
+    color: antiquewhite;
+}
+
+.color{
+    background-color: #1D313C;
+}
+
+
+.card{
+    background: rgba(29, 49, 60, 0.9); 
+    border-radius: 19px; 
+    border-color: rgba(196, 59, 57, 0.7);
+}
+.card hr {
+    width: 100%; /* Establece el ancho al 100% del contenedor */
+    height: 1px; /* Establece la altura de la línea */
+    background-color: #ffffff; /* Color de la línea */
+    margin: 10px 0; /* Margen superior e inferior para separar del contenido */
+    border: none; /* Elimina cualquier borde */
+}
+
+.colorB{
+    background: rgba(29, 49, 60, 0.9); 
+    border-radius: 7px;
+    color: antiquewhite;
+    border-color: rgba(196, 59, 57, 0.7);
+}
+.colorB button:hover{
+    color: antiquewhite;
+    background-color: #2e4f5f;
+
+}
+.colorB button:focus{
+    box-shadow: 0 0 10px rgba(196, 59, 57, 0.7);
+}
+
+/* 
+.colorBGC{
+    background: rgba(29, 49, 60, 0.9); 
+}
+
+.colorB{
+    border-radius: 7px; 
+    border-color: rgba(196, 59, 57, 0.7);
+    color: white;
+} */
+
+input, select, textarea{
+    color: antiquewhite;
+}
+
+textarea:focus, input:focus {
+    color: antiquewhite;
+}
+
+::placeholder {
+    color: antiquewhite;
+    
+}
+
+input:focus { 
+    outline: none !important;
+    border-color: rgba(196, 59, 57, 0.7);
+    box-shadow: 0 0 10px rgba(196, 59, 57, 0.7);
+}
+
+/* button{
+    color: antiquewhite;
+}
+
+button:hover{
+    color: antiquewhite;
+    background-color: #2e4f5f;
+    
+}
+
+button:focus{
+    box-shadow: 0 0 10px rgba(196, 59, 57, 0.7);
+} */
+
+.img{
+    width: 200px;
+    height: 200px;
+}
