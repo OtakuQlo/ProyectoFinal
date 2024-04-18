@@ -1,0 +1,9 @@
+.colorBGC{
+    background: rgba(29, 49, 60, 0.9); 
+}
+
+.colorB{
+    border-radius: 19px; 
+    border-color: rgba(196, 59, 57, 0.7);
+    filter: drop-shadow( 0rem 0.4rem 2px rgba(0, 0, 0, 0.25));
+}
