@@ -37,3 +37,16 @@ app.get('/', (req, res) => {
     res.send('API')
 })
 
+app.get('/lista', (req,res) => {
+    const query = 'select * from marca';
+    conexion.query(query, (error,resultado) => {
+        if (!error) {
+            return res.status(200).json(resultado);
+        }else{
+            return res.status(500).json(error);
+        }
+    })
+})
+
+
+
