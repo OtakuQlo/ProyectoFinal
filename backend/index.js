@@ -20,7 +20,7 @@ const conexion = mysql.createConnection(
         host:'localhost',
         database:'ordenalo',
         user:'root',
-        password:'1234'
+        password:''
     }
 )
 
@@ -37,7 +37,7 @@ app.get('/', (req, res) => {
     res.send('API')
 })
 
-app.get('/lista', (req,res) => {
+app.get('/get', (req,res) => {
     const query = 'select * from marca';
     conexion.query(query, (error,resultado) => {
         if (!error) {
