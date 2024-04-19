@@ -1,1 +1,49 @@
-<p>generar-informe works!</p>
+<div class="container-fluid">
+    <div class="row ms-3 me-3 mt-3">
+        <div class="row mb-3">
+            <!-- Aqui deberia ir el menu que se despliega a la derecha-->
+            <div class="col-1">
+                <img src="../../assets/Icon/usuario.png" alt="Imagen perfil" class="float-start"
+                    style="width: 90px; height: 90px;">
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-5">
+                <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                    <symbol id="info-fill" fill="white" viewBox="0 0 16 16">
+                        <path
+                            d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
+                    </symbol>
+                </svg>
+                <div class="alert d-flex align-items-center colorBGC colorB" role="alert"
+                    style="right: 64px; width: 456px; height: 70px;">
+                    <svg class="bi flex-shrink-0 me-3 ms-4" width="40" height="40" role="img" aria-label="Info:">
+                        <use xlink:href="#info-fill" />
+                    </svg>
+                    <div class="text-white" style="font-size: 20px;">
+                        Indícanos tu problema detalladamente
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-4">
+            <div class="col-sm-10 col-md-10 col-lg-9 col-xl-8">
+                <div class="card colorBGC colorB text-white text-center">
+                    <div class="card colorBGC colorB text-white text-center">
+                        <div class="card-body">
+                            <h4>Reportar Problema</h4>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3 mt-3 ">
+                            <textarea class="form-control colorBGC colorB text-white" name="reporte" id="reporte"
+                                rows="10"></textarea>
+                        </div>
+                        <button type="button" class="btn colorBGC colorB text-white mb-2 mt-2"
+                            style="width: 160px; height: 40px;">Enviar Reporte</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
