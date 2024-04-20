@@ -1,26 +1,24 @@
 import { Component, OnInit } from '@angular/core';
-import { marcaModel } from '../shared/marca.model';
-import { Observable } from 'rxjs';
-import { ApiTestService } from '../Services/api-test.service';
-import { CommonModule } from '@angular/common';
+
+import { MarcaService } from '../../../service/marca.service';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent implements OnInit {
 
-  marca: Observable<marcaModel[]> | undefined
-
-  constructor(private lista: ApiTestService) {
+export class HomeComponent implements OnInit{
+  constructor(private _marcaservice:MarcaService){}
+  ngOnInit(): void {
+      this.obtenermarcas();
   }
-
-  ngOnInit() {
-    this.marca = this.lista.obtenerMarca();
-    /* console.log(this.marca); */
+  obtenermarcas(){
+    this._marcaservice.getMarca().subscribe(data=>{
+      console.log(data)
+    })
   }
 
 }
