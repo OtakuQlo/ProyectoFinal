@@ -64,3 +64,4 @@ exports.borrarMarca = async (req, res) => {
         res.status(500).send('Hubo un error al eliminar la marca');
     }
 };
+

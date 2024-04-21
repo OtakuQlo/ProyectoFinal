@@ -1,42 +1,47 @@
-
 const { Sequelize, DataTypes, Model } = require('sequelize');
-
+const Productos = require('./productos')
 const sequelize = new Sequelize('ordenalo', 'root', '1234', {
     host: 'localhost',
     dialect:'mysql',
     port:3306
 });
 
-class Plans extends Model {}
+class Perdidas extends Model {}
 
-Plans.init({
-    idplan:{
-        type: DataTypes.INTEGER,
+Perdidas.init({
+    idperdidas:{
+        type:DataTypes.INTEGER,
         primaryKey:true,
-        autoIncrement:true
+        autoIncrement: true
     },
-    nombreplan:{
-        type:DataTypes.STRING,
+    descripcion:{
+        type: DataTypes.STRING,
         allowNull:false
     },
-    cantidademp:{
+    fecha:{
+        type:DataTypes.DATE,
+        allowNull:false
+    },
+    idproducto:{
         type:DataTypes.INTEGER,
         allowNull:false
     }
+
 }, {
     sequelize, // Pasar la instancia de Sequelize aquí
-    modelName: 'Plans',
+    modelName: 'Perdidas',
     timestamps: false // Deshabilitar las marcas de tiempo automáticas // Nombre del modelo
 });
 
-
-
-
-
-
+Productos.hasMany(Perdidas,{
+    foreignKey: 'idproducto'
+});
+Perdidas.belongsTo(Productos,{
+    foreignKey: 'idproducto'
+});
 
 
 
 // Ahora el modelo está asociado con la instancia de Sequelize
 // Puedes exportar el modelo si lo deseas
-module.exports = Plans;
+module.exports = Perdidas;

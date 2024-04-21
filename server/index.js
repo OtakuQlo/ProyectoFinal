@@ -15,7 +15,10 @@ app.use('/api/perfiles',require('./routes/perfiles'));
 app.use('/api/productos',require('./routes/productos'));
 app.use('/api/empresas',require('./routes/empresas'));
 app.use('/api/productollegadas',require('./routes/productollegadas'));
-
+app.use('/api/perdidas',require('./routes/perdidas'));
+app.use('/api/stockproducts',require('./routes/stockproducts'));
+app.use('/api/boletas',require('./routes/boletas'));
+app.use('/api/detalleventas',require('./routes/detalleVentas'));
 
 app.get('/api/marca', (req, res) => {
   res.send('HOLA');

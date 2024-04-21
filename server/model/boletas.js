@@ -6,24 +6,31 @@ const sequelize = new Sequelize('ordenalo', 'root', '1234', {
     port:3306
 });
 
-class Empresas extends Model {}
+class Boletas extends Model {}
 
-Empresas.init({
-    idempresa:{
+Boletas.init({
+    idboleta:{
         type: DataTypes.INTEGER,
         primaryKey:true,
-        autoIncrement:true
     },
-    nombreempresa:{
+    nombretrabajador:{
         type:DataTypes.STRING,
+        allowNull:false
+    },
+    fecha:{
+        type: DataTypes.DATE,
+        allowNull:false
+    },
+    preciototal:{
+        type: DataTypes.INTEGER,
         allowNull:false
     }
 }, {
     sequelize, // Pasar la instancia de Sequelize aquí
-    modelName: 'Empresas',
+    modelName: 'Boletas',
     timestamps: false // Deshabilitar las marcas de tiempo automáticas // Nombre del modelo
 });
 
 // Ahora el modelo está asociado con la instancia de Sequelize
 // Puedes exportar el modelo si lo deseas
-module.exports = Empresas;
+module.exports = Boletas;
