@@ -44,3 +44,23 @@ exports.actualizarMarca = async (req, res) => {
         res.status(500).send('Hubo un error al actualizar la marca');
     }
 };
+
+exports.borrarMarca = async (req, res) => {
+    try {
+        // Buscar la marca por su ID
+        const marca = await Marca.findByPk(req.params.id);
+
+        // Verificar si la marca existe
+        if (!marca) {
+            return res.status(404).json({ msg: 'La marca no existe' });
+        }
+
+        // Eliminar la marca de la base de datos
+        await marca.destroy();
+
+        res.json({ msg: 'La marca ha sido eliminada' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Hubo un error al eliminar la marca');
+    }
+};

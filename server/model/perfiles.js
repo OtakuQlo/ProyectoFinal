@@ -1,4 +1,5 @@
 const { Sequelize, DataTypes, Model } = require('sequelize');
+const Usuarios = require('./usuarios');
 
 const sequelize = new Sequelize('ordenalo', 'root', '1234', {
     host: 'localhost',
@@ -6,24 +7,39 @@ const sequelize = new Sequelize('ordenalo', 'root', '1234', {
     port:3306
 });
 
-class Marca extends Model {}
+class Perfiles extends Model {}
 
-Marca.init({
-    idmarca:{
+Perfiles.init({
+    id:{
         type: DataTypes.INTEGER,
         primaryKey:true,
         autoIncrement:true
     },
-    nombremarca:{
+    idusuario:{
+        type: DataTypes.INTEGER,
+        allowNull:false
+    },
+    nombre:{
         type:DataTypes.STRING,
+        allowNull:false
+    },
+    estado:{
+        type:DataTypes.BOOLEAN,
         allowNull:false
     }
 }, {
     sequelize, // Pasar la instancia de Sequelize aquí
-    modelName: 'Marca',
+    modelName: 'Perfiles',
     timestamps: false // Deshabilitar las marcas de tiempo automáticas // Nombre del modelo
+});
+
+Usuarios.hasMany(Perfiles,{
+    foreignKey: 'idusuario'
+});
+Perfiles.belongsTo(Usuarios,{
+    foreignKey: 'idusuario'
 });
 
 // Ahora el modelo está asociado con la instancia de Sequelize
 // Puedes exportar el modelo si lo deseas
-module.exports = Marca;
+module.exports = Perfiles;
