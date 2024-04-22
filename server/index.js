@@ -18,7 +18,8 @@ app.use('/api/productollegadas',require('./routes/productollegadas'));
 app.use('/api/perdidas',require('./routes/perdidas'));
 app.use('/api/stockproducts',require('./routes/stockproducts'));
 app.use('/api/boletas',require('./routes/boletas'));
-app.use('/api/detalleventas',require('./routes/detalleVentas'));
+app.use('/api/detalleventas',require('./routes/detalleventas'));
+app.use('/api/reportes',require('./routes/reportes'));
 
 app.get('/api/marca', (req, res) => {
   res.send('HOLA');
