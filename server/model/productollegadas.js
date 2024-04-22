@@ -3,7 +3,7 @@ const Usuarios = require('./usuarios');
 const Productos = require('./productos');
 const Empresas = require('./empresas');
 
-const sequelize = new Sequelize('ordenalo', 'root', '1234', {
+const sequelize = new Sequelize('ordenalo', 'root', '', {
     host: 'localhost',
     dialect:'mysql',
     port:3306

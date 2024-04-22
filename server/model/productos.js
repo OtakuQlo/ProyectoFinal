@@ -1,6 +1,6 @@
 const { Sequelize, DataTypes, Model } = require('sequelize');
 const Marca = require('./marca')
-const sequelize = new Sequelize('ordenalo', 'root', '1234', {
+const sequelize = new Sequelize('ordenalo', 'root', '', {
     host: 'localhost',
     dialect:'mysql',
     port:3306
