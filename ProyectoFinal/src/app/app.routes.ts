@@ -8,6 +8,8 @@ import { CrearCuentaComponent } from './crear-cuenta/crear-cuenta.component';
 import { AdministrarPerfilesComponent } from './administrar-perfiles/administrar-perfiles.component';
 import { ReporteProblemaComponent } from './reporte-problema/reporte-problema.component';
 import { GenerarInformeComponent } from './generar-informe/generar-informe.component';
+import { AgregarProductoComponent } from './agregar-producto/agregar-producto.component';
+import { AjustePlanesComponent } from './ajuste-planes/ajuste-planes.component';
 
 export const routes: Routes = [
     { path: 'Home', component: HomeComponent }, 
@@ -19,5 +21,7 @@ export const routes: Routes = [
     { path: 'AdministrarPerfiles', component: AdministrarPerfilesComponent },
     { path: 'ReportarProblema', component: ReporteProblemaComponent },
     { path: 'Informes', component: GenerarInformeComponent },
+    { path: 'AgregarProducto', component: AgregarProductoComponent },
+    { path: 'AjustePlan', component: AjustePlanesComponent },
     { path: '', redirectTo: 'Home', pathMatch: 'full' }
 ];
