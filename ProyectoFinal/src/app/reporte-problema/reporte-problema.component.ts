@@ -25,7 +25,7 @@ export class ReporteProblemaComponent {
   }
 
   emptyReport(){
-    if (this.reporte.length < 10){
+    if (this.reporte.length <= 10){
       this.labelReporte = 'Por favor escriba algo en el reporte';
     }else{
       this.router.navigate(['/Home']);

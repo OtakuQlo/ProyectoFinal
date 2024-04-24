@@ -33,31 +33,38 @@
                     <div class="col">
                         <div class="card colorBGC colorB text-white ">
                             <div class="card-body">
-                                <div class="mb-4 mt-3 align-items-center row">
+                                <div class="mb-3 mt-2 align-items-center row">
                                     <label for="Codigo" class="col-sm-3 col-form-label">Código</label>
                                     <div class="col-sm-9">
-                                        <input type=""
+                                        <input [(ngModel)]="codebar"
                                             class="form-control-plaintext text-white colorBGC colorB text-center"
                                             id="codigo" placeholder="Ingrese o escanee el código de barras"
                                             style="border-radius: 10px; height: 45px;">
                                     </div>
+                                    <div class="col-7 offset-4 mt-1 text-center">
+                                        <label>{{labelcodebar}}</label>
+                                    </div>
                                 </div>
-                                <div class="mb-4 mt-3 align-items-center row">
+                                <div class="mb-3 mt-2 align-items-center row">
                                     <label for="Codigo" class="col-sm-3 col-form-label">Nombre del producto</label>
                                     <div class="col-sm-9">
-                                        <input type=""
+                                        <input [(ngModel)]="nombre"
                                             class="form-control-plaintext text-white colorBGC colorB text-center"
                                             id="nombreProducto" placeholder="Ingrese el nombre del Producto"
                                             style="border-radius: 10px; height: 45px;">
                                     </div>
+                                    <div class="col-7 offset-4 text-center">
+                                        <label>{{labelnombre}}</label>
+                                    </div>
                                 </div>
-                                <div class="mb-4 mt-3 align-items-center row">
+                                <div class="mb-3 mt-2 align-items-center row">
                                     <label for="Codigo" class="col-sm-3 col-form-label">Cantidad</label>
                                     <div
                                         class="col-2 offset-3 col-sm-2 offset-sm-1 col-md-1 offset-md-3 col-lg-2 offset-lg-1 col-xl-1 offset-xl-3 text-center">
-                                        <button class="btn btn-danger btnT">-</button></div>
+                                        <button class="btn btn-danger btnT">-</button>
+                                    </div>
                                     <div class="col-2 col-sm-2 col-md-1 col-lg-2 col-xl-1 align-items-center me-xl-2">
-                                        <input type=""
+                                        <input [(ngModel)]="cantidad"
                                             class="form-control-plaintext text-white colorBGC colorB text-center"
                                             id="nombreProducto" placeholder="0"
                                             style="border-radius: 10px; height: 45px; width: 45px;">
@@ -65,13 +72,19 @@
                                     <div class="col-2 col-sm-1 col-md-1 col-lg-2 col-xl-1 text-center"><button
                                             class="btn btn-success btnT">+</button></div>
                                 </div>
-                                <div class="row justify-content-center mb-3 mt-2">
+
+                                <div class="col-7 offset-4 mb-3 text-center">
+                                    <label>{{labelcantidad}}</label>
+                                </div>
+
+                                <div class="row justify-content-center mb-2 mt-1">
                                     <div class="col-5">
-                                        <button type="button" class="btn btn-danger colorB"
+                                        <button (click)="cancelarVenta()" type="button" class="btn btn-danger colorB"
                                             style="width: 160px; height: 40px;">Cancelar</button>
                                     </div>
                                     <div class="col-4">
-                                        <button type="button" class="btn colorBGC colorB text-white"
+                                        <button (click)="valVenta()" type="button"
+                                            class="btn colorBGC colorB text-white"
                                             style="width: 160px; height: 40px;">Agregar</button>
                                     </div>
 
