@@ -15,24 +15,31 @@
             <div class="col-lg-6 col-md-6 col-sm-6 col-xl-6">
                 <form class="ms-5">
                     <div class="mb-3 mt-5  w-75">
-                        <input class="form-control colorBGC colorB" id="nombre" placeholder="Nombre">
+                        <input [(ngModel)]="codebar" class="form-control colorBGC colorB letra" id="codigo" name="codigo" placeholder="Codigo">
+                        <label class="letra"> {{labelcodebar}}</label>
                     </div>
 
                     <div class="mb-3 mt-5  w-75">
-                        <input class="form-control colorBGC colorB" id="rut" placeholder="">
+                        <input [(ngModel)]="nombre" class="form-control colorBGC colorB" id="nombre" name="nombre" placeholder="Nombre" >
+                        <label class="letra"> {{nombre}}</label>
                     </div>
 
                     <div class="mb-3 mt-5  w-75">
-                        <input type="password" class="form-control colorBGC colorB" id="pass1" placeholder="Contraseña">
+                        <input [(ngModel)]="fecha" min="{{fechaFormateada}}" max="20205-12-31"   type="date" class="form-control colorBGC colorB" id="fecven" name="fecven">
+                        <label class="letra"></label>
                     </div>
 
                     <div class="mb-3 mt-5  w-75">
-                        <input type="password" class="form-control colorBGC colorB" id="pass1" placeholder="Contraseña">
+                        <input  class="form-control colorBGC colorB" id="cantidad" name="cantidad" placeholder="Cantidad">
                     </div>
 
                     <div class="mb-5 mt-5  w-75">
-                        <input type="password" class="form-control colorBGC colorB" id="pass2"
-                            placeholder="Confirme su contraseña">
+                        <input  class="form-control colorBGC colorB" id="preven" name="preven" placeholder="Precio a venta">
+                    </div>
+
+                    <div class="mb-5 mt-5  w-75">
+                        <input  class="form-control colorBGC colorB" id="prelle" name="prelle"
+                            placeholder="Precio llegada">
                     </div>
 
                 </form>
@@ -106,7 +113,7 @@
                     <div class="row justify-content-center mt-5 mb-5">
 
                         <div class="col-sm-5 col-md-3 col-lg-4 col-xl-2 "><button type="submit"
-                                class="btn colorBGC colorB ">Confirmar</button></div>
+                                class="btn colorBGC colorB" >Confirmar</button></div>
 
                     </div>
                 </div>
