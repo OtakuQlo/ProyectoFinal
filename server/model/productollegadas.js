@@ -44,6 +44,10 @@ ProductoLlegadas.init({
     cantidad:{
         type: DataTypes.INTEGER,
         allowNull:false
+    },
+    precio:{
+        type: DataTypes.INTEGER,
+        allowNull:false
     }
 
 }, {
