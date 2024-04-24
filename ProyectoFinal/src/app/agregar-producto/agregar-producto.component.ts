@@ -18,7 +18,7 @@ export class AgregarProductoComponent {
   ) {
     
   }
-
+  nombre: String = '';
   fecha:any;
   cantidad: number = 0;
   prelle: number = 0;
@@ -35,13 +35,16 @@ export class AgregarProductoComponent {
   labelnombre: string = '';
   labelcodebar: string = '';
   labelcantidad: string = '';
+  labelpreven: string = '';
+  labelprelle: string = '';
+  labelfecha: string = '';
 
 
   
 
   //formato fecha para dar el minimo al input
   fechahoy: Date = new Date();  
-  nombre: String = '';
+
   dia: String = ("0" + this.fechahoy.getDate()).slice(-2); // Día del mes
   mes: String = ("0" + (this.fechahoy.getMonth() + 1)).slice(-2); // Los meses en JavaScript empiezan en 0
   anio: number = this.fechahoy.getFullYear();
@@ -58,12 +61,18 @@ export class AgregarProductoComponent {
     // validacion de que se seleccione una fecha de vencimiento
     if(!this.fecha){
       bandera = false;
+      this.labelfecha = "Debe haber una fecha selecionada";
+    }else{
+      this.labelfecha = "";
     }
 
     // validacion que nombre del producto no este vacio
 
     if(this.nombre.length <= 0){
       bandera = false;
+      this.labelnombre = "El nombre del producto no debe estar vacio";
+    }else{
+      this.labelnombre = ""
     }
 
     if(!this.regexcode.test(this.codebar)){
@@ -73,11 +82,25 @@ export class AgregarProductoComponent {
       this.labelcodebar = " ";
     }
 
-    if (!this.regexnumeros.test(this.cantidad.toString()) || this.cantidad <=0 && this.cantidad > 100000) {
+    if (!this.regexnumeros.test(this.cantidad.toString()) || this.cantidad <=0 || this.cantidad > 999) {
       bandera = false;
-      this.labelcantidad = "Solo se acepta numeros y mayor de 0 hasta 100000"
+      this.labelcantidad = "Solo se acepta numeros y mayor de 0 hasta 999"
     }else{
       this.labelcantidad = " ";
+    }
+
+    if (!this.regexnumeros.test(this.preven.toString()) || this.preven <=0 || this.preven > 100000) {
+      bandera = false;
+      this.labelpreven = "Solo se acepta numeros y mayor de 0 hasta 100000"
+    }else{
+      this.labelpreven = " ";
+    }
+
+    if (!this.regexnumeros.test(this.prelle.toString()) || this.prelle <=0 || this.prelle > 100000) {
+      bandera = false;
+      this.labelprelle = "Solo se acepta numeros y mayor de 0 hasta 100000"
+    }else{
+      this.labelprelle = " ";
     }
 
 

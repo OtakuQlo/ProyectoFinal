@@ -14,32 +14,40 @@
 
             <div class="col-lg-6 col-md-6 col-sm-6 col-xl-6">
                 <form class="ms-5">
-                    <div class="mb-3 mt-5  w-75">
-                        <input [(ngModel)]="codebar" class="form-control colorBGC colorB letra" id="codigo" name="codigo" placeholder="Codigo">
+                    <div class=" mt-5  w-75">
+                        <label class="letra mb-1">Codigo:</label>
+                        <input [(ngModel)]="codebar" class="form-control colorBGC colorB letra" id="codigo" name="codigo" >
                         <label class="letra"> {{labelcodebar}}</label>
                     </div>
 
-                    <div class="mb-3 mt-5  w-75">
-                        <input [(ngModel)]="nombre" class="form-control colorBGC colorB" id="nombre" name="nombre" placeholder="Nombre" >
-                        <label class="letra"> {{nombre}}</label>
+                    <div class=" mt-2  w-75">
+                        <label class="letra mb-1">Nombre:</label>
+                        <input [(ngModel)]="nombre" class="form-control colorBGC colorB" id="nombre" name="nombre" >
+                        <label class="letra"> {{labelnombre}}</label>
                     </div>
 
-                    <div class="mb-3 mt-5  w-75">
+                    <div class="mt-2  w-75">
+                        <label class="letra mb-1">Fecha vencimiento:</label>
                         <input [(ngModel)]="fecha" min="{{fechaFormateada}}" max="20205-12-31"   type="date" class="form-control colorBGC colorB" id="fecven" name="fecven">
-                        <label class="letra"></label>
+                        <label class="letra">{{labelfecha}}</label>
                     </div>
 
-                    <div class="mb-3 mt-5  w-75">
-                        <input  class="form-control colorBGC colorB" id="cantidad" name="cantidad" placeholder="Cantidad">
+                    <div class="mt-2  w-75">
+                        <label class="letra mb-1">Cantidad:</label>
+                        <input [(ngModel)]="cantidad"  class="form-control colorBGC colorB" id="cantidad" name="cantidad" placeholder="Cantidad">
+                        <label for="" class="letra">{{labelcantidad}}</label>
                     </div>
 
-                    <div class="mb-5 mt-5  w-75">
-                        <input  class="form-control colorBGC colorB" id="preven" name="preven" placeholder="Precio a venta">
+                    <div class="mt-2  w-75">
+                        <label class="letra mb-1">Precio a venta:</label>
+                        <input [(ngModel)]="preven" class="form-control colorBGC colorB" id="preven" name="preven" placeholder="Precio a venta">
+                        <label for="" class="letra">{{labelpreven}}</label>
                     </div>
 
-                    <div class="mb-5 mt-5  w-75">
-                        <input  class="form-control colorBGC colorB" id="prelle" name="prelle"
-                            placeholder="Precio llegada">
+                    <div class="mt-2  w-75">
+                        <label class="letra mb-1">Precio de llegada:</label>
+                        <input [(ngModel)]="prelle" class="form-control colorBGC colorB" id="prelle" name="prelle" placeholder="Precio llegada">
+                        <label for="" class="letra">{{labelprelle}}</label>
                     </div>
 
                 </form>
@@ -51,8 +59,10 @@
 
                 <div class="row justify-content-center">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xl-12">
-                        <div class="mb-3 mt-5  w-75">
-                            <input class="form-control colorBGC colorB" id="nombre" placeholder="Nombre">
+                        <div class="mb-3 mt-2  w-75">
+                            
+                            <label class="letra mb-1">Marca:</label>
+                            <input class="form-control colorBGC colorB" id="nombre">
                         </div>
                         <p>
                             <button class="btn colorBGC colorB" type="button" data-bs-toggle="collapse"
@@ -75,20 +85,10 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xl-12">
-                        <div class="mb-3 mt-5 ">
-
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                  Action
-                                </button>
-                                <div class="dropdown-menu">
-                                  <a class="dropdown-item" href="#">Action</a>
-                                  <a class="dropdown-item" href="#">Another action</a>
-                                  <a class="dropdown-item" href="#">Something else here</a>
-                                  <div class="dropdown-divider"></div>
-                                  <a class="dropdown-item" href="#">Separated link</a>
-                                </div>
-                              </div>
+                        <div class="mb-3 mt-5 w-75 ">
+                            
+                            <label class="letra mb-1">Empresa:</label>
+                            <input class="form-control colorBGC colorB" id="nombre">
 
                         </div>
                         <p>
@@ -101,7 +101,7 @@
                         <div class="collapse w-75" id="collapseExample1">
                             <input class="form-control colorBGC colorB mb-1" id="nombre" placeholder="Nombre">
                             <button class="btn colorBGC colorB" type="button">
-                                Marca
+                                Añadir
                             </button>
                         </div>
                     </div>
@@ -113,7 +113,7 @@
                     <div class="row justify-content-center mt-5 mb-5">
 
                         <div class="col-sm-5 col-md-3 col-lg-4 col-xl-2 "><button type="submit"
-                                class="btn colorBGC colorB" >Confirmar</button></div>
+                                class="btn colorBGC colorB" (click) = "agregarProducto()">Confirmar</button></div>
 
                     </div>
                 </div>
