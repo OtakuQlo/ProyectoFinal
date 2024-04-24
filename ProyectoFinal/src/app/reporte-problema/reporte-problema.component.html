@@ -35,12 +35,20 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <div class="mb-3 mt-3 ">
-                            <textarea class="form-control colorBGC colorB text-white" name="reporte" id="reporte"
-                                rows="10"></textarea>
+                        <div class="row">
+                            <div class="mb-3 mt-3 ">
+                                <textarea class="form-control colorBGC colorB text-white" name="reporte" id="reporte"
+                                    rows="10" style="resize: none;" [(ngModel)]="reporte"></textarea>
+                            </div>
                         </div>
-                        <button type="button" class="btn colorBGC colorB text-white mb-2 mt-2"
-                            style="width: 160px; height: 40px;">Enviar Reporte</button>
+                        <div class="row">
+                            <label>{{labelReporte}}</label>
+                        </div>
+                        <div class="row justify-content-center  ">
+                            <button (click)="emptyReport()" type="button"
+                                class="btn colorBGC colorB text-white mb-2 mt-2"
+                                style="width: 160px; height: 38px; ">Enviar Reporte</button>
+                        </div>
                     </div>
                 </div>
             </div>
