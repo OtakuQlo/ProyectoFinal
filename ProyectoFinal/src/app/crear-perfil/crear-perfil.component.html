@@ -14,7 +14,9 @@
 
             <form class="ms-5">
                 <div class="mb-3 mt-5  w-75">
-                  <input  class="form-control colorBGC colorB input" id="nombre" placeholder="Nombre">
+                    <label for="" class="letra">Nombre:</label>
+                    <input  [(ngModel)]="nombre" class="form-control colorBGC colorB input" [ngModelOptions]="{standalone: true}">
+                    <label for="" class="letra">{{labelnombre}}</label>
                 </div>
             </form>
             
@@ -33,7 +35,7 @@
             </div>
             <div class="row justify-content-center mt-5 mb-5">
 
-                <div class="col-sm-5 col-md-4 col-lg-3 col-xl-2"><button type="submit" class="btn colorBGC colorB ">Confirmar</button></div>
+                <div class="col-sm-5 col-md-4 col-lg-3 col-xl-2"><button type="submit" class="btn colorBGC colorB " (click)="crearPerfil()">Confirmar</button></div>
                 
             </div>
             
