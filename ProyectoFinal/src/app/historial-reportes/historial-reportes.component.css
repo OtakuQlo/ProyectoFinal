@@ -46,6 +46,8 @@
 }
 
 .material-symbols-outlined {
+    font-size: 10px;
+    width: 9px;
   font-variation-settings:
   'FILL' 0,
   'wght' 400,
