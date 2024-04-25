@@ -10,6 +10,9 @@ import { ReporteProblemaComponent } from './reporte-problema/reporte-problema.co
 import { GenerarInformeComponent } from './generar-informe/generar-informe.component';
 import { AgregarProductoComponent } from './agregar-producto/agregar-producto.component';
 import { AjustePlanesComponent } from './ajuste-planes/ajuste-planes.component';
+import { HistorialComponent } from './historial/historial.component';
+import { InventarioComponent } from './inventario/inventario.component';
+import { HistorialReportesComponent } from './historial-reportes/historial-reportes.component';
 
 export const routes: Routes = [
     { path: 'Home', component: HomeComponent }, 
@@ -23,5 +26,8 @@ export const routes: Routes = [
     { path: 'Informes', component: GenerarInformeComponent },
     { path: 'AgregarProducto', component: AgregarProductoComponent },
     { path: 'AjustePlan', component: AjustePlanesComponent },
+    { path: 'Historial', component: HistorialComponent },
+    { path: 'Inventario', component: InventarioComponent },
+    { path: 'HistorialReportes', component: HistorialReportesComponent },
     { path: '', redirectTo: 'Home', pathMatch: 'full' }
 ];

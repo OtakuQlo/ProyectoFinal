@@ -1,0 +1,54 @@
+#bar {
+    background-color: #1D313C90; /* Color con opacidad */
+    border-bottom: 2px solid #C43B3970;
+    color: white;   
+    text-shadow: 
+    -1px -1px 0 #C43B3950,  
+     1px -1px 0 #C43B3950,
+    -1px  1px 0 #C43B3950,
+     1px  1px 0 #C43B3950; 
+}
+.fondo{
+    background-image: url('/assets/imagenes/Fondo.jpg'); /* Ruta de la imagen */
+    background-size: cover; /* Ajustar el tamaño de la imagen para cubrir completamente el contenedor */
+    background-position: center; /* Centrar la imagen dentro del contenedor */
+}
+.container{
+    color:white
+}
+.card{
+    background: rgba(29, 49, 60, 0.9); 
+    border-radius: 19px; 
+    border-color: rgba(196, 59, 57, 0.7);
+    
+}
+.card hr {
+    width: 100%; /* Establece el ancho al 100% del contenedor */
+    height: 1px; /* Establece la altura de la línea */
+    background-color: #ffffff; /* Color de la línea */
+    margin: 10px 0; /* Margen superior e inferior para separar del contenido */
+    border: none; /* Elimina cualquier borde */
+}
+
+.colorB{
+    background: rgba(29, 49, 60, 0.9); 
+    border-radius: 7px;
+    color: antiquewhite;
+    border-color: rgba(196, 59, 57, 0.7);
+}
+.colorB button:hover{
+    color: antiquewhite;
+    background-color: #2e4f5f;
+
+}
+.colorB button:focus{
+    box-shadow: 0 0 10px rgba(196, 59, 57, 0.7);
+}
+
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}

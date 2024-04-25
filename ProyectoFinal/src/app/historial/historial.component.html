@@ -1,0 +1,110 @@
+<div class="container mt-2">
+    <div>
+        <span class="material-icons" style="font-size:40px; color:black;">
+            account_circle
+        </span>
+    </div>
+    <div class="row">
+        <div class="col-2">
+            <input min="" max="20205-12-31" type="date" class="form-control colorB" id="fecven" name="fecven">
+            <label class="letra"></label>
+        </div>
+        <div class="col-2">
+
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary colorB" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Buscar Monto
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content card">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Monto</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="range" class="form-range" min="0" max="5" id="customRange2">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">cerrar</button>
+                            <button type="button" class="btn colorB ">buscar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 position-absolute end-0">
+            <select class="form-select" aria-label="Default select example">
+                <option selected>Seleccion de la opcion</option>
+                <option value="1">Ventas</option>
+                <option value="2">Ingresos</option>
+            </select>
+        </div>
+    </div>
+    <div class="row card mt-5 ">
+        <table class="table" style="color: white;">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">First</th>
+                    <th scope="col">Last</th>
+                    <th scope="col">Handle</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>asd</td>
+                </tr>
+                <tr>
+                    <th scope="row">2</th>
+                    <td>Jacob</td>
+                    <td>Thornton</td>
+                    <td>das</td>
+                </tr>
+                <tr>
+                    <th scope="row">3</th>
+                    <td colspan="2">Larry the Bird</td>
+                    <td>df</td>
+                </tr>
+                <tr>
+                    <th scope="row">4</th>
+                    <td colspan="2">Larry the Bird</td>
+                    <td>df</td>
+                </tr>
+                <tr>
+                    <th scope="row">5</th>
+                    <td colspan="2">Larry the Bird</td>
+                    <td>df</td>
+                </tr>
+                <tr>
+                    <th scope="row">6</th>
+                    <td colspan="2">Larry the Bird</td>
+                    <td>df</td>
+                </tr>
+                <tr>
+                    <th scope="row">7</th>
+                    <td colspan="2">Larry the Bird</td>
+                    <td>df</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="row mt-2">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+            </ul>
+        </nav>
+    </div>
+</div>
