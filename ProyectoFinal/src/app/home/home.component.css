@@ -18,7 +18,7 @@
      1px -1px 0 #C43B3950,
     -1px  1px 0 #C43B3950,
      1px  1px 0 #C43B3950; 
-    
+    padding-bottom: 2px;
 }
 
 #fondo{
@@ -30,7 +30,7 @@
     color:white
 }
 .card{
-    background: rgba(29, 49, 60, 0.9); 
+    background: rgba(29, 49, 60, 1); 
     border-radius: 19px; 
     border-color: rgba(196, 59, 57, 0.7);
 }
