@@ -1,87 +1,97 @@
-<div class="container mt-2">
-    <div>
-        <span class="material-icons" style="font-size:40px; color:black;">
-            account_circle
-        </span>
-    </div>
-    <div class="row">
-        <div class="col-2">
-            <button class="btn colorB">invnetario</button>
+<div class="container-fluid mt-2">
+    <div class="row ms-4 me-4 mt-3">
+        <div class="row mb-3">
+            <!-- Aqui deberia ir el menu que se despliega a la derecha-->
+            <div class="col-2">
+                <img src="../../assets/Icon/usuario.png" alt="Imagen perfil" class="float-start"
+                    style="width: 80px; height: 80px;">
+            </div>
         </div>
-        <div class="col-2">
-            <button class="btn colorB">limipeza</button>
-        </div>
-        <div class="col-2  ">
-            <button class="btn colorB ">Añadir Producto</button>
-        </div>
+        <div class="row">
+            <div class="col-8">
+                <button class="btn colorB me-2">Generar Perdida</button>
+            
+                <button class="btn colorB me-2 ms-2" (click)="addProduct()">Añadir Producto</button>
+            
+                <button class="btn colorB me-2 ms-2">Limpiar Filtros</button>
+            </div>
 
-        <div class="col-4 position-absolute end-0">
-            <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn colorB" type="submit">Search</button>
-            </form>
+            <div class="col-4">
+                <form class="d-flex ">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn colorB" type="submit">Search</button>
+                </form>
+            </div>
         </div>
-    </div>
-    <div class="row card mt-5 ">
-        <table class="table" style="color: white;">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">First</th>
-                    <th scope="col">Last</th>
-                    <th scope="col">Handle</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>asd</td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>das</td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td colspan="2">Larry the Bird</td>
-                    <td>df</td>
-                </tr>
-                <tr>
-                    <th scope="row">4</th>
-                    <td colspan="2">Larry the Bird</td>
-                    <td>df</td>
-                </tr>
-                <tr>
-                    <th scope="row">5</th>
-                    <td colspan="2">Larry the Bird</td>
-                    <td>df</td>
-                </tr>
-                <tr>
-                    <th scope="row">6</th>
-                    <td colspan="2">Larry the Bird</td>
-                    <td>df</td>
-                </tr>
-                <tr>
-                    <th scope="row">7</th>
-                    <td colspan="2">Larry the Bird</td>
-                    <td>df</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="row mt-2">
-        <nav aria-label="Page navigation example">
-            <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">Next</a></li>
-            </ul>
-        </nav>
+        <div class="row mt-3">
+            <div class="card colorBGC colorB text-white text-center">
+                <div class="card-body">
+                    <table class="table" style="color: white;">
+                        <thead>
+                            <tr>
+                                <th scope="col">Codigo</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Marca</th>
+                                <th scope="col">Precio</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>Mark</td>
+                                <td>Otto</td>
+                                <td>asd</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">2</th>
+                                <td>Jacob</td>
+                                <td>Thornton</td>
+                                <td>das</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">3</th>
+                                <td colspan="2">Larry the Bird</td>
+                                <td>df</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">4</th>
+                                <td colspan="2">Larry the Bird</td>
+                                <td>df</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">5</th>
+                                <td colspan="2">Larry the Bird</td>
+                                <td>df</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">6</th>
+                                <td colspan="2">Larry the Bird</td>
+                                <td>df</td>
+                            </tr>
+                            
+                                <th scope="row">7</th>
+                                <td colspan="2">Larry the Bird</td>
+                                <td>df</td>
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-2 justify-content-center">
+            <div class="col-3 align-items-center">
+                 <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                </ul>
+            </nav>
+            </div>
+           
+        </div>
     </div>
 </div>
