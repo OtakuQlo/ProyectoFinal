@@ -37,7 +37,21 @@ exports.obtenerUsuariosId = async (req, res) => {
       res.status(500).send('HUBO UN ERROR');
     }
   };
-
+  exports.obtenerUsuariosEmail = async (req, res) => {
+    try {
+      const { email } = req.params; // Get the email from request parameters
+      const usuario = await Usuarios.findOne({ where: { email: email } }); // Find the user by email
+    
+      if (!usuario) { // If user not found
+        return res.status(404).json({ error: 'Usuario no encontrado' });
+      }
+    
+      res.json(usuario); // Send the found user as response
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Hubo un error');
+    }
+  };
   exports.actualizarContra = async (req, res) => {
     try {
         const { contra } = req.body;
