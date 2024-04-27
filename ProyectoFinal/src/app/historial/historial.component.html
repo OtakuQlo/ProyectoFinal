@@ -8,14 +8,14 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-2">
-                <input min="" max="20205-12-31" type="date" class="form-control colorB" id="fecven" name="fecven">
+            <div class="col-9">
+                <input min="" max="20205-12-31" type="date" class="btn colorB me-2" id="fecven" name="fecven">
                 <label class="letra"></label>
-            </div>
-            <div class="col-2">
+
+
 
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary colorB" data-bs-toggle="modal"
+                <button type="button" class="btn btn-primary colorB ms-2" data-bs-toggle="modal"
                     data-bs-target="#exampleModal">
                     Buscar Monto
                 </button>
@@ -42,7 +42,8 @@
                 </div>
             </div>
 
-            <div class="col-6 position-absolute end-0">
+
+            <div class="col-3 text-center">
                 <select class="form-select card" aria-label="Default select example">
                     <option selected>Seleccion de la opcion</option>
                     <option value="1">Ventas</option>
@@ -51,13 +52,14 @@
             </div>
         </div>
         <div class="row card mt-2 ">
-            <table class="table" style="color: white;">
+            <table class="table text-center" style="color: white;">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">First</th>
                         <th scope="col">Last</th>
                         <th scope="col">Handle</th>
+                        <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -93,16 +95,17 @@
                         <td colspan="2">Larry the Bird</td>
                         <td>df</td>
                     </tr>
-                    <tr>
+                    
                         <th scope="row">7</th>
                         <td colspan="2">Larry the Bird</td>
                         <td>df</td>
-                    </tr>
+                    
                 </tbody>
             </table>
         </div>
-        <div class="row mt-2">
-            <nav aria-label="Page navigation example">
+        <div class="row mt-2 justify-content-center">
+            <div class="col-3">
+                <nav aria-label="Page navigation example">
                 <ul class="pagination">
                     <li class="page-item"><a class="page-link" href="#">Previous</a></li>
                     <li class="page-item"><a class="page-link" href="#">1</a></li>
@@ -110,7 +113,9 @@
                     <li class="page-item"><a class="page-link" href="#">3</a></li>
                     <li class="page-item"><a class="page-link" href="#">Next</a></li>
                 </ul>
-            </nav>
+                </nav>
+            </div>
+            
         </div>
     </div>
 </div>
