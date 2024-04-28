@@ -1,9 +1,3 @@
-.titulo{
-    background-color: #1D313C;
-    border-radius: 7px;
-    padding: 20px;
-    height: 100px;
-}
 
 .letra{
     color: antiquewhite;
@@ -70,6 +64,10 @@ input:focus {
     outline: none !important;
     border-color: rgba(196, 59, 57, 0.7);
     box-shadow: 0 0 10px rgba(196, 59, 57, 0.7);
+}
+
+.size{
+    height: 50px;
 }
 
 /* button{
