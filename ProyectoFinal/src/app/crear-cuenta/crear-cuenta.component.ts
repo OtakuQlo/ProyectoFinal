@@ -69,7 +69,9 @@ export class CrearCuentaComponent {
       ),
     ]),
   });
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log(this._serviceUsuario.getUserActive());
+  }
   // funcion de crear cuenta
   crearCuenta(
     nombre: any,
