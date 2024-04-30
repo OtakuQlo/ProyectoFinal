@@ -99,7 +99,16 @@ export class CrearCuentaComponent {
       passadmin: passadmin,
       email: email,
       rol: 1,
-    });
+    }).subscribe(
+      (response) => {
+        console.log('Solicitud POST completada correctamente', response);
+        // Aquí puedes realizar cualquier acción adicional después de que la solicitud POST se complete correctamente
+      },
+      (error) => {
+        console.error('Error al realizar la solicitud POST', error);
+        // Aquí puedes manejar cualquier error que ocurra durante la solicitud POST
+      }
+    );;
   }
 
   // funcion de validar

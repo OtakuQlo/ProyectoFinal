@@ -12,8 +12,9 @@ export class UsuarioService {
   // publicar el nuevo usuario
   postUsuario(usuario:any): Observable<any> {
     // enviar el nuevo usuario
-    console.log('post');
+    console.log(usuario);
     return this.http.post(this.url,usuario);
+    
   }
 
 
