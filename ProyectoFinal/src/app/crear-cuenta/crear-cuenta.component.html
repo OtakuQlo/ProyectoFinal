@@ -1,96 +1,117 @@
 <div class="container">
     <div class="row mt-3">
         <div class="row ">
-            <div class="alert d-flex align-items-center colorBGC colorB" role="alert" style="width: 250px; height: 70px; border-radius: 26px;">                
-                    <div class="text-white">
-                        <h2 >Crea tu cuenta</h2>
-                    </div>   
+            <div class="alert d-flex align-items-center colorBGC colorB" role="alert"
+                style="width: 250px; height: 70px; border-radius: 26px;">
+                <div class="text-white">
+                    <h2>Crea tu cuenta</h2>
+                </div>
             </div>
         </div>
+       
+            <div class="row colorBGC colorB mt-2">
 
-        <div class="row colorBGC colorB mt-2">
-
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xl-6">
-                <form class="ms-3">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xl-6">
+                    <form class="ms-3" [formGroup]="registroForm" (ngSubmit)="onSubmit()">
+                    <!-- nombre -->
+                    <div class="mb-3 mt-5  w-75  ">
+                        <input class="form-control colorBGC colorB size" id="nombre" placeholder="Ingrese su Nombre"
+                            type="text" formControlName="nombre">
+                        <p *ngIf="validNombre;" style="color: yellow;">Nombre no valido</p>
+                    </div>
+                    <!-- apellido -->
+                    <div class="mb-3 mt-5  w-75  ">
+                        <input class="form-control colorBGC colorB size" id="apellido" placeholder="Ingrese su Apellido"
+                            type="text" formControlName="apellido">
+                        <p *ngIf="validApellido;" style="color: yellow;">Apellido no valido</p>
+                    </div>
                     <!-- Rut -->
                     <div class="mb-3 mt-5  w-75  ">
-                        <input class="form-control colorBGC colorB size" id="rut" placeholder="Ingrese su Rut">
+                        <input class="form-control colorBGC colorB size" id="rut" placeholder="Ingrese su Rut"
+                            formControlName="rut">
+                        <p *ngIf="validRut;" style="color: yellow;">Rut no valido</p>
                     </div>
                     <!-- Correo electronico -->
                     <div class="mb-3 mt-5  w-75 ">
                         <input class="form-control colorBGC colorB size" type="email" id="correo"
-                            placeholder="Ingrese su Correo Electronico">
+                            formControlName="correo" placeholder="Ingrese su Correo Electronico">
+                        <p *ngIf="validarCorreo" style="color: yellow;">Valor no valido</p>
                     </div>
                     <!-- Telefono -->
                     <div class="mb-3 mt-5  w-75 ">
-                        <input class="form-control colorBGC colorB size" type="tel" id="phone"
-                            placeholder="Ingrese su telefono">
+                        <input class="form-control colorBGC colorB size" type="number" id="phone"
+                            formControlName="telefono" placeholder="Ingrese su telefono">
+                        <p *ngIf="validartelefono" style="color: yellow;">Valor no valido</p>
                     </div>
+
+
                     <!-- Contraseña y confirmar -->
                     <div class="mb-3 mt-5  w-75 ">
-                        <input type="password" class="form-control size colorBGC colorB" id="pass"
+                        <input type="password" class="form-control size colorBGC colorB" id="pass" formControlName="pass"
                             placeholder="Ingrese su Contraseña">
+                        <p *ngIf="validarPass" style="color: yellow;">Valor no valido</p>
                     </div>
                     <div class="mt-5  w-75 ">
-                        <input type="password" class="form-control size colorBGC colorB" id="cpass"
+                        <input type="password" class="form-control size colorBGC colorB" id="cpass" formControlName="pass1"
                             placeholder="Confirme su contraseña">
+                        <p *ngIf="validarPass2" style="color: yellow;">Valor no valido</p>
+                    </div>
+                    <div class="mt-2 mb-4 col-sm-5 col-md-4 col-lg-3 col-xl-2"><button type="submit"
+                        class="btn colorBGC colorB ">Confirmar</button>
+                </div>
+
+                    </form>
+
+
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xl-6">
+                    <div class="row mt-5">
+                        <h3 class="text-center letra">Seleccion de Plan</h3>
+                    </div>
+                    <div class="row align-items-start mt-3">
+                        <div class="m-2 card col">
+                            <p><input [(ngModel)] = "checkboxFirst" (change)="CheckboxChanges1()" type="checkbox" id="first_checkbox" value="first_checkbox" /> Plan Basico</p>
+                            <ol>
+                                <li>uno de ejecutivo</li>
+                                <li>perfiles empleado y </li>
+                                <li>no informes</li>
+                            </ol>
+                            <hr>
+                            <p>total = $20.000</p>
+                        </div>
+                        <div class="m-2 card col">
+                            <p><input (change)="CheckboxChanges2()" [(ngModel)] = "checkboxSecond" type="checkbox" id="second_checkbox" value="second_checkbox" /> Plan Intermedio</p>
+                            <ol>
+                                <li>2 de ejecutivo</li>
+                                <li>4 perfiles empleado</li>
+                                <li>genera informes basicos</li>
+                            </ol>
+                            <hr>
+                            <p>total = $30.000</p>
+                        </div>
+                        <div class="m-2 card col">
+                            <p> <input (change)="CheckboxChanges3()" type="checkbox"[(ngModel)] = "checkboxThird" id="third_checkbox" value="third_checkbox" /> Plan Premium</p>
+                            <ol>
+                                <li>3 de ejecutivo</li>
+                                <li>10 perfiles empleado</li>
+                                <li>genera informes detallados</li>
+                            </ol>
+                            <hr>
+                            <p>total = $65.000</p>
+                        </div>
+
+                    </div>
+                    <div class="row mt-4">
+                        <p class="text-center  letra"> <input [(ngModel)] = "checkboxTermState" type="checkbox" id="term_checkbox" value="term_checkbox" />
+                            Declaro
+                            haber leido y aceptar los terminos y condiciones de la web</p>
                     </div>
 
-                </form>
-
+                </div>
 
             </div>
-
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xl-6">
-                <div class="row mt-5">
-                    <h3 class="text-center letra">Seleccion de Plan</h3>
-                </div>
-                <div class="row align-items-start mt-3">
-                    <div class="m-2 card col">
-                        <p><input type="checkbox" id="termino" value="second_checkbox" /> Plan Basico</p>
-                        <ol>
-                            <li>uno de ejecutivo</li>
-                            <li>perfiles empleado y </li>
-                            <li>no informes</li>
-                        </ol>
-                        <hr>
-                        <p>total = $20.000</p>
-                    </div>
-                    <div class="m-2 card col">
-                        <p><input type="checkbox" id="termino" value="second_checkbox" /> Plan Intermedio</p>
-                        <ol>
-                            <li>2 de ejecutivo</li>
-                            <li>4 perfiles empleado</li>
-                            <li>genera informes basicos</li>
-                        </ol>
-                        <hr>
-                        <p>total = $30.000</p>
-                    </div>
-                    <div class="m-2 card col">
-                        <p> <input type="checkbox" id="termino" value="second_checkbox" /> Plan Premium</p>
-                        <ol>
-                            <li>3 de ejecutivo</li>
-                            <li>10 perfiles empleado</li>
-                            <li>genera informes detallados</li>
-                        </ol>
-                        <hr>
-                        <p>total = $65.000</p>
-                    </div>
-
-                </div>
-                <div class="row mt-4">
-                    <p class="text-center  letra"> <input type="checkbox" id="termino" value="second_checkbox" />
-                        Declaro
-                        haber leido y aceptar los terminos y condiciones de la web</p>
-                </div>
-                <div class="row justify-content-center mt-4 mb-4">
-                    <div class="col-sm-5 col-md-4 col-lg-3 col-xl-2"><button type="submit"
-                            class="btn colorBGC colorB ">Confirmar</button>
-                    </div>
-                </div>
-            </div>
-
-        </div>
+        
     </div>
 
 

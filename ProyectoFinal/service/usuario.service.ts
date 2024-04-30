@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
@@ -9,8 +9,18 @@ export class UsuarioService {
 
   constructor(private http: HttpClient) { }
 
+  // publicar el nuevo usuario
   postUsuario(usuario:any): Observable<any> {
+    // enviar el nuevo usuario
+    console.log('post');
     return this.http.post(this.url,usuario);
   }
 
+
+  // validar el nuevo usuario
+  
+  getUserEmail(email:string): Observable<any>{
+     return this.http.get(this.url+'/'+email);
+  }
+ 
 }
