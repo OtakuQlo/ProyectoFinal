@@ -23,5 +23,10 @@ export class UsuarioService {
   getUserEmail(email:string): Observable<any>{
      return this.http.get(this.url+'/'+email);
   }
+
+  agregarPassAdmin(id: number, datos: any) {
+    return this.http.put(`http://localhost:3000/api/usuarios/passadmin/${id}`, datos);
+  }
+
  
 }

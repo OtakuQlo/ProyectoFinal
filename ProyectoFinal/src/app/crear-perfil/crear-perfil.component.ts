@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms'; // <== ¡Añade las importaciones!
 import { NavigationExtras, Router } from '@angular/router';
+import { PerfilusuarioService } from '../../../service/perfilusuario.service';
 
 @Component({
   selector: 'app-crear-perfil',
@@ -12,6 +13,11 @@ import { NavigationExtras, Router } from '@angular/router';
   styleUrl: './crear-perfil.component.css'
 })
 export class CrearPerfilComponent {
+
+  constructor(private router: Router, private perfil: PerfilusuarioService) {
+    
+  }
+
   nombre: string = '';
   
 
@@ -33,10 +39,20 @@ export class CrearPerfilComponent {
      this.labelnombre = '';
    }
 
-   if (!bandera) {
-     // no avanza
-   }else{
-     // avanza
+   if (bandera) {
+    console.log("pasa");
+     this.perfil.postPerfil({
+      "idusuario": 1,
+      "nombre": this.nombre,
+      "estado": 1
+     }).subscribe(
+      response => {
+        // Manejar la respuesta aquí si es necesario
+      },
+      error => {
+        // Manejar los errores aquí si la solicitud falla
+      }
+    );
    }
 
  }

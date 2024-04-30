@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms'; // <== ¡Añade las importaciones!
 import { NavigationExtras, Router } from '@angular/router';
+import { UsuarioService } from '../../../service/usuario.service';
 
 @Component({
   selector: 'app-crear-perfil-jefe',
@@ -12,6 +13,9 @@ import { NavigationExtras, Router } from '@angular/router';
   styleUrl: './crear-perfil-jefe.component.css'
 })
 export class CrearPerfilJefeComponent {
+  constructor(private usuarios: UsuarioService){
+
+  }
   nombre: string = '';
   pass1: string = '';
   pass2: string = '';
@@ -19,6 +23,8 @@ export class CrearPerfilJefeComponent {
   labelnombre: string = '';
   labelpass1: string = '';
   labelpass2: string = '';
+
+ 
 
   regexname: RegExp =
     /^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]{2,100}$/;
@@ -36,19 +42,19 @@ export class CrearPerfilJefeComponent {
       this.labelpass2 = '';
     }
 
-    if (!this.regexname.test(this.nombre)) {
-      bandera = false;
-      this.labelnombre =
-        'El nombre debe ser sin caracteres epeciales ni numeros.';
-    } else {
-      this.labelnombre = '';
+
+    if (bandera) {
+      
+
+      this.usuarios.agregarPassAdmin(1, { passadmin: this.pass1 })
+      .subscribe(
+        response => console.log('Datos actualizados!', response),
+        error => console.error('Error al actualizar datos', error)
+      );
+  
     }
 
-    if (!bandera) {
-      // no avanza
-    }else{
-      // avanza
     }
 
-  }
 }
+

@@ -16,7 +16,8 @@
                 <form class="ms-5">
                     <div class=" mt-5  w-75">
                         <label for="" class="letra">Nombre:</label>
-                        <input  [(ngModel)]="nombre" class="form-control colorBGC colorB" [ngModelOptions]="{standalone: true}">
+                        <input  [(ngModel)]="nombre" class="form-control colorBGC colorB" [ngModelOptions]="{standalone: true}" readonly placeholder="Miguel Pérez">
+                        <!--el input esa en read only porque debe mostrar el nombre del usuario -->
                         <label for="" class="letra">{{labelnombre}} </label>
                     </div>
 
