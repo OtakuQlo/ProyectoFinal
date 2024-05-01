@@ -10,14 +10,11 @@ export class UsuarioService {
 
   constructor(private http: HttpClient) { }
 
-  //Consultas para url a la que se desea entrar y si esta logeado el user
   readonly KeyLoggeo = 'loged';
   private urlAcceso = '';
 
-  //Status del login
   public LoginStatusSubject = new Subject<boolean>();
   public ChangeLoginStatus = this.LoginStatusSubject.asObservable();
-  
   // publicar el nuevo usuario
   postUsuario(usuario: any): Observable<any> {
     // enviar el nuevo usuario
@@ -43,7 +40,7 @@ export class UsuarioService {
       localStorage.setItem(this.KeyLoggeo, 'true');
       this.LoginStatusSubject.next(true);
   }
-
+  
   deletUserActive() {
     let flag = localStorage.getItem('usuario') ? true : false;
     localStorage.removeItem(this.KeyLoggeo)
@@ -51,16 +48,9 @@ export class UsuarioService {
     return flag ? localStorage.removeItem('usuario') : false;
   }
 
-  //verifica si esta activo
-  isActive(urlAC: string){
-    const isLogged = localStorage.getItem(this.KeyLoggeo);
-    if (!isLogged) {
-      this.urlAcceso = urlAC;
-      return false;
-    }
-    return true;
-  }
+
   
+
   getUserActive() {
     return localStorage.getItem("usuario");
   }
