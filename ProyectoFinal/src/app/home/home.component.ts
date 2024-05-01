@@ -23,7 +23,10 @@ export class HomeComponent implements OnInit {
     pass: new FormControl('123', [Validators.required]),
   });
 
+  routeRedirect = '';
+
   ngOnInit(): void {}
+  
   inicioSesion() {
     console.log(this.registroForm.status);
     let userInfo = this.registroForm.value;
