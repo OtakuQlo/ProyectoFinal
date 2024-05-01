@@ -41,18 +41,20 @@ exports.obtenerReporteId = async (req, res) => {
   exports.responderReporte = async (req, res) => {
     try {
         const { respuesta } = req.body;
-        let reporte = await Reportes.findByPk(req.params.id);
+        let reportes = await Reportes.findByPk(req.params.id);
 
-        if (!reporte) {
+        if (!reportes) {
             return res.status(404).json({ msg: 'El reporte no existe' });
         }
-       reporte.respuesta = respuesta
-        await reporte.save();
+       reportes.respuesta = respuesta
+       reportes.solucion = true
+       
+        await reportes.save();
 
-        res.json(reporte);
+        res.json(reportes);
     } catch (error) {
         console.error(error);
-        res.status(500).send('Hubo un error al actualizar el reporte');
+        res.status(500).send('Hubo un error al responder el reporte');
     }
 };
 

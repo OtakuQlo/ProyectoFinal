@@ -35,18 +35,23 @@ export class CrearPerfilJefeComponent {
      console.log(this.pass1,this.pass2)
     if (this.pass1 != this.pass2) {
       bandera = false;
-      this.pass2 = '';
-      this.pass1 = '';
       this.labelpass2 = 'Deben coincidir las contraseñas';
     }else{
       this.labelpass2 = '';
+    }
+
+    if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%#?^&])[A-Za-z\d@$!#%^?&]{8,50}$/.test(this.pass1)){
+      bandera = false;
+      this.labelpass1 = "Debe ingresar una contraseña con carateres especiales, mayuscula y numero con minimo de 8 y maximo de 50 caracteres"
+    }else{
+      this.labelpass1 = '';
     }
 
 
     if (bandera) {
       
 
-      this.usuarios.agregarPassAdmin(1, { passadmin: this.pass1 })
+      this.usuarios.agregarPassAdmin(1, { passadmin: this.usuarios.encryptContra(this.pass1 )})
       .subscribe(
         response => console.log('Datos actualizados!', response),
         error => console.error('Error al actualizar datos', error)

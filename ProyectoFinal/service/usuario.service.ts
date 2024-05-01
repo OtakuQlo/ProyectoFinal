@@ -24,10 +24,7 @@ export class UsuarioService {
   }
 
   agregarPassAdmin(id: number, datos: any) {
-    return this.http.put(
-      `http://localhost:3000/api/usuarios/passadmin/${id}`,
-      datos
-    );
+    return this.http.put(`${this.url}/passadmin/${id}`, datos);
   }
 
   setUserActive(user: any) {
