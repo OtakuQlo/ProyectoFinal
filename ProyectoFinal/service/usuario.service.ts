@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import SimpleCrypto from 'simple-crypto-js';
 @Injectable({
   providedIn: 'root',
@@ -8,13 +8,8 @@ import SimpleCrypto from 'simple-crypto-js';
 export class UsuarioService {
   url = 'http://localhost:3000/api/usuarios';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  readonly KeyLoggeo = 'loged';
-  private urlAcceso = '';
-
-  public LoginStatusSubject = new Subject<boolean>();
-  public ChangeLoginStatus = this.LoginStatusSubject.asObservable();
   // publicar el nuevo usuario
   postUsuario(usuario: any): Observable<any> {
     // enviar el nuevo usuario
@@ -36,27 +31,17 @@ export class UsuarioService {
   }
 
   setUserActive(user: any) {
-      localStorage.setItem("usuario", JSON.stringify(user));
-      localStorage.setItem(this.KeyLoggeo, 'true');
-      this.LoginStatusSubject.next(true);
+    localStorage.setItem('usuario', JSON.stringify(user));
   }
-  
+
   deletUserActive() {
     let flag = localStorage.getItem('usuario') ? true : false;
-    localStorage.removeItem(this.KeyLoggeo)
-    this.LoginStatusSubject.next(false);
     return flag ? localStorage.removeItem('usuario') : false;
   }
-
-
-  
-
   getUserActive() {
-    return localStorage.getItem("usuario");
+    return localStorage.getItem('usuario');
   }
-
   encryptContra(pass: any) {
-
     const secretKey = 'romeoyjulieta';
     const simpleCrypto = new SimpleCrypto(secretKey);
     return simpleCrypto.encrypt(pass);
