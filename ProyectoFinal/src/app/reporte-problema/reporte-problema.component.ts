@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ReportesService } from '../../../service/reportes.service';
+import { UsuarioService } from '../../../service/usuario.service';
 
 @Component({
   selector: 'app-reporte-problema',
@@ -15,8 +17,8 @@ export class ReporteProblemaComponent {
 
   reporte: string= '';
   labelReporte: string= '';
-
-  constructor(public router: Router){
+  
+  constructor(public router: Router, private reportar:ReportesService, private userS:UsuarioService){
 
   }
 
@@ -25,11 +27,29 @@ export class ReporteProblemaComponent {
   }
 
   emptyReport(){
+   
     if (this.reporte.length <= 10){
       this.labelReporte = 'Por favor escriba algo en el reporte';
     }else{
+      this.crearReporte();
       this.router.navigate(['/Home']);
     }
+  }
 
+  crearReporte(){
+    let user = this.userS.getUserActive();
+    this.reportar.crearReporte({
+      idreporte: '',
+      idusuario : user.idusuario,
+      descripcion : this.reporte,
+      respuesta : '',
+      solucion : false
+    }).subscribe((response) => {
+      console.log('Si',response);
+    },
+    (error) => {
+      console.log('No', error);
+    });
+    console.log('Si')
   }
 }
