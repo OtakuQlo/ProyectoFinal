@@ -10,7 +10,7 @@ export class VentaService {
   
   url = 'http://localhost:3000/api/';
 
-  realizarCompra(){
-    
+  realizarCompra(productos: any){
+    this.http.post(this.url , productos);
   }
 }

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { VentaService } from '../../../service/venta.service';
 
 @Component({
   selector: 'app-realizar-venta',
@@ -11,7 +12,7 @@ import { Router } from '@angular/router';
 })
 export class RealizarVentaComponent {
 
-  constructor(private route:Router){
+  constructor(private route:Router, private venta:VentaService){
   }
 
   codebar: string = '';
@@ -54,6 +55,7 @@ export class RealizarVentaComponent {
     if(!bandera){
       console.log('no pass');      
     }else{
+      
       console.log('pass');
       // this.router.navigate(['/Home']);
     }
