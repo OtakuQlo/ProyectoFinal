@@ -73,7 +73,7 @@
                                             </div>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="submit" class="btn colorB ">Iniciar</button>
+                                            <button type="submit" class="btn colorB " data-bs-dismiss="modal">Iniciar</button>
                                         </div>
                                     </form>
                                 </div>
@@ -97,7 +97,7 @@
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Iniciar sesion</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"
-                    aria-label="Close"></button>
+                    aria-label="Close" id="omg"></button>
             </div>
             <form class="ms-3" [formGroup]="registroForm" (ngSubmit)="inicioSesion()">
                 <div class="modal-body">

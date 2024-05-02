@@ -28,13 +28,17 @@ export class HomeComponent implements OnInit {
   inicioSesion() {
     console.log(this.registroForm.status);
     let userInfo = this.registroForm.value;
+    let modal= document.getElementById('recuperarCuentaModal');
+    let myInput = document.getElementById('omg');
     if (this.registroForm.status == 'VALID') {
       this._serviceUsuario.getUserEmail(userInfo.correo).subscribe((data) => {
         console.log(data);
         if ((data.contra = this._serviceUsuario.encryptContra(userInfo.pass))) {
           this._serviceUsuario.setUserActive(data);
           console.log(this._serviceUsuario.getUserActive());
+          setTimeout(async () => {
           this.route.navigate(['./Perfiles']);
+        }, 300);
         }
       });
     }
