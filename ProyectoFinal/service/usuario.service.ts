@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import SimpleCrypto from 'simple-crypto-js';
+import { environment } from '../src/environments/environment';
 @Injectable({
   providedIn: 'root',
 })
@@ -43,7 +44,7 @@ export class UsuarioService {
   }
 
   encryptContra(pass: any) {
-    const secretKey = 'romeoyjulieta';
+    const secretKey = environment.key;
     const simpleCrypto = new SimpleCrypto(secretKey);
     return simpleCrypto.encrypt(pass);
   }
