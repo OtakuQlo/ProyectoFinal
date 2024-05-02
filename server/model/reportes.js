@@ -24,7 +24,7 @@ Reportes.init({
     },
     respuesta:{
         type:DataTypes.STRING,
-        allowNull:false
+        allowNull:true
     },
     solucion:{
         type:DataTypes.BOOLEAN,

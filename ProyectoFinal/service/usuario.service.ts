@@ -7,6 +7,7 @@ import SimpleCrypto from 'simple-crypto-js';
 })
 export class UsuarioService {
   url = 'http://localhost:3000/api/usuarios';
+  
 
   constructor(private http: HttpClient) {}
 
@@ -35,9 +36,12 @@ export class UsuarioService {
     let flag = localStorage.getItem('usuario') ? true : false;
     return flag ? localStorage.removeItem('usuario') : false;
   }
+
   getUserActive() {
-    return localStorage.getItem('usuario');
+    let activoU: any = localStorage.getItem('usuario');
+    return JSON.parse(activoU);
   }
+
   encryptContra(pass: any) {
     const secretKey = 'romeoyjulieta';
     const simpleCrypto = new SimpleCrypto(secretKey);
