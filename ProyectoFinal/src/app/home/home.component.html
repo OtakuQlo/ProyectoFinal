@@ -81,12 +81,42 @@
                         </div>
                         O
                         <div class="col mt-2">
-                            <button type="submit" class="btn colorB ">Crear Cuenta</button>
+                            <button type="submit" class="btn colorB " (click)="irCrearCuenta()">Crear Cuenta</button>
                         </div>
                         <div class="col mt-2 mb-1">
+<!-- recuperar contra -->
+<div class="col  mt-3 mb-2">
+    <a type="submit" data-bs-toggle="modal"
+        data-bs-target="#recuperarCuentaModal" style="color: yellow;">¿Olvidaste tu contraseña?</a>
+</div>
+<!-- modal -->
+<div class="modal fade " id="recuperarCuentaModal" tabindex="-1"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content card">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Iniciar sesion</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <form class="ms-3" [formGroup]="registroForm" (ngSubmit)="inicioSesion()">
+                <div class="modal-body">
 
-                            <a href="#">¿Olvidaste tu contraseña?</a>
+                    <div>
+                        <input class="form-control colorBGC colorB" type="email" id="correo"
+                            formControlName="correo"
+                            placeholder="Ingrese su Correo Electronico">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn colorB ">Iniciar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
                         </div>
+                        
                     </div>
                 </div>
             </div>

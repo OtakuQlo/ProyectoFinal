@@ -8,6 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -17,10 +18,10 @@ import { CommonModule } from '@angular/common';
   styleUrl: './home.component.css',
 })
 export class HomeComponent implements OnInit {
-  constructor(private _serviceUsuario: UsuarioService) {}
+  constructor(private _serviceUsuario: UsuarioService, private route:Router) {}
   registroForm = new FormGroup({
-    correo: new FormControl('asdas', [Validators.required]),
-    pass: new FormControl('123', [Validators.required]),
+    correo: new FormControl('dadas@gmail.com', [Validators.required]),
+    pass: new FormControl('7SOB4SLdi7i27KO@', [Validators.required]),
   });
 
   ngOnInit(): void {}
@@ -33,8 +34,12 @@ export class HomeComponent implements OnInit {
         if ((data.contra = this._serviceUsuario.encryptContra(userInfo.pass))) {
           this._serviceUsuario.setUserActive(data);
           console.log(this._serviceUsuario.getUserActive());
+          this.route.navigate(['./Perfiles']);
         }
       });
     }
+  }
+  irCrearCuenta(){
+    this.route.navigate(['./Registro']);
   }
 }
