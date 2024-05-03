@@ -13,6 +13,8 @@ import { VentaService } from '../../../service/venta.service';
 export class RealizarVentaComponent {
 
   constructor(private route:Router, private venta:VentaService){
+    console.log(localStorage.getItem('pActivo'));
+    
   }
 
   codebar: string = '';

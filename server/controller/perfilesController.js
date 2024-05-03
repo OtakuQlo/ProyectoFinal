@@ -1,4 +1,5 @@
 const Perfiles = require("../model/perfiles")
+const Op = require('sequelize')
 exports.creandoPerfiles= async (req,res)=>{
     try{
         let perfiles;
@@ -12,7 +13,8 @@ exports.creandoPerfiles= async (req,res)=>{
 }
 exports.obtenerPerfil= async(req,res)=>{
     try{
-        const perfiles = await Perfiles.findAll();
+        const perfiles = await Perfiles.findAll({
+        });
         res.json(perfiles)
     }
     catch(error){

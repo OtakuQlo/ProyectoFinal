@@ -29,8 +29,9 @@ export class UsuarioService {
     return this.http.put(`${this.url}/passadmin/${id}`, datos);
   }
 
-  setUserActive(user: any) {
-    localStorage.setItem('usuario', JSON.stringify(user));
+  setUserActive(user: any) {  
+    localStorage.setItem('usuario', JSON.stringify(user))
+
   }
 
   deletUserActive() {

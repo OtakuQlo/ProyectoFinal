@@ -5,11 +5,11 @@
         </div>
     </div>
     <div class="row mt-5 text-center justify-content-center">
-        <div class="col-sm-5 col-md-4 col-lg-4 col-xl-3 mt-5">
+        <div (click)="activarUser(p.id)" *ngFor="let p of perfiles" class="col-sm-5 col-md-4 col-lg-4 col-xl-3 mt-5">
             <img src="../../assets/Icon/usuario.png" alt="FotoPerfil" width="150" height="150">
-            <h3 class="txt mt-3">Administrador</h3>
+            <h3 class="txt mt-3">{{p.nombre}}</h3>
         </div>
-        <div class="col-sm-5 col-md-4 col-lg-4 col-xl-3 mt-5">
+        <!-- <div class="col-sm-5 col-md-4 col-lg-4 col-xl-3 mt-5">
             <img src="../../assets/Icon/usuario.png" alt="FotoPerfil" width="150" height="150">
             <h3 class="txt mt-3">Manuel Rivera</h3>
         </div>
@@ -20,7 +20,7 @@
         <div class="col-sm-5 col-md-4 col-lg-4 col-xl-3 mt-5">
             <img src="../../assets/Icon/usuario.png" alt="FotoPerfil" width="150" height="150">
             <h3 class="txt mt-3">Andres</h3>
-        </div>
+        </div> -->
     </div>
 
 </div>
