@@ -33,7 +33,7 @@ export class CrearCuentaComponent {
   checkboxThird: boolean = false;
   plan: number = 0;
   constructor(
-    private router: Router,
+    private route: Router,
     private _serviceUsuario: UsuarioService
   ) {}
 
@@ -83,14 +83,14 @@ export class CrearCuentaComponent {
     idplan: any,
     passadmin: any
   ) {
-    const cipherText = this._serviceUsuario.encryptContra(contra);
+
     this._serviceUsuario
       .postUsuario({
         idusaurio: '',
         nombre: nombre,
         apellido: apellido,
         rut: rut,
-        contra: cipherText,
+        contra: this._serviceUsuario.encryptContra(contra),
         telefono: telefono,
         idplan: idplan,
         passadmin: passadmin,
@@ -155,7 +155,7 @@ export class CrearCuentaComponent {
     ) {
       if (this.checkboxTermState) {
         if (this.checkboxFirst || this.checkboxSecond || this.checkboxThird) {
-          console.log('hola');
+          console.log(usuario.pass);
           this.crearCuenta(
             usuario.nombre,
             usuario.apellido,
@@ -163,9 +163,10 @@ export class CrearCuentaComponent {
             usuario.pass,
             usuario.correo,
             usuario.telefono,
-            1,
+            this.plan,
             'sda'
           );
+          this.route.navigate(['./Perfiles']);
         }
       }
     }
@@ -173,13 +174,16 @@ export class CrearCuentaComponent {
   CheckboxChanges1() {
     this.checkboxSecond = false;
     this.checkboxThird = false;
+    this.plan = 1;
   }
   CheckboxChanges2() {
     this.checkboxFirst = false;
     this.checkboxThird = false;
+    this.plan = 2;
   }
   CheckboxChanges3() {
     this.checkboxSecond = false;
     this.checkboxFirst = false;
+    this.plan = 3;
   }
 }

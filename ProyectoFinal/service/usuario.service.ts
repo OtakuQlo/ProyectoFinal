@@ -49,4 +49,10 @@ export class UsuarioService {
     const simpleCrypto = new SimpleCrypto(secretKey);
     return simpleCrypto.encrypt(pass);
   }
+  desencryptContra(pass: any) {
+    const secretKey = environment.key;
+    const simpleCrypto = new SimpleCrypto(secretKey);
+    console.log(simpleCrypto.decrypt(pass))
+    return simpleCrypto.decrypt(pass);
+  }
 }

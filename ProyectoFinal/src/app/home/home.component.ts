@@ -18,32 +18,40 @@ import { Router } from '@angular/router';
   styleUrl: './home.component.css',
 })
 export class HomeComponent implements OnInit {
-  constructor(private _serviceUsuario: UsuarioService, private route:Router) {}
+
+  validSesion: boolean = false;
+
+  constructor(private _serviceUsuario: UsuarioService, private route: Router) { }
   registroForm = new FormGroup({
     correo: new FormControl('dadas@gmail.com', [Validators.required]),
-    pass: new FormControl('7SOB4SLdi7i27KO@', [Validators.required]),
+    pass: new FormControl('7SOB4SLdi7i27sKO@', [Validators.required]),
   });
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
   inicioSesion() {
-    console.log(this.registroForm.status);
     let userInfo = this.registroForm.value;
-    let modal= document.getElementById('recuperarCuentaModal');
-    let myInput = document.getElementById('omg');
     if (this.registroForm.status == 'VALID') {
       this._serviceUsuario.getUserEmail(userInfo.correo).subscribe((data) => {
-        console.log(data);
-        if ((data.contra = this._serviceUsuario.encryptContra(userInfo.pass))) {
+
+        if (this._serviceUsuario.desencryptContra(data.contra) == userInfo.pass) {
           this._serviceUsuario.setUserActive(data);
           console.log(this._serviceUsuario.getUserActive());
+
           setTimeout(async () => {
-          this.route.navigate(['./Perfiles']);
-        }, 300);
+            this.route.navigate(['./Perfiles']);
+          }, 300);
+        }
+        else {
+          //  Alerta de error
+          this.validSesion = true;
+          setTimeout(async () => {
+            this.validSesion = false;
+          }, 3000);
         }
       });
     }
   }
-  irCrearCuenta(){
+  irCrearCuenta() {
     this.route.navigate(['./Registro']);
   }
 }

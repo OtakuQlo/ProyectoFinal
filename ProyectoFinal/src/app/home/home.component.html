@@ -6,11 +6,9 @@
 
         <div class="row">
             <div class="col-8 mt-3">
-                <!-- imagen carrusel -->
-                <!-- <div class="row">
-                    <h5>“En OrdenaloTodo, llevamos la gestión de inventario y ventas de bazares al siguiente nivel.”
-                    </h5>
-                </div> -->
+                <div *ngIf="validSesion;"class="alert alert-warning" role="alert">
+                   Contraseña o Correo incorrecto
+                  </div>
                 <div class="row mb-5">
                     <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
                         <div class="carousel-inner">
@@ -103,7 +101,7 @@
                 <div class="modal-body">
 
                     <div>
-                        <input class="form-control colorBGC colorB" type="email" id="correo"
+                        <input class="form-control colorBGC colorB" type="email" id="corsreo"
                             formControlName="correo"
                             placeholder="Ingrese su Correo Electronico">
                     </div>
