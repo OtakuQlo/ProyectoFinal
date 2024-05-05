@@ -7,16 +7,14 @@ import { environment } from '../src/environments/environment';
   providedIn: 'root',
 })
 export class UsuarioService {
-  url = environment.url+'usuarios';
+  url = 'http://localhost:3000/api/usuarios';
   
 
   constructor(private http: HttpClient) {}
 
   // publicar el nuevo usuario
-  postUsuario(usuario: any): Observable<any> {
-    // enviar el nuevo usuario
-    console.log(usuario);
-    return this.http.post(this.url, usuario);
+  postUsuario(usuario: any): Observable<any>{
+   return this.http.post(this.url, usuario)   
   }
 
   // validar el nuevo usuario

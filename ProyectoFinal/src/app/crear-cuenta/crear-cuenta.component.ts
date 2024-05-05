@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-
 import {
   FormControl,
   FormGroup,
@@ -11,7 +10,6 @@ import {
 import { UsuarioService } from '../../../service/usuario.service';
 import { validateRut } from '@fdograph/rut-utilities';
 import { CommonModule } from '@angular/common';
-
 @Component({
   selector: 'app-crear-cuenta',
   standalone: true,
@@ -27,8 +25,6 @@ export class CrearCuentaComponent {
   validarPass: boolean = false;
   validarPass2: boolean = false;
   validartelefono: boolean = false;
-  validarPlan: boolean = false;
-  validarTerminos: boolean = false;
   checkboxTermState: boolean = false;
   checkboxFirst: boolean = false;
   checkboxSecond: boolean = false;
@@ -37,7 +33,7 @@ export class CrearCuentaComponent {
   constructor(
     private route: Router,
     private _serviceUsuario: UsuarioService
-  ) { }
+  ) {}
 
   registroForm = new FormGroup({
     rut: new FormControl('202995470', [Validators.required]),
@@ -72,6 +68,7 @@ export class CrearCuentaComponent {
     ]),
   });
   ngOnInit(): void {
+    console.log(this._serviceUsuario.getUserActive());
   }
   // funcion de crear cuenta
   crearCuenta(
@@ -84,8 +81,8 @@ export class CrearCuentaComponent {
     idplan: any,
     passadmin: any
   ) {
-    if (!this._serviceUsuario.getUserEmail(email)) {
-      this._serviceUsuario
+
+    this._serviceUsuario
       .postUsuario({
         idusaurio: '',
         nombre: nombre,
@@ -97,22 +94,7 @@ export class CrearCuentaComponent {
         passadmin: passadmin,
         email: email,
         rol: 1,
-      })
-      .subscribe(
-        (response) => {
-          console.log('Solicitud POST completada correctamente', response);
-          // Aquí puedes realizar cualquier acción adicional después de que la solicitud POST se complete correctamente
-        },
-        (error) => {
-          console.error('Error al realizar la solicitud POST', error);
-          // Aquí puedes manejar cualquier error que ocurra durante la solicitud POST
-        }
-      );
-    }else{
-      //el usuario ya existe
-
-    }
-   
+      }).subscribe()
   }
 
   // funcion de validar
@@ -161,6 +143,7 @@ export class CrearCuentaComponent {
     ) {
       if (this.checkboxTermState) {
         if (this.checkboxFirst || this.checkboxSecond || this.checkboxThird) {
+          console.log(usuario.pass);
           this.crearCuenta(
             usuario.nombre,
             usuario.apellido,
@@ -171,13 +154,8 @@ export class CrearCuentaComponent {
             this.plan,
             'sda'
           );
-          this.route.navigate(['./CrearJefe']);
+          // this.route.navigate(['./Perfiles']);
         }
-        else {
-          this.validarPlan = true;
-        }
-      } else {
-        this.validarTerminos = true;
       }
     }
   }
