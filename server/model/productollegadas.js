@@ -33,10 +33,6 @@ ProductoLlegadas.init({
         type:DataTypes.DATE,
         allowNull:false
     },
-    idproducto:{
-        type: DataTypes.INTEGER,
-        allowNull:false
-    },
     idempresa:{
         type: DataTypes.INTEGER,
         allowNull:false
@@ -45,7 +41,15 @@ ProductoLlegadas.init({
         type: DataTypes.INTEGER,
         allowNull:false
     },
-    precio:{
+    precioaventa:{
+        type: DataTypes.INTEGER,
+        allowNull:false
+    },
+    barcode:{ 
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    preciollegada:{
         type: DataTypes.INTEGER,
         allowNull:false
     }
@@ -56,12 +60,6 @@ ProductoLlegadas.init({
     timestamps: false // Deshabilitar las marcas de tiempo automáticas // Nombre del modelo
 });
 
-Productos.hasMany(ProductoLlegadas,{
-    foreignKey: 'idproducto'
-});
-ProductoLlegadas.belongsTo(Productos,{
-    foreignKey: 'idproducto'
-});
 
 Empresas.hasMany(ProductoLlegadas,{
     foreignKey: 'idempresa'

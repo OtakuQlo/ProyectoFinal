@@ -20,7 +20,7 @@ export class CrearPerfilJefeComponent {
   pass1: string = '';
   pass2: string = '';
 
-  labelnombre: string = '';
+  labelnombre: string = this.usuarios.getUserActive().nombre;
   labelpass1: string = '';
   labelpass2: string = '';
 
@@ -51,7 +51,7 @@ export class CrearPerfilJefeComponent {
     if (bandera) {
       
 
-      this.usuarios.agregarPassAdmin(1, { passadmin: this.usuarios.encryptContra(this.pass1 )})
+      this.usuarios.agregarPassAdmin(this.usuarios.getUserActive().idusuario, { passadmin: this.usuarios.encryptContra(this.pass1 )})
       .subscribe(
         response => console.log('Datos actualizados!', response),
         error => console.error('Error al actualizar datos', error)

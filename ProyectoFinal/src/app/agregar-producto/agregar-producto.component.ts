@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms'; // <== ¡Añade las importaciones!
 import { NavigationExtras, Router } from '@angular/router';
+import { MarcaService } from '../../../service/marca.service';
 
 @Component({
   selector: 'app-agregar-producto',
@@ -15,9 +16,16 @@ import { NavigationExtras, Router } from '@angular/router';
 export class AgregarProductoComponent {
   constructor(
     private router: Router,
+    private _marcaservice: MarcaService
   ) {
     
   }
+  ngOnInit(): void {
+    this.obtenermarcas();
+  }
+
+
+
   nombre: String = '';
   fecha:any;
   cantidad: number = 0;
@@ -52,6 +60,15 @@ export class AgregarProductoComponent {
   fechaFormateada1: String = `${this.dia}-${this.mes}-${this.anio}`;
   fechaFormateada: String = `${this.anio}-${this.mes}-${this.dia}`;
 
+  marcas: any = [];
+
+
+  obtenermarcas(){
+    this._marcaservice.getMarca().subscribe(data=>{
+      this.marcas = data
+      console.log(this.marcas);
+    })
+  }
 
 
   agregarProducto(){

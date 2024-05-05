@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms'; // <== ¡Añade las importaciones!
 import { NavigationExtras, Router } from '@angular/router';
 import { PerfilusuarioService } from '../../../service/perfilusuario.service';
+import { UsuarioService } from '../../../service/usuario.service';
 
 @Component({
   selector: 'app-crear-perfil',
@@ -14,7 +15,7 @@ import { PerfilusuarioService } from '../../../service/perfilusuario.service';
 })
 export class CrearPerfilComponent {
 
-  constructor(private router: Router, private perfil: PerfilusuarioService) {
+  constructor(private router: Router, private perfil: PerfilusuarioService, private user: UsuarioService) {
     
   }
 
@@ -42,7 +43,7 @@ export class CrearPerfilComponent {
    if (bandera) {
     console.log("pasa");
      this.perfil.postPerfil({
-      "idusuario": 1,
+      "idusuario": this.user.getUserActive().idusuario,
       "nombre": this.nombre,
       "estado": 1
      }).subscribe(

@@ -27,7 +27,7 @@ Productos.init({
         allowNull: false
     },
     barcode:{ 
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false
     }
 }, {
