@@ -37,10 +37,10 @@ export class ReporteProblemaComponent {
   }
 
   crearReporte(){
-    let user = this.userS.getUserActive();
+    let user = 1;
     this.reportar.crearReporte({
       idreporte: '',
-      idusuario : user.idusuario,
+      idusuario : 1,
       descripcion : this.reporte,
       respuesta : '',
       solucion : false

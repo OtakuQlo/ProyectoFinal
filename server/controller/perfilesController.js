@@ -8,12 +8,16 @@ exports.creandoPerfiles= async (req,res)=>{
         res.send(perfiles)
     }catch(error){
         console.log(error);
-        res.status(500).send('HUBO UN ERROR CREADNO PERFILES')
+        res.status(500).send('HUBO UN ERROR CREANDO PERFILES')
     }
 }
 exports.obtenerPerfil= async(req,res)=>{
     try{
+        const { idusuario } = req.params;
         const perfiles = await Perfiles.findAll({
+            where : {
+                idusuario : idusuario,
+            }
         });
         res.json(perfiles)
     }

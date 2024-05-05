@@ -21,10 +21,17 @@ export class HomeComponent implements OnInit {
 
   validSesion: boolean = false;
 
-  constructor(private _serviceUsuario: UsuarioService, private route: Router) { }
+  constructor(private _serviceUsuario: UsuarioService, private route: Router) { 
+    this._serviceUsuario.deletUserActive();
+    console.log(localStorage.getItem('usuario'));
+    console.log(this._serviceUsuario.encryptContra('123'));
+    
+  }
+
   registroForm = new FormGroup({
     correo: new FormControl('dadas@gmail.com', [Validators.required]),
     pass: new FormControl('7SOB4SLdi7i27sKO@', [Validators.required]),
+
   });
 
   ngOnInit(): void { }

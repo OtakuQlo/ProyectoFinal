@@ -15,7 +15,7 @@ export class PerfilusuarioService {
     return this.http.post(this.url,perfil);
   }
 
-  getPerfiles(): Observable<any>{
-    return this.http.get(this.url)
+  getPerfiles(id:any): Observable<any>{
+    return this.http.get(this.url+"/"+id)
   }
 }

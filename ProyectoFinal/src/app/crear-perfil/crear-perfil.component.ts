@@ -16,6 +16,7 @@ import { UsuarioService } from '../../../service/usuario.service';
 export class CrearPerfilComponent {
 
   constructor(private router: Router, private perfil: PerfilusuarioService, private user: UsuarioService) {
+    console.log(localStorage.getItem('usuario'));
     
   }
 
@@ -45,7 +46,7 @@ export class CrearPerfilComponent {
      this.perfil.postPerfil({
       "idusuario": this.user.getUserActive().idusuario,
       "nombre": this.nombre,
-      "estado": 1
+      "estado": 0
      }).subscribe(
       response => {
         // Manejar la respuesta aquí si es necesario

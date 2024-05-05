@@ -14,8 +14,10 @@ import { UsuarioService } from '../../../service/usuario.service';
 })
 export class CrearPerfilJefeComponent {
   constructor(private usuarios: UsuarioService){
-
+    console.log(localStorage.getItem('usuario'));
+    
   }
+  
   nombre: string = '';
   pass1: string = '';
   pass2: string = '';

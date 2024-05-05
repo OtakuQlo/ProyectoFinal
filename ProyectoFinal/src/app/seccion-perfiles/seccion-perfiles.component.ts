@@ -15,10 +15,18 @@ export class SeccionPerfilesComponent {
 
   usuario: any = this.userS.getUserActive()
   perfiles: any;
+  perfilU : any = {
+    id : 0,
+    idusuario : this.usuario.idusuario,
+    nombre : this.usuario.nombre,
+    estado : 0
+  }
 
-  constructor(private route:Router, private perfilS:PerfilusuarioService, private userS:UsuarioService){
-    this.perfilS.getPerfiles().subscribe((perfiles) => {
-      this.perfiles = perfiles.filter((perfilArr:any) => perfilArr.idusuario == this.usuario.idusuario);
+  constructor(private route:Router, private perfilS:PerfilusuarioService, private userS:UsuarioService){    
+    this.perfilS.getPerfiles(parseInt(this.usuario.idusuario)).subscribe((perfiles) => {
+      this.perfiles = perfiles
+      this.perfiles.push(this.perfilU);
+      console.log(localStorage.getItem('usuario'));
       console.log(this.perfiles);
     })
   }

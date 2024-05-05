@@ -13,8 +13,9 @@ export class UsuarioService {
   constructor(private http: HttpClient) {}
 
   // publicar el nuevo usuario
+
   postUsuario(usuario: any): Observable<any>{
-   return this.http.post(this.url, usuario)   
+   return this.http.post(this.url, usuario)
   }
 
   // validar el nuevo usuario
