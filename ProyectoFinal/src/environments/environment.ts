@@ -1,4 +1,5 @@
 export const environment = {
     production: true,
-    key: 'romeoyjulieta'
+    key: 'romeoyjulieta',
+    url: 'http://localhost:3000/api/'
   };

@@ -7,8 +7,6 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { NgModule } from '@angular/core';
-import SimpleCrypto from 'simple-crypto-js';
 import { UsuarioService } from '../../../service/usuario.service';
 import { validateRut } from '@fdograph/rut-utilities';
 import { CommonModule } from '@angular/common';
