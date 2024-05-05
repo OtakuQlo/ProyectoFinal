@@ -21,11 +21,7 @@ export class HomeComponent implements OnInit {
 
   validSesion: boolean = false;
 
-  constructor(private _serviceUsuario: UsuarioService, private route: Router) { 
-    this._serviceUsuario.deletUserActive();
-    console.log(localStorage.getItem('usuario'));
-    console.log(this._serviceUsuario.encryptContra('123'));
-    
+  constructor(private _serviceUsuario: UsuarioService, private route: Router) {   
   }
 
   registroForm = new FormGroup({
