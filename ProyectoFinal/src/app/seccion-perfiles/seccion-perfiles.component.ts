@@ -2,12 +2,12 @@ import { Component } from '@angular/core';
 import { PerfilusuarioService } from '../../../service/perfilusuario.service';
 import { UsuarioService } from '../../../service/usuario.service';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-seccion-perfiles',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,RouterOutlet],
   templateUrl: './seccion-perfiles.component.html',
   styleUrl: './seccion-perfiles.component.css'
 })
@@ -19,13 +19,15 @@ export class SeccionPerfilesComponent {
     id : 0,
     idusuario : this.usuario.idusuario,
     nombre : this.usuario.nombre,
-    estado : 0
+    estado : false,
+    passadmin : 'asdas'
   }
 
-  constructor(private route:Router, private perfilS:PerfilusuarioService, private userS:UsuarioService){    
+  constructor(private route:Router, private perfilS:PerfilusuarioService, private userS:UsuarioService){ 
+    localStorage.removeItem('pActivo')   
     this.perfilS.getPerfiles(parseInt(this.usuario.idusuario)).subscribe((perfiles) => {
       this.perfiles = perfiles
-      this.perfiles.push(this.perfilU);
+      this.perfiles.unshift(this.perfilU);
       console.log(localStorage.getItem('usuario'));
       console.log(this.perfiles);
     })

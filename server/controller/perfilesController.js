@@ -27,16 +27,21 @@ exports.obtenerPerfil= async(req,res)=>{
     }
 }
 
-exports.obtenerPerfilId = async (req, res) => {
+exports.actualizarPerfil = async (req, res) => {
     try {
-      const { id } = req.params; // Obtenemos el ID de los parámetros de la solicitud
-      const perfiles = await Perfiles.findByPk(id); // Buscamos la marca por su ID
+      const { nombre } = req.body // Obtenemos el ID de los parámetros de la solicitud
+      const perfil = await Perfiles.findByPk(req.params.id); // Buscamos la marca por su ID
   
-      if (!perfiles) { // Si no se encontró la marca
+      if (!perfil) { // Si no se encontró la marca
         return res.status(404).json({ error: 'Marca no encontrada' });
       }
-  
-      res.json(perfiles); // Enviamos la marca encontrada como respuesta
+
+      perfil.nombre = nombre
+      
+
+      await perfil.save();
+      
+      res.json(perfil); // Enviamos la marca encontrada como respuesta
     } catch (error) {
       console.log(error);
       res.status(500).send('HUBO UN ERROR');
@@ -46,13 +51,15 @@ exports.obtenerPerfilId = async (req, res) => {
 exports.borrarPerfil = async (req, res) => {
   try {
       // Buscar la marca por su ID
-      const perfiles = await Perfiles.findByPk(req.params.id);
+      const { id } = req.params
+      const perfiles = await Perfiles.findByPk(id);
+      
 
       // Verificar si la marca existe
       if (!perfiles) {
           return res.status(404).json({ msg: 'el perfil no existe' });
       }
-
+      console.log(perfiles)
       // Eliminar la marca de la base de datos
       await perfiles.destroy();
 

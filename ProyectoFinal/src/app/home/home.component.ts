@@ -22,6 +22,7 @@ export class HomeComponent implements OnInit {
   validSesion: boolean = false;
 
   constructor(private _serviceUsuario: UsuarioService, private route: Router) {   
+  
   }
 
   registroForm = new FormGroup({

@@ -22,14 +22,14 @@ Perfiles.init({
     nombre:{
         type:DataTypes.STRING,
         allowNull:false
+    },   
+    passadmin:{
+        type:DataTypes.STRING,
+        allowNull:true
     },
     estado:{
         type:DataTypes.BOOLEAN,
         allowNull:false
-    },
-    passadmin:{
-        type:DataTypes.STRING,
-        allowNull:true
     },
 }, {
     sequelize, // Pasar la instancia de Sequelize aquí

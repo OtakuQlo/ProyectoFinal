@@ -46,8 +46,8 @@ exports.obtenerReporteId = async (req, res) => {
         if (!reportes) {
             return res.status(404).json({ msg: 'El reporte no existe' });
         }
-       reportes.respuesta = respuesta
-       reportes.solucion = true
+        reportes.respuesta = respuesta
+        reportes.solucion = true
        
         await reportes.save();
 
