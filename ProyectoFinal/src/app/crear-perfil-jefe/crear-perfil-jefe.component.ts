@@ -53,11 +53,7 @@ export class CrearPerfilJefeComponent {
     if (bandera) {
       
 
-      this.usuarios.agregarPassAdmin(this.usuarios.getUserActive().idusuario, { passadmin: this.usuarios.encryptContra(this.pass1 )})
-      .subscribe(
-        response => console.log('Datos actualizados!', response),
-        error => console.error('Error al actualizar datos', error)
-      );
+      console.log("test")
   
     }
 

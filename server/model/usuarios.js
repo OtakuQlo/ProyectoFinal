@@ -38,10 +38,6 @@ Usuarios.init({
         type:DataTypes.INTEGER,
         allowNull:false
     },
-    passadmin:{
-        type:DataTypes.STRING,
-        allowNull:true
-    },
     email:{
         type:DataTypes.STRING,
         allowNull:false

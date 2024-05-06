@@ -24,10 +24,6 @@ export class UsuarioService {
     return this.http.get(this.url + '/' + email);
   }
 
-  agregarPassAdmin(id: number, datos: any) {
-    return this.http.put(`${this.url}/passadmin/${id}`, datos);
-  }
-
   setUserActive(user: any) {  
     localStorage.setItem('usuario', JSON.stringify(user))
 

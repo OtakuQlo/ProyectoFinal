@@ -26,7 +26,11 @@ Perfiles.init({
     estado:{
         type:DataTypes.BOOLEAN,
         allowNull:false
-    }
+    },
+    passadmin:{
+        type:DataTypes.STRING,
+        allowNull:true
+    },
 }, {
     sequelize, // Pasar la instancia de Sequelize aquí
     modelName: 'Perfiles',

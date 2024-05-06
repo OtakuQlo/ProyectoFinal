@@ -1,10 +1,35 @@
 
 const ProductoLlegadas = require("../model/productollegadas");
-
+const Producto = require("../model/productos");
+const Stock = require("../model/stockproducts");
+ 
 exports.creandoProductosLlegada= async (req,res)=>{
     try{
         let producto;
         producto = new ProductoLlegadas(req.body);
+        let productounico = await Producto.findOne({where: {barcode: producto.barcode}});
+        if (productounico == null){
+            
+            let productounico1 = new Producto({
+                "nombreproducto": producto.nombre,
+                "idmarca": 1,
+                "precio" : producto.precioaventa,
+                "barcode": producto.barcode
+            });
+            await productounico1.save();
+        }
+        let products = await Producto.findAll();
+        let productostock = await Stock.findOne({where: {barcode: products.idproducto}});
+        if (productostock == null){
+            
+            let productstock = new Stock({
+                "nombreproducto": producto.nombre,
+                "idmarca": 1,
+                "precio" : producto.precioaventa,
+                "barcode": producto.barcode
+            });
+            await productostock.save();
+        }
         await producto.save();
         res.send(producto)
     }catch(error){
