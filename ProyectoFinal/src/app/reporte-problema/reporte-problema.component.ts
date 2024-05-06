@@ -37,10 +37,10 @@ export class ReporteProblemaComponent {
   }
 
   crearReporte(){
-    let user = 1;
+    let user : any = localStorage.getItem('usuario');
     this.reportar.crearReporte({
       idreporte: '',
-      idusuario : 1,
+      idusuario : user.idusuario,
       descripcion : this.reporte,
       respuesta : '',
       solucion : false
