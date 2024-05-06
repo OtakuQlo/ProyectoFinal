@@ -10,6 +10,7 @@ import {
 import { UsuarioService } from '../../../service/usuario.service';
 import { validateRut } from '@fdograph/rut-utilities';
 import { CommonModule } from '@angular/common';
+import { ToastService } from '../../../service/toast.service';
 @Component({
   selector: 'app-crear-cuenta',
   standalone: true,
@@ -32,7 +33,8 @@ export class CrearCuentaComponent {
   plan: number = 0;
   constructor(
     private route: Router,
-    private _serviceUsuario: UsuarioService
+    private _serviceUsuario: UsuarioService,
+    private _servicioToast : ToastService
   ) {}
 
   registroForm = new FormGroup({
@@ -68,7 +70,7 @@ export class CrearCuentaComponent {
     ]),
   });
   ngOnInit(): void {
-    console.log(this._serviceUsuario.getUserActive());
+    
   }
   // funcion de crear cuenta
   crearCuenta(
@@ -81,8 +83,12 @@ export class CrearCuentaComponent {
     idplan: any,
     passadmin: any
   ) {
-
-    this._serviceUsuario
+    this._serviceUsuario.getUserEmail(email).subscribe(data=>{
+      console.log(data)
+      this._servicioToast.errorSuccess("Error","El correo ya está en uso")
+    },(error)=>{
+      console.error('Error al obtener los datos del usuario:', error);
+      this._serviceUsuario
       .postUsuario({
         idusaurio: '',
         nombre: nombre,
@@ -95,6 +101,10 @@ export class CrearCuentaComponent {
         email: email,
         rol: 1,
       }).subscribe()
+      this._servicioToast.showSuccess("Cuenta Creda","cuenta creada con existo")
+      this.route.navigate(['/CrearJefe']);
+    })
+
   }
 
   // funcion de validar
