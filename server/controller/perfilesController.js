@@ -63,3 +63,15 @@ exports.borrarPerfil = async (req, res) => {
   }
 };
 
+exports.crearPerfilAdmin= async (req,res)=>{
+    try{
+        let perfil;
+        perfil = new Perfiles(req.body);
+        await perfil.save();
+        res.send(perfil)
+    }catch(error){
+        console.log(error);
+        res.status(500).send('HUBO UN ERROR');
+    }
+}
+

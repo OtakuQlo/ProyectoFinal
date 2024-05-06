@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms'; // <== ¡Añade las importaciones!
 import { NavigationExtras, Router } from '@angular/router';
 import { UsuarioService } from '../../../service/usuario.service';
+import { PerfilusuarioService } from '../../../service/perfilusuario.service';
 
 @Component({
   selector: 'app-crear-perfil-jefe',
@@ -13,7 +14,7 @@ import { UsuarioService } from '../../../service/usuario.service';
   styleUrl: './crear-perfil-jefe.component.css'
 })
 export class CrearPerfilJefeComponent {
-  constructor(private usuarios: UsuarioService){
+  constructor(private usuarios: UsuarioService, private perfiles: PerfilusuarioService){
     console.log(localStorage.getItem('usuario'));
     
   }
@@ -53,7 +54,12 @@ export class CrearPerfilJefeComponent {
     if (bandera) {
       
 
-      console.log("test")
+      this.perfiles.postPerfilAdmin({
+        idusuario: this.usuarios.getUserActive().idusuario,
+        nombre: this.usuarios.getUserActive().nombre,
+        passadmin: this.pass1,
+        estado: 0
+      }).subscribe();
   
     }
 

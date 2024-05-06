@@ -15,6 +15,11 @@ export class PerfilusuarioService {
     return this.http.post(this.url,perfil);
   }
 
+  postPerfilAdmin(datos:any): Observable<any> {
+    return this.http.post(this.url+"/admin/",datos);
+  }
+
+
   getPerfiles(id:any): Observable<any>{
     return this.http.get(this.url+"/"+id)
   }

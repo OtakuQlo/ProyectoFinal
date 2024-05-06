@@ -76,19 +76,3 @@ exports.obtenerUsuariosId = async (req, res) => {
 };
 
 
-exports.agregarPassAdmin= async (req, res) => {
-  try {
-      const { passadmin } = req.body;
-      let usuarios = await Usuarios.findByPk(req.params.id);
-
-      if (!usuarios) {
-          return res.status(404).json({ msg: 'El usuario no existe' });
-      }
-     usuarios.passadmin = passadmin;
-      await usuarios.save();
-      res.json(usuarios);
-  } catch (error) {
-      console.error(error);
-      res.status(500).send('Hubo un error al actualizar la passadmin');
-  }
-};
