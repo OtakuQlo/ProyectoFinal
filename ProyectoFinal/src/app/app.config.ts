@@ -9,7 +9,6 @@ export const appConfig: ApplicationConfig = {
   providers: [provideRouter(routes), provideHttpClient(),
   provideToastr({timeOut:1200,preventDuplicates:true}),
   provideAnimations()
-
   ],
 
 };

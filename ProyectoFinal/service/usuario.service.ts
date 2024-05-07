@@ -53,4 +53,11 @@ export class UsuarioService {
     console.log(simpleCrypto.decrypt(pass))
     return simpleCrypto.decrypt(pass);
   }
+
+  
+  editarPlanes(id:any,datos:any): Observable<any> {
+    return this.http.put(this.url+"/planes/"+id,datos);
+
+}
+
 }

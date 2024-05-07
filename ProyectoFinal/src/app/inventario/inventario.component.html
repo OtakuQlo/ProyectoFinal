@@ -13,66 +13,38 @@
             
                 <button class="btn colorB me-2 ms-2" (click)="addProduct()">Añadir Producto</button>
             
-                <button class="btn colorB me-2 ms-2">Limpiar Filtros</button>
+                <button class="btn colorB me-2 ms-2" (click)="cleanFilter()">Limpiar Filtros</button>
             </div>
 
             <div class="col-4">
                 <form class="d-flex ">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn colorB" type="submit">Search</button>
+                    <input [(ngModel)]="search" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
+
+                    <button class="btn colorB" type="button" (click)="filter()">Search</button>
+
                 </form>
             </div>
         </div>
         <div class="row card mt-2">
-                    <table class="table text-center" style="color: white;">
-                        <thead>
-                            <tr>
-                                <th scope="col">Codigo</th>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Marca</th>
-                                <th scope="col">Precio</th>
-                                <th scope="col"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>asd</td>
-                                <td>asd</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
-                                <td>das</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td colspan="2">Larry the Bird</td>
-                                <td>df</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">4</th>
-                                <td colspan="2">Larry the Bird</td>
-                                <td>df</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">5</th>
-                                <td colspan="2">Larry the Bird</td>
-                                <td>df</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">6</th>
-                                <td colspan="2">Larry the Bird</td>
-                                <td>df</td>
-                            </tr>
-                                <th scope="row">7</th>
-                                <td colspan="2">Larry the Bird</td>
-                                <td>df</td>
-                        </tbody>
-                    </table>
+            <table class="table text-center" style="color: white;">
+                <thead>
+                    <tr>
+                        <th scope="col">Codigo</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Marca</th>
+                        <th scope="col">Precio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let product of productos">
+                        <td>{{ product.idproducto }}</td>
+                        <td>{{ product.nombreproducto }}</td> 
+                        <td>{{ product.marca }}</td> 
+                        <td>{{ product.precio }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            
 
         </div>
         <div class="row mt-2 justify-content-center">
