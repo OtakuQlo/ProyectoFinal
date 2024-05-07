@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit {
 
   registroForm = new FormGroup({
     correo: new FormControl('dadas@gmail.com', [Validators.required]),
-    pass: new FormControl('7SOB4SLdi7i27sKO@', [Validators.required]),
+    pass: new FormControl('7SOB4SLdi7i27KO@', [Validators.required]),
 
   });
 
@@ -36,11 +36,14 @@ export class HomeComponent implements OnInit {
     let userInfo = this.registroForm.value;
     if (this.registroForm.status == 'VALID') {
       this._serviceUsuario.getUserEmail(userInfo.correo).subscribe((data) => {
+        console.log(this._serviceUsuario.desencryptContra(data.contra))
+        console.log(userInfo.pass)
+        console.log(this._serviceUsuario.desencryptContra(data.contra) === userInfo.pass)
 
         if (this._serviceUsuario.desencryptContra(data.contra) == userInfo.pass) {
-          this._serviceUsuario.setUserActive(data);
+          this._serviceUsuario.setUserActive(userInfo.correo);
           console.log(this._serviceUsuario.getUserActive());
-
+          console.log("2")
           setTimeout(async () => {
             this.route.navigate(['./Perfiles']);
           }, 300);

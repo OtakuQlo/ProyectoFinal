@@ -24,8 +24,11 @@ export class UsuarioService {
     return this.http.get(this.url + '/' + email);
   }
 
-  setUserActive(user: any) {  
-    localStorage.setItem('usuario', JSON.stringify(user))
+  setUserActive(email: any) {  
+    this.getUserEmail(email).subscribe(data=>{
+      localStorage.setItem('usuario', JSON.stringify(data))
+    })
+    
 
   }
 

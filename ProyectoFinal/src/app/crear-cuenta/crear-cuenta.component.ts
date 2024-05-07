@@ -97,10 +97,10 @@ export class CrearCuentaComponent {
         contra: this._serviceUsuario.encryptContra(contra),
         telefono: telefono,
         idplan: idplan,
-        passadmin: passadmin,
         email: email,
         rol: 1,
       }).subscribe()
+      this._serviceUsuario.setUserActive(email);
       this._servicioToast.showSuccess("Cuenta Creda","cuenta creada con existo")
       this.route.navigate(['/CrearJefe']);
     })
