@@ -1,6 +1,7 @@
 
 const Usuarios = require("../model/usuarios");
 
+
 exports.creandoUsuarios= async (req,res)=>{
     try{
         let usuarios;
@@ -73,6 +74,30 @@ exports.obtenerUsuariosId = async (req, res) => {
         console.error(error);
         res.status(500).send('Hubo un error al actualizar la pass');
     }
+};
+
+
+exports.actualizarPlan = async (req, res) => {
+  try {
+      const { idplan } = req.body;
+      let usuario = await Usuarios.findByPk(req.params.id);
+
+      if (!usuario) {
+          return res.status(404).json({ msg: 'El usuario no existe' });
+      }
+
+      // Actualizar los campos de la marca
+      usuario.idplan = idplan;
+      
+
+      // Guardar los cambios en la base de datos
+      await usuario.save();
+
+      res.json(usuario);
+  } catch (error) {
+      console.error(error);
+      res.status(500).send('Hubo un error al actualizar el id plan');
+  }
 };
 
 

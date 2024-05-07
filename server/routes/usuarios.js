@@ -7,5 +7,5 @@ router.post('/',usuariosController.creandoUsuarios);
 router.get('/',usuariosController.obtenerUsuarios);
 router.get('/:email',usuariosController.obtenerUsuariosEmail);
 router.put('/:id',usuariosController.actualizarContra);
-// router.put('/passadmin/:id',usuariosController.agregarPassAdmin);
+router.put('/planes/:id',usuariosController.actualizarPlan);
 module.exports = router;
