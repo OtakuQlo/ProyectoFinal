@@ -29,7 +29,7 @@ exports.obtenerPerfil= async(req,res)=>{
 
 exports.actualizarPerfil = async (req, res) => {
     try {
-      const { nombre } = req.body // Obtenemos el ID de los parámetros de la solicitud
+      const { nombre , passadmin } = req.body // Obtenemos el ID de los parámetros de la solicitud
       const perfil = await Perfiles.findByPk(req.params.id); // Buscamos la marca por su ID
   
       if (!perfil) { // Si no se encontró la marca
@@ -37,8 +37,8 @@ exports.actualizarPerfil = async (req, res) => {
       }
 
       perfil.nombre = nombre
+      perfil.passadmin = passadmin
       
-
       await perfil.save();
       
       res.json(perfil); // Enviamos la marca encontrada como respuesta
@@ -48,20 +48,39 @@ exports.actualizarPerfil = async (req, res) => {
     }
 };
 
+exports.status = async (req,res) => {
+    try {
+        const { estado } = req.params // Obtenemos el ID de los parámetros de la solicitud
+        const perfil = await Perfiles.findByPk(req.params.id); // Buscamos la marca por su ID
+    
+        if (!perfil) { // Si no se encontró la marca
+          return res.status(404).json({ error: 'Perfil no encontrada' });
+        }
+  
+        perfil.estado = estado;
+        
+        await perfil.save();
+        
+        res.json(perfil); // Enviamos la marca encontrada como respuesta
+      } catch (error) {
+        console.log(error);
+        res.status(500).send('HUBO UN ERROR');
+      }
+}
+
 exports.borrarPerfil = async (req, res) => {
   try {
       // Buscar la marca por su ID
-      const { id } = req.params
-      const perfiles = await Perfiles.findByPk(id);
+      const perfiles = await Perfiles.findByPk(req.params.id);
       
 
       // Verificar si la marca existe
       if (!perfiles) {
           return res.status(404).json({ msg: 'el perfil no existe' });
       }
-      console.log(perfiles)
+      
       // Eliminar la marca de la base de datos
-      await perfiles.destroy();
+      await perfiles.destroy()
 
       res.json({ msg: 'el perfil ha sido eliminada' });
   } catch (error) {

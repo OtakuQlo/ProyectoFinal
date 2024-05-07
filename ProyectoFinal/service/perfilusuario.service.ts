@@ -24,11 +24,15 @@ export class PerfilusuarioService {
     return this.http.get(this.url+"/"+id)
   }
 
-  editarPerfil(id:any, perfil:any){
-    return this.http.put(this.url+"/"+id, perfil)
+  putPerfil(id:any, perfil:any){
+    return this.http.put(this.url+"/"+id, perfil);
   }
 
-  deletPerfil(id:any){
-    return this.http.delete(this.url+"/"+id)
+  deletePerfil(id:any){
+    return this.http.delete(this.url+"/"+id);
+  }
+
+  setActivateUser(id:any, status:any){
+    return this.http.put(this.url+"/ONOFF/"+id, status)
   }
 }
