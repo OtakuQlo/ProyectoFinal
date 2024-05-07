@@ -48,16 +48,36 @@ exports.actualizarPerfil = async (req, res) => {
     }
 };
 
-exports.status = async (req,res) => {
+exports.statusON = async (req,res) => {
     try {
-        const { estado } = req.params // Obtenemos el ID de los parámetros de la solicitud
+        // Obtenemos el ID de los parámetros de la solicitud
         const perfil = await Perfiles.findByPk(req.params.id); // Buscamos la marca por su ID
     
         if (!perfil) { // Si no se encontró la marca
           return res.status(404).json({ error: 'Perfil no encontrada' });
         }
   
-        perfil.estado = estado;
+        perfil.estado = true;
+        
+        await perfil.save();
+        
+        res.json(perfil); // Enviamos la marca encontrada como respuesta
+      } catch (error) {
+        console.log(error);
+        res.status(500).send('HUBO UN ERROR');
+      }
+}
+
+exports.statusOFF = async (req,res) => {
+    try {
+        // Obtenemos el ID de los parámetros de la solicitud
+        const perfil = await Perfiles.findByPk(req.params.id); // Buscamos la marca por su ID
+    
+        if (!perfil) { // Si no se encontró la marca
+          return res.status(404).json({ error: 'Perfil no encontrada' });
+        }
+  
+        perfil.estado = false;
         
         await perfil.save();
         

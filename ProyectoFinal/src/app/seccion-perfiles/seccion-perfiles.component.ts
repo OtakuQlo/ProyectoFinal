@@ -15,14 +15,9 @@ export class SeccionPerfilesComponent {
 
   usuario: any = this.userS.getUserActive()
   perfiles: any;
-  act = JSON.parse(localStorage.getItem('pActivo')!)
     
 
   constructor(private route:Router, private perfilS:PerfilusuarioService, private userS:UsuarioService){ 
-    
-    
-    
-    localStorage.removeItem('pActivo') 
     this.perfilS.getPerfiles(parseInt(this.usuario.idusuario)).subscribe((perfiles) => {
       this.perfiles = perfiles
       console.log(localStorage.getItem('usuario'));

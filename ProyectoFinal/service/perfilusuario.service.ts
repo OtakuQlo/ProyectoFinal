@@ -33,6 +33,15 @@ export class PerfilusuarioService {
   }
 
   setActivateUser(id:any, status:any){
-    return this.http.put(this.url+"/ONOFF/"+id, status)
+    return this.http.put(this.url+"/ON/"+id, status)
+  }
+
+  setInactiveProfile(id:any, status:any){
+    return this.http.put(this.url+"/OFF/"+id, status)
+  }
+
+  getPerfilActivo(){
+    let activoP: any = localStorage.getItem('pActivo')
+    return JSON.parse(activoP);
   }
 }
