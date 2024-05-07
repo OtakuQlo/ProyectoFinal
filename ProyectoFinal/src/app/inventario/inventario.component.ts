@@ -1,21 +1,105 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { ProductoService } from '../../../service/producto.service';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-inventario',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, FormsModule],
   templateUrl: './inventario.component.html',
   styleUrl: './inventario.component.css'
 })
+
 export class InventarioComponent {
+  // variables
+  // productos: any[] = [
+  //   { idproducto: 1, nombreproducto: "andres", marca: "javier", precio: 1234, barcode: "asd" },
+  //   { idproducto: 2, nombreproducto: "andrea", marca: "javiera", precio: 1234, barcode: "hola" },
+  //   { idproducto: 3, nombreproducto: "carlos", marca: "garcía", precio: 1500, barcode: "qwerty" },
+  //   { idproducto: 4, nombreproducto: "laura", marca: "pérez", precio: 2000, barcode: "asdfgh" },
+  //   { idproducto: 5, nombreproducto: "miguel", marca: "lópez", precio: 1000, barcode: "zxcvbn" },
+  //   { idproducto: 6, nombreproducto: "sofía", marca: "martínez", precio: 1800, barcode: "poiuyt" },
+  //   { idproducto: 7, nombreproducto: "ana", marca: "ruiz", precio: 2200, barcode: "mnbvcx" },
+  //   { idproducto: 8, nombreproducto: "david", marca: "hernández", precio: 1700, barcode: "lkjhgf" },
+  //   { idproducto: 9, nombreproducto: "maría", marca: "gómez", precio: 1900, barcode: "zxcvbn" },
+  //   { idproducto: 10, nombreproducto: "juan", marca: "sánchez", precio: 2500, barcode: "asdfgh" },
+  //   { idproducto: 11, nombreproducto: "paula", marca: "díaz", precio: 1300, barcode: "mnbvcx" },
+  //   { idproducto: 12, nombreproducto: "pedro", marca: "muñoz", precio: 2400, barcode: "poiuyt" },
+  //   { idproducto: 13, nombreproducto: "elena", marca: "torres", precio: 1600, barcode: "qwerty" },
+  //   { idproducto: 14, nombreproducto: "hugo", marca: "romero", precio: 2100, barcode: "lkjhgf" },
+  //   { idproducto: 15, nombreproducto: "lucía", marca: "fernández", precio: 2800, barcode: "zxcvbn" }
 
-  constructor(private router:Router){
+  // ];
 
+  // productosO: any[] = [
+  //   { idproducto: 1, nombreproducto: "andres", marca: "javier", precio: 1234, barcode: "asd" },
+  //   { idproducto: 2, nombreproducto: "andrea", marca: "javiera", precio: 1234, barcode: "hola" },
+  //   { idproducto: 3, nombreproducto: "carlos", marca: "garcía", precio: 1500, barcode: "qwerty" },
+  //   { idproducto: 4, nombreproducto: "laura", marca: "pérez", precio: 2000, barcode: "asdfgh" },
+  //   { idproducto: 5, nombreproducto: "miguel", marca: "lópez", precio: 1000, barcode: "zxcvbn" },
+  //   { idproducto: 6, nombreproducto: "sofía", marca: "martínez", precio: 1800, barcode: "poiuyt" },
+  //   { idproducto: 7, nombreproducto: "ana", marca: "ruiz", precio: 2200, barcode: "mnbvcx" },
+  //   { idproducto: 8, nombreproducto: "david", marca: "hernández", precio: 1700, barcode: "lkjhgf" },
+  //   { idproducto: 9, nombreproducto: "maría", marca: "gómez", precio: 1900, barcode: "zxcvbn" },
+  //   { idproducto: 10, nombreproducto: "juan", marca: "sánchez", precio: 2500, barcode: "asdfgh" },
+  //   { idproducto: 11, nombreproducto: "paula", marca: "díaz", precio: 1300, barcode: "mnbvcx" },
+  //   { idproducto: 12, nombreproducto: "pedro", marca: "muñoz", precio: 2400, barcode: "poiuyt" },
+  //   { idproducto: 13, nombreproducto: "elena", marca: "torres", precio: 1600, barcode: "qwerty" },
+  //   { idproducto: 14, nombreproducto: "hugo", marca: "romero", precio: 2100, barcode: "lkjhgf" },
+  //   { idproducto: 15, nombreproducto: "lucía", marca: "fernández", precio: 2800, barcode: "zxcvbn" }
+
+  // ];
+  productos : any[] = []
+  productosO: any[] = []
+
+  search: string = "";
+  totalPages:number=0;
+  displacement:number=0;
+  actualPage:number = 1;
+  constructor(private router: Router, private _serviceProduto: ProductoService) { }
+
+  ngOnInit(): void {
+    this.getProduct();
+    this.totalPages = this.totalPage();
+    this.pageGenerator()
   }
 
-  addProduct(){
+  getProduct() {
+    this._serviceProduto.getProductos().subscribe(data => {
+      this.productos = data;
+      this.productosO = data;
+    });
+  }
+
+  cleanFilter() {
+    this.productos = this.productosO;
+    this.search = "";
+    this.actualPage = 1;
+    this.pageGenerator()
+  }
+
+  filter() {
+    this.productos = this.productosO.filter((product) => {
+      // product.marca.includes(this.search.toLocaleLowerCase()) ||
+      return product.nombreproducto.includes(this.search.toLocaleLowerCase()) ||  product.precio == Number(this.search) || product.barcode == this.search
+    });
+    this.pageGenerator();
+    this.totalPages = this.totalPage();
+  }
+
+  addProduct() {
     this.router.navigate(['/AgregarProducto'])
   }
 
+  // pagination
+  totalPage(){
+    return Math.ceil(this.productos.length/10);
+  }
+
+  pageGenerator(){
+    this.displacement = (this.actualPage - 1) * 10;
+    this.productos = this.productos.slice(this.displacement, this.displacement+10);
+  }
 }
