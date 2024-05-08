@@ -19,21 +19,21 @@ export class SeccionPerfilesComponent {
     
 
   constructor(private route:Router, private perfilS:PerfilusuarioService, private userS:UsuarioService, private alert:ToastService){ 
+    this.getPerfiles()
+
+  }
+
+  ngOnInit(): void {   
+  }
+
+  getPerfiles(){
     this.perfilS.getPerfiles(parseInt(this.usuario.idusuario)).subscribe((perfiles) => {
       this.perfiles = perfiles
-     
-      
-      let perfil : any = this.perfiles.find(({id} : any) => id === 1)
-      console.log(perfil);
     })
   }
 
-  ngOnInit(): void {
-    
-    
-  }
-
   activarUser(idP:any){
+    this.getPerfiles
     let perfil : any = this.perfiles.find(({id} : any) => id === idP)
     if (perfil.estado === true){
       return this.alert.errorSuccess('Seleccione otro','Perfil ya en uso')
