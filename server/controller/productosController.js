@@ -1,4 +1,5 @@
 const Productos = require("../model/productos")
+const Marca = require("../model/marca")
 exports.creandoProductos= async (req,res)=>{
     try{
         let productos;
@@ -20,7 +21,19 @@ exports.obtenerProducto= async(req,res)=>{
         res.status(500).send('HUBO UN ERROR EN ENCONTRAR PRODUCTOS')
     }
 }
-
+exports.obtenerProductosMarca= async(req,res)=>{
+    try{
+        const reporte = await Productos.findAll({
+            include:Marca,
+            required: false
+        })
+        res.json(reporte)
+    }
+    catch(error){
+        console.log(error);
+        res.status(500).send('HUBO UN ERROR EN ENCONTRAR PRODUCTOS')
+    }
+}
 // exports.actualizarProducto = async (req, res) => {
 //     try {
 //         const { idmarca, nombremarca } = req.body;
