@@ -3,6 +3,7 @@ import { PerfilusuarioService } from '../../../service/perfilusuario.service';
 import { UsuarioService } from '../../../service/usuario.service';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { ToastService } from '../../../service/toast.service';
 
 @Component({
   selector: 'app-seccion-perfiles',
@@ -17,23 +18,34 @@ export class SeccionPerfilesComponent {
   perfiles: any;
     
 
-  constructor(private route:Router, private perfilS:PerfilusuarioService, private userS:UsuarioService){ 
+  constructor(private route:Router, private perfilS:PerfilusuarioService, private userS:UsuarioService, private alert:ToastService){ 
     this.perfilS.getPerfiles(parseInt(this.usuario.idusuario)).subscribe((perfiles) => {
       this.perfiles = perfiles
-      console.log(localStorage.getItem('usuario'));
-      console.log(this.perfiles);
+     
+      
+      let perfil : any = this.perfiles.find(({id} : any) => id === 1)
+      console.log(perfil);
     })
   }
 
   ngOnInit(): void {
-    /* this.perfilS.setActivateUser(parseInt(this.act.id), {estado : false}).subscribe(); */
+    
+    
   }
 
   activarUser(idP:any){
-    localStorage.setItem('pActivo', JSON.stringify(this.perfiles.find(({id} : any) => id === idP)))
-    this.perfilS.setActivateUser(parseInt(idP), {estado : true}).subscribe();
-    this.route.navigate(['/Venta'])
-    console.log(localStorage.getItem('pActivo'));
+    let perfil : any = this.perfiles.find(({id} : any) => id === idP)
+    if (perfil.estado === true){
+      return this.alert.errorSuccess('Seleccione otro','Perfil ya en uso')
+    }else {
+      localStorage.setItem('pActivo', JSON.stringify(this.perfiles.find(({id} : any) => id === idP)))
+      this.perfilS.setActivateUser(parseInt(idP), {estado : true}).subscribe();
+      this.route.navigate(['/Venta'])
+      console.log(localStorage.getItem('pActivo'));
+    }
+    
   }
+
+  
 
 }
