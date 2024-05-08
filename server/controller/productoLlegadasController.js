@@ -12,24 +12,31 @@ exports.creandoProductosLlegada= async (req,res)=>{
             
             let productounico1 = new Producto({
                 "nombreproducto": producto.nombre,
-                "idmarca": 1,
+                "idmarca": producto.idmarca,
                 "precio" : producto.precioaventa,
                 "barcode": producto.barcode
             });
             await productounico1.save();
         }
         let products = await Producto.findAll();
-        let productostock = await Stock.findOne({where: {barcode: products.idproducto}});
-        if (productostock == null){
-            
-            let productstock = new Stock({
-                "nombreproducto": producto.nombre,
-                "idmarca": 1,
-                "precio" : producto.precioaventa,
-                "barcode": producto.barcode
-            });
-            await productostock.save();
+
+        for (let producto of products) {
+            if (producto.idproducto) {
+                let productostock = await Stock.findOne({where: {idproducto: producto.idproducto}});
+                
+                if (!productostock){
+                    let productstock = new Stock({
+                        "idproducto": producto.idproducto,
+                        "cantidadtotal": 0,
+                        "idusuario": producto.idusuario
+                    });
+                    await productstock.save();
+                }
+            } else {
+                console.log(`El producto con id ${producto.id} no tiene un idproducto válido.`);
+            }
         }
+        
         await producto.save();
         res.send(producto)
     }catch(error){
@@ -37,6 +44,7 @@ exports.creandoProductosLlegada= async (req,res)=>{
         res.status(500).send('HUBO UN ERROR EN AÑADIR UN PRODUCTO AL INVENTARIO')
     }
 }
+
 exports.obtenerInventario= async(req,res)=>{
     try{
         const producto = await ProductoLlegadas.findAll();

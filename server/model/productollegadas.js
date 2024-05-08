@@ -2,6 +2,7 @@ const { Sequelize, DataTypes, Model } = require('sequelize');
 const Usuarios = require('./usuarios');
 const Productos = require('./productos');
 const Empresas = require('./empresas');
+const Marcas = require('./marca')
 
 const sequelize = new Sequelize('ordenalo', 'root', '', {
     host: 'localhost',
@@ -37,6 +38,10 @@ ProductoLlegadas.init({
         type: DataTypes.INTEGER,
         allowNull:false
     },
+    idempresa:{
+        type: DataTypes.INTEGER,
+        allowNull:false
+    },
     cantidad:{
         type: DataTypes.INTEGER,
         allowNull:false
@@ -52,12 +57,30 @@ ProductoLlegadas.init({
     preciollegada:{
         type: DataTypes.INTEGER,
         allowNull:false
+    },
+    idusuario:{
+        type: DataTypes.INTEGER,
+        allowNull:false
     }
 
 }, {
     sequelize, // Pasar la instancia de Sequelize aquí
     modelName: 'ProductoLlegadas',
     timestamps: false // Deshabilitar las marcas de tiempo automáticas // Nombre del modelo
+});
+
+Usuarios.hasMany(ProductoLlegadas,{
+    foreignKey: 'idusuario'
+});
+ProductoLlegadas.belongsTo(Usuarios,{
+    foreignKey: 'idusuario'
+});
+
+Marcas.hasMany(ProductoLlegadas,{
+    foreignKey: 'idmarca'
+});
+ProductoLlegadas.belongsTo(Marcas,{
+    foreignKey: 'idmarca'
 });
 
 
