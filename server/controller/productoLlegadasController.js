@@ -23,9 +23,9 @@ exports.creandoProductosLlegada= async (req,res)=>{
             producto2 = productounico;
         }
 
-        let test = await Stock.findOne({where: {idproducto: producto2.idproducto, idusuario: producto.idusuario }})
+        let stock = await Stock.findOne({where: {idproducto: producto2.idproducto, idusuario: producto.idusuario }})
 
-        if (test == null) {
+        if (stock == null) {
             let productstock = new Stock({
                                 "idproducto": producto2.idproducto,
                                 "cantidadtotal": producto.cantidad,
@@ -33,8 +33,9 @@ exports.creandoProductosLlegada= async (req,res)=>{
                             });
             await productstock.save();
         } else {
-            test.cantidadtotal += producto.cantidad;
-            await test.save();
+            
+            stock.cantidadtotal += producto.cantidad;
+            await stock.save();
         }
         
         await producto.save();

@@ -4,27 +4,35 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms'; // <== ¡Añade las importaciones!
 import { NavigationExtras, Router } from '@angular/router';
 import { MarcaService } from '../../../service/marca.service';
+import { CommonModule } from '@angular/common';
+import { EmpresaService } from '../../../service/empresa.service';
+import { ProdcutosllegadaService } from '../../../service/prodcutosllegada.service';
+import { UsuarioService } from '../../../service/usuario.service';
 
 @Component({
   selector: 'app-agregar-producto',
   standalone: true,
   imports: [
-    FormsModule,],
+    FormsModule,CommonModule],
   templateUrl: './agregar-producto.component.html',
   styleUrl: './agregar-producto.component.css'
 })
 export class AgregarProductoComponent {
   constructor(
     private router: Router,
-    private _marcaservice: MarcaService
+    private _marcaservice: MarcaService,
+    private empresa: EmpresaService,
+    private producto: ProdcutosllegadaService,
+    private usuario: UsuarioService
   ) {
     
   }
   ngOnInit(): void {
     this.obtenermarcas();
+    this.obtenerEmpresas();
   }
 
-
+  
 
   nombre: String = '';
   fecha:any;
@@ -61,12 +69,23 @@ export class AgregarProductoComponent {
   fechaFormateada: String = `${this.anio}-${this.mes}-${this.dia}`;
 
   marcas: any = [];
+  empresas: any = [];
+
+  marcaid: number = 0;
+  empresaid: number = 0;
 
 
   obtenermarcas(){
     this._marcaservice.getMarca().subscribe(data=>{
       this.marcas = data
       console.log(this.marcas);
+    })
+  }
+
+  obtenerEmpresas(){
+    this.empresa.getEmpresas().subscribe(data=>{
+      this.empresas = data
+      console.log(this.empresas);
     })
   }
 
@@ -124,8 +143,22 @@ export class AgregarProductoComponent {
     if(!bandera){
       this.nombre = "pepe";
     }else{
-      this.nombre = "Momo";
-      // this.router.navigate(['/Home']);
+      console.log(this.marcaid,this.empresaid);
+      this.producto.postProduct({
+        
+        "nombre": this.nombre,
+        "fechaingreso": this.fechaFormateada,
+        "fechavencimiento": this.fecha,
+        "idempresa": this.empresaid,
+        "idmarca": this.marcaid,
+        "cantidad": this.cantidad,
+        "preciollegada": this.prelle,
+        "precioaventa": this.preven,
+        "barcode": this.codebar,
+        "idusuario": this.usuario.getUserActive().idusuario
+
+      }).subscribe();
+      this.router.navigate(['/Inventario']);
     }
   }
   
