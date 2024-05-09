@@ -18,7 +18,7 @@
                         <label for="" class="letra">Nombre:</label>
                         <input  [(ngModel)]="nombre" class="form-control colorBGC colorB" [ngModelOptions]="{standalone: true}" readonly placeholder="{{labelnombre}}">
                         <!--el input esa en read only porque debe mostrar el nombre del usuario -->
-                        <label for="" class="letra">{{labelnombre}} </label>
+                        
                     </div>
 
                     
@@ -32,7 +32,6 @@
                     <div class=" mt-2  w-75">
                         <label for="" class="letra">Confirmar contraseña:</label>
                         <input [(ngModel)]="pass2" type="password" class="form-control colorBGC colorB"  [ngModelOptions]="{standalone: true}">
-                        <label for="" class="letra">{{labelpass2}} {{pass2}}</label>
                     </div>
 
                 </form>
