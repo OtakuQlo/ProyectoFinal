@@ -22,6 +22,10 @@ Perdidas.init({
         type:DataTypes.DATE,
         allowNull:false
     },
+    cantidad:{
+        type:DataTypes.INTEGER,
+        allowNull:false
+    },
     idproducto:{
         type:DataTypes.INTEGER,
         allowNull:false
