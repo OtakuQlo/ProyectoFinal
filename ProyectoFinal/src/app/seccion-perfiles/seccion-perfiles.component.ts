@@ -21,6 +21,7 @@ export class SeccionPerfilesComponent {
 
   constructor(private route:Router, private perfilS:PerfilusuarioService, private userS:UsuarioService, private alert:ToastService){ 
     this.getPerfiles()
+    console.log(this.userS.getUserActive());
     
   }
 

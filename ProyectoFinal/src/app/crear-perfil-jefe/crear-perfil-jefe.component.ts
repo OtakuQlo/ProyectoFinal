@@ -17,19 +17,21 @@ export class CrearPerfilJefeComponent {
   constructor(private usuarios: UsuarioService, private perfiles: PerfilusuarioService,
     private route: Router
   ){
-    console.log(localStorage.getItem('usuario'));
     
   }
+
   
   nombre: string = '';
   pass1: string = '';
   pass2: string = '';
 
-  labelnombre: string = this.usuarios.getUserActive().nombre;
+  labelnombre: string = '';
   labelpass1: string = '';
   labelpass2: string = '';
 
- 
+  ngOnInit() {
+    this.labelnombre = localStorage.getItem('nombre')!
+  }
 
   regexname: RegExp =
     /^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]{2,100}$/;

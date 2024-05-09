@@ -14,7 +14,7 @@ import { Observable, interval, map, switchMap } from 'rxjs';
 export class AppComponent {
   title = 'ProyectoFinal';
 
-  userA: any = this.perfilS.getPerfilActivo() 
+  userA: any ; 
   
   constructor(private route:Router, private perfilS:PerfilusuarioService){    
   }
