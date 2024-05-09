@@ -26,6 +26,8 @@ export class UsuarioService {
 
   setUserActive(email: any) {  
     this.getUserEmail(email).subscribe(data=>{
+      console.log("set user active"+data);
+      
       localStorage.setItem('usuario', JSON.stringify(data))
     })
     

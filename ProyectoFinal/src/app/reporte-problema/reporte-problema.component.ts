@@ -32,7 +32,7 @@ export class ReporteProblemaComponent {
       this.labelReporte = 'Por favor escriba algo en el reporte';
     }else{
       this.crearReporte();
-      this.router.navigate(['/Home']);
+      this.router.navigate(['/Inventario']);
     }
   }
 
