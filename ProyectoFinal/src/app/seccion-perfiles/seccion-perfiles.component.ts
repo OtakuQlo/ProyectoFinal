@@ -21,11 +21,11 @@ export class SeccionPerfilesComponent {
 
   constructor(private route:Router, private perfilS:PerfilusuarioService, private userS:UsuarioService, private alert:ToastService){ 
     this.getPerfiles()
-
+    
   }
 
   ngOnInit(){   
-    interval(10000) // Intervalo de 10 segundos
+    interval(5000) // Intervalo de 10 segundos
       .pipe(
         switchMap(() => this.perfilS.getPerfiles(parseInt(this.usuario.idusuario)))
       )
