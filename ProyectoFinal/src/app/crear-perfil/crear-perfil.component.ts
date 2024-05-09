@@ -15,7 +15,7 @@ import { UsuarioService } from '../../../service/usuario.service';
 })
 export class CrearPerfilComponent {
 
-  constructor(private router: Router, private perfil: PerfilusuarioService, private user: UsuarioService) {
+  constructor(private route: Router, private perfil: PerfilusuarioService, private user: UsuarioService) {
     console.log(localStorage.getItem('usuario'));
     
   }
@@ -49,12 +49,13 @@ export class CrearPerfilComponent {
       "estado": 0
      }).subscribe(
       response => {
-        // Manejar la respuesta aquí si es necesario
+        
       },
       error => {
         // Manejar los errores aquí si la solicitud falla
       }
     );
+    this.route.navigate(['./Perfiles']);
    }
 
  }

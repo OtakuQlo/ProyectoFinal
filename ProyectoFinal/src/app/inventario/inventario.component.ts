@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { ProductoService } from '../../../service/producto.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { PerdidasService } from '../../../service/perdidas.service';
+import { ToastService } from '../../../service/toast.service';
 
 @Component({
   selector: 'app-inventario',
@@ -51,25 +53,52 @@ export class InventarioComponent {
   //   { idproducto: 15, nombreproducto: "lucía", marca: "fernández", precio: 2800, barcode: "zxcvbn" }
 
   // ];
-  productos : any[] = []
+  productos: any[] = []
   productosO: any[] = []
 
   search: string = "";
-  totalPages:number=0;
-  displacement:number=0;
-  actualPage:number = 1;
-  constructor(private router: Router, private _serviceProduto: ProductoService) { }
+  totalPages: number = 0;
+  displacement: number = 0;
+  actualPage: number = 1;
+
+
+  barcode: string = "";
+  desc: string = "";
+  cant: number = 0;
+
+
+
+  //formato fecha para dar el minimo al input
+  fechahoy: Date = new Date();
+
+  dia: String = ("0" + this.fechahoy.getDate()).slice(-2); // Día del mes
+  mes: String = ("0" + (this.fechahoy.getMonth() + 1)).slice(-2); // Los meses en JavaScript empiezan en 0
+  anio: number = this.fechahoy.getFullYear();
+  fechaFormateada: String = `${this.anio}-${this.mes}-${this.dia}`;
+  constructor(
+    private router: Router,
+    private _serviceProduto: ProductoService,
+    private _servicePerdidas: PerdidasService,
+    private _serviceToast:ToastService
+  ) { }
 
   ngOnInit(): void {
     this.getProduct();
-    this.totalPages = this.totalPage();
+    
+    
     this.pageGenerator()
   }
 
   getProduct() {
     this._serviceProduto.getProductos().subscribe(data => {
+      console.log(data);
+      
       this.productos = data;
+      console.log(this.productos);
+      
       this.productosO = data;
+      this.totalPages = this.totalPage();
+    console.log(this.totalPages);
     });
   }
 
@@ -82,11 +111,13 @@ export class InventarioComponent {
 
   filter() {
     this.productos = this.productosO.filter((product) => {
-      // product.marca.includes(this.search.toLocaleLowerCase()) ||
-      return product.nombreproducto.includes(this.search.toLocaleLowerCase()) ||  product.precio == Number(this.search) || product.barcode == this.search
+      return product.nombreproducto.includes(this.search.toLocaleLowerCase()) || product.precio == Number(this.search) || product.barcode == this.search
     });
-    this.pageGenerator();
+    console.log(this.productos);
     this.totalPages = this.totalPage();
+    this.actualPage = 1;
+    this.pageGenerator();
+
   }
 
   addProduct() {
@@ -94,12 +125,40 @@ export class InventarioComponent {
   }
 
   // pagination
-  totalPage(){
-    return Math.ceil(this.productos.length/10);
+  totalPage() {
+    console.log(this.productos);
+
+    return Math.ceil(this.productos.length / 10);
   }
 
-  pageGenerator(){
+  pageGenerator() {
     this.displacement = (this.actualPage - 1) * 10;
-    this.productos = this.productos.slice(this.displacement, this.displacement+10);
+  }
+
+  nextPage() {
+    
+    if (this.actualPage + 1 <= this.totalPages) {
+      this.actualPage = this.actualPage + 1;
+      this.pageGenerator();
+    }
+
+  }
+  previousPage() {
+    if (this.actualPage - 1 > 0) {
+      this.actualPage = this.actualPage - 1;
+      this.pageGenerator();
+    }
+  }
+  postPerdidas() {
+    if (this.cant>=1) {
+      if (this.barcode != "") {
+        this._servicePerdidas.postPerdidas({ idperdidas	:'',idproducto	:this.barcode, fecha:this.fechaFormateada,descripcion: this.desc, cantidad: this.cant }).subscribe()
+        this._serviceToast.showSuccess("Con exito","Reporte con exito")
+      }else{
+        this._serviceToast.errorSuccess("Error","Hubo un Error")
+      }
+    }else{
+      this._serviceToast.errorSuccess("Error","Hubo un Error")
+    }
   }
 }

@@ -1,24 +1,43 @@
 <div class="container-fluid mt-2">
     <div class="row ms-4 me-4 mt-3">
-        <div class="row mb-3">
-            <!-- Aqui deberia ir el menu que se despliega a la derecha-->
-            <div class="col-2">
-                <img src="../../assets/Icon/usuario.png" alt="Imagen perfil" class="float-start"
-                    style="width: 80px; height: 80px;">
-            </div>
-        </div>
         <div class="row">
             <div class="col-8">
-                <button class="btn colorB me-2">Generar Perdida</button>
-            
+                <button class="btn colorB me-2" data-bs-toggle="modal" data-bs-target="#exampleModal">Generar
+                    Perdida</button>
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Generar Perdidas</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <form class="d-flex ">
+                                <div class="modal-body">
+                                    <input [(ngModel)]="barcode" class="form-control me-2 "placeholder="Codigo de barras"  name="barcode">
+                                    <textarea  [(ngModel)]="desc" class="form-control me-2 mt-2 " placeholder="Descripción"name="desc"></textarea>
+                                    <input [(ngModel)]="cant" type="number" class="form-control me-2 mt-2 " placeholder="Cantidad"name="cant">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn colorB " data-bs-dismiss="modal"
+                                    aria-label="Close" (click)="postPerdidas()">Generar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
                 <button class="btn colorB me-2 ms-2" (click)="addProduct()">Añadir Producto</button>
-            
+
                 <button class="btn colorB me-2 ms-2" (click)="cleanFilter()">Limpiar Filtros</button>
             </div>
 
             <div class="col-4">
                 <form class="d-flex ">
-                    <input [(ngModel)]="search" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
+                    <input [(ngModel)]="search" class="form-control me-2" type="search" placeholder="Search"
+                        aria-label="Search" name="search">
 
                     <button class="btn colorB" type="button" (click)="filter()">Search</button>
 
@@ -36,30 +55,29 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let product of productos">
-                        <td>{{ product.idproducto }}</td>
-                        <td>{{ product.nombreproducto }}</td> 
-                        <td>{{ product.marca }}</td> 
+                    <tr *ngFor="let product of productos.slice(displacement, displacement+10)">
+                        <!-- <td>{{ product.barcode }}</td> -->
+                        <td>{{ product.idproducto}}</td>
+                        <td>{{ product.nombreproducto }}</td>
+                        <td>{{ product.Marca.nombremarca }}</td>
                         <td>{{ product.precio }}</td>
                     </tr>
                 </tbody>
             </table>
-            
+
 
         </div>
         <div class="row mt-2 justify-content-center">
             <div class="col-3 align-items-center">
-                 <nav aria-label="Page navigation example">
-                <ul class="pagination">
-                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                </ul>
-            </nav>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item"><a class="page-link" (click)="previousPage()">Previous</a></li>
+                        <li class="page-item"><a class="page-link">{{actualPage}}</a></li>
+                        <li class="page-item"><a class="page-link" (click)="nextPage()">Next</a></li>
+                    </ul>
+                </nav>
             </div>
-           
+
         </div>
     </div>
 </div>

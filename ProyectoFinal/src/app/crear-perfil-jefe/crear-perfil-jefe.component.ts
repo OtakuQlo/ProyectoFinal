@@ -14,7 +14,9 @@ import { PerfilusuarioService } from '../../../service/perfilusuario.service';
   styleUrl: './crear-perfil-jefe.component.css'
 })
 export class CrearPerfilJefeComponent {
-  constructor(private usuarios: UsuarioService, private perfiles: PerfilusuarioService){
+  constructor(private usuarios: UsuarioService, private perfiles: PerfilusuarioService,
+    private route: Router
+  ){
     console.log(localStorage.getItem('usuario'));
     
   }
@@ -57,9 +59,10 @@ export class CrearPerfilJefeComponent {
       this.perfiles.postPerfilAdmin({
         idusuario: this.usuarios.getUserActive().idusuario,
         nombre: this.usuarios.getUserActive().nombre,
-        passadmin: this.pass1,
+        passadmin: this.usuarios.encryptContra(this.pass1),
         estado: 0
       }).subscribe();
+      this.route.navigate(['./Perfiles']);
   
     }
 
