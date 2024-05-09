@@ -42,9 +42,9 @@
                                 <div class="mb-3 mt-2 align-items-center row">
                                     <label for="Codigo" class="col-sm-3 col-form-label">Nombre del producto</label>
                                     <div class="col-sm-9">
-                                        <input [(ngModel)]="nombre"
+                                        <input [(ngModel)]="nombre" disabled
                                             class="form-control-plaintext text-white colorBGC colorB text-center"
-                                            id="nombreProducto" placeholder="Ingrese el nombre del Producto"
+                                            id="nombreProducto" placeholder="Nombre del Producto"
                                             style="border-radius: 10px; height: 45px;">
                                     </div>
                                     <div class="col-7 offset-4 text-center">
@@ -55,16 +55,16 @@
                                     <label for="Codigo" class="col-sm-3 col-form-label">Cantidad</label>
                                     <div
                                         class="col-2 offset-3 col-sm-2 offset-sm-1 col-md-1 offset-md-3 col-lg-2 offset-lg-1 col-xl-1 offset-xl-3 text-center">
-                                        <button class="btn btn-danger btnT">-</button>
+                                        <button class="btn btn-danger btnT" (click)="lessC()">-</button>
                                     </div>
                                     <div class="col-2 col-sm-2 col-md-1 col-lg-2 col-xl-1 align-items-center me-xl-2">
                                         <input [(ngModel)]="cantidad"
                                             class="form-control-plaintext text-white colorBGC colorB text-center"
-                                            id="nombreProducto" placeholder="0"
+                                            id="nombreProducto" placeholder="{{cantidad}}"
                                             style="border-radius: 10px; height: 45px; width: 45px;">
                                     </div>
                                     <div class="col-2 col-sm-1 col-md-1 col-lg-2 col-xl-1 text-center"><button
-                                            class="btn btn-success btnT">+</button></div>
+                                        class="btn btn-success btnT" (click)="addC()">+</button></div>
                                 </div>
 
                                 <div class="col-7 offset-4 mb-3 text-center">
@@ -95,7 +95,6 @@
                             <table class="table text-white ">
                                 <thead>
                                     <tr>
-                                        <th scope="col">#</th>
                                         <th scope="col">Producto</th>
                                         <th scope="col">Cantidad</th>
                                         <th scope="col">Precio</th>
@@ -104,75 +103,20 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <th scope="row">1</th>
+                                        
                                         <td>Detergente Omo 15LTs</td>
                                         <td>2</td>
                                         <td>$1500</td>
                                         <td><img src="../../assets/Icon/borrar.png" alt="Basurero" width="20"
                                                 height="20"></td>
                                     </tr>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>Detergente Omo 15LTs</td>
-                                        <td>2</td>
-                                        <td>$1500</td>
-                                        <td><img src="../../assets/Icon/borrar.png" alt="Basurero" width="20"
-                                                height="20"></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>Detergente Omo 15LTs</td>
-                                        <td>2</td>
-                                        <td>$1500</td>
-                                        <td><img src="../../assets/Icon/borrar.png" alt="Basurero" width="20"
-                                                height="20"></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>Detergente Omo 15LTs</td>
-                                        <td>2</td>
-                                        <td>$1500</td>
-                                        <td><img src="../../assets/Icon/borrar.png" alt="Basurero" width="20"
-                                                height="20"></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>Detergente Omo 15LTs</td>
-                                        <td>2</td>
-                                        <td>$1500</td>
-                                        <td><img src="../../assets/Icon/borrar.png" alt="Basurero" width="20"
-                                                height="20"></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>Detergente Omo 15LTs</td>
-                                        <td>2</td>
-                                        <td>$1500</td>
-                                        <td><img src="../../assets/Icon/borrar.png" alt="Basurero" width="20"
-                                                height="20"></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>Detergente Omo 15LTs</td>
-                                        <td>2</td>
-                                        <td>$1500</td>
-                                        <td><img src="../../assets/Icon/borrar.png" alt="Basurero" width="20"
-                                                height="20"></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>Detergente Omo 15LTs</td>
-                                        <td>2</td>
-                                        <td>$1500</td>
-                                        <td><img src="../../assets/Icon/borrar.png" alt="Basurero" width="20"
-                                                height="20"></td>
-                                    </tr>
+                                    
                                 </tbody>
                                 <tfoot>
-                                    <td scope="col">Fecha Facturación: </td>
-                                    <td scope="col"> 17-04-2024 </td>
-                                    <td scope="col">Total: </td>
-                                    <td scope="col">$15000</td>
+                                    <td scope="col">Fecha Facturación: 17-04-2024</td>
+                                    
+                                    <td scope="col">Total: </td>   
+                                    <td scope="col">${{total}}</td> 
                                 </tfoot>
                             </table>
                         </div>
@@ -181,11 +125,11 @@
                 <div class="row justify-content-center mt-3">
                     <div class="col-5">
                         <button type="button" class="btn btn-danger colorB"
-                            style="width: 160px; height: 40px;">Cancelar</button>
+                            style="width: 160px; height: 40px;" >Cancelar</button>
                     </div>
                     <div class="col-4">
                         <button type="button" class="btn colorBGC colorB text-white"
-                            style="width: 160px; height: 40px;">Pagar</button>
+                            style="width: 160px; height: 40px;" (click)="pagarVenta()">Pagar</button>
                     </div>
 
                 </div>

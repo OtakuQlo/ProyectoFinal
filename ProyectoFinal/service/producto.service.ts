@@ -14,4 +14,8 @@ export class ProductoService {
     return this.http.get(this.url);
   }
 
+  getProductoVenta(barcode:any){
+    return this.http.get(this.url+"/"+barcode)
+  }
+
 }

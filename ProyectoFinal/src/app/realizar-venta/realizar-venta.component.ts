@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { VentaService } from '../../../service/venta.service';
+import { ToastService } from '../../../service/toast.service';
+import { PerfilusuarioService } from '../../../service/perfilusuario.service';
+import { ProductoService } from '../../../service/producto.service';
 
 @Component({
   selector: 'app-realizar-venta',
@@ -12,15 +15,26 @@ import { VentaService } from '../../../service/venta.service';
 })
 export class RealizarVentaComponent {
 
-  constructor(private route:Router, private venta:VentaService){
+  constructor(private venta:VentaService, private alert:ToastService, private perfil:PerfilusuarioService, private productoS:ProductoService){
+    this.alert.showSuccess('','Bienvenido '+this.perfilV.nombre)
     console.log(localStorage.getItem('pActivo'));
-    
+   
   }
 
+  //Insert
+  detalle : any;
+  producto : any;
+  boleta : any;
+  total : number = 0;
+
+  //Producto
   codebar: string = '';
   nombre: String = ''; 
   cantidad: number = 0;
   
+  //Perfil
+  perfilV : any = this.perfil.getPerfilActivo()
+
   //regex
   regexcode: RegExp = /^[a-zA-Z0-9]+$/;
   regexnumeros: RegExp = /^\d+$/;
@@ -32,14 +46,6 @@ export class RealizarVentaComponent {
 
   valVenta(){
     let bandera = true;
-
-    if(this.nombre.length <= 0){
-      bandera = false;
-      this.labelnombre = "El nombre del producto no debe estar vacio";
-    }else{
-      this.labelnombre = ""
-    }
-
     if(!this.regexcode.test(this.codebar)){
       bandera = false;
       this.labelcodebar = "Solo se pueden ingresar numeros y letras en el codigo de barras"
@@ -55,12 +61,41 @@ export class RealizarVentaComponent {
     }
 
     if(!bandera){
-      console.log('no pass');      
+      this.alert.errorSuccess('','Asegurate de rellenar bien los campos')
     }else{
-      
-      console.log('pass');
-      // this.router.navigate(['/Home']);
+      this.alert.showSuccess('','Se agrego el producto')
     }
+
+  }
+
+  pagarVenta(){
+    
+  }
+
+  agregarProducto(){
+    this.productoS.getProductoVenta(this.codebar).subscribe((producto) =>{
+      this.producto = producto
+    })
+    this.nombre = this.producto.nombre
+    console.log(this.producto);
+    
+  }
+
+  cancelarPago(){
+    this.boleta = []
+    this.producto = []
+    this.boleta = []
+  }
+
+  detalleVenta(){
+
+  }
+
+  boletaVenta(){
+
+  }
+
+  stockProducto(){
 
   }
 
@@ -71,5 +106,16 @@ export class RealizarVentaComponent {
     this.labelcantidad = '';
     this.codebar = '';
     this.labelcodebar = '';
+  }
+
+  addC(){
+    return this.cantidad = this.cantidad + 1
+  }
+
+  lessC(){
+    if (this.cantidad < 1){
+      return this.cantidad = 0
+    }
+    return this.cantidad = this.cantidad -1
   }
 }
