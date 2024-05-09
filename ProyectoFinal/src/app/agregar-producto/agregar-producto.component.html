@@ -65,13 +65,15 @@
                     <div class="row justify-content-center">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xl-12">
                             <div class="mb-3 mt-2">
-                                <label for="">Marca</label>
-                                <select class="colorB colorBGC text-center" style="width:105px; height: 40px;" aria-label="Default select example" [(ngModel)]="marcaid">
+                                <label for="" class="letra">Marca:</label>
+                                <select class="colorB colorBGC text-center ms-3" style="width:105px; height: 40px;" aria-label="Default select example" [(ngModel)]="marcaid">
                                     
                                     <option *ngFor="let marca of marcas" [value]="marca.idmarca">
                                         {{marca.nombremarca}}
                                     </option>
                                 </select>
+                                <br>
+                                <label for="" class="letra ms-3">{{labelmarca}}</label>
                             </div>
                             
                                 <button class="btn colorBGC colorB" type="button" data-bs-toggle="collapse"
@@ -97,17 +99,17 @@
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xl-12">
                             <div class="mb-3 mt-5 w-75 ">
-                                <label for="">Empresa</label>
-                                <select class="colorB colorBGC text-center" style="width:105px; height: 40px;" aria-label="Default select example" [(ngModel)]="empresaid">
+                                <label for="" class="letra">Empresa:</label>
+                                <select class="colorB colorBGC text-center ms-2" style="width:105px; height: 40px;" aria-label="Default select example" [(ngModel)]="empresaid">
                                     <option *ngFor="let empresa of empresas" [value]="empresa.idempresa">
                                         {{empresa.nombreempresa}}
                                     </option>
                                 </select>
+                                <label for="" class="letra ms-3">{{labelempresa}}</label>
                                 
                                 
                                     
-                                <!-- <label class="letra mb-1">Empresa:</label>
-                            <input class="form-control colorBGC colorB" id="nombre"> -->
+                                
 
                             </div>
                             

@@ -74,6 +74,9 @@ export class AgregarProductoComponent {
   marcaid: number = 0;
   empresaid: number = 0;
 
+  labelmarca: string = "";
+  labelempresa: string = "";
+
 
   obtenermarcas(){
     this._marcaservice.getMarca().subscribe(data=>{
@@ -111,6 +114,20 @@ export class AgregarProductoComponent {
       this.labelnombre = ""
     }
 
+    if (this.marcaid == 0) {
+      bandera = false;
+      this.labelmarca = "Se debe ingresar una marca.";
+    }else{
+      this.labelmarca = "";
+    }
+
+    if (this.empresaid == 0) {
+      bandera = false;
+      this.labelempresa = "Se debe ingresar una empresa.";
+    }else{
+      this.labelempresa = "";
+    }
+
     if(!this.regexcode.test(this.codebar)){
       bandera = false;
       this.labelcodebar = "Solo se pueden ingresar numeros y letras en el codigo de barras"
@@ -140,9 +157,8 @@ export class AgregarProductoComponent {
     }
 
 
-    if(!bandera){
-      this.nombre = "pepe";
-    }else{
+    if(bandera){
+      
       console.log(this.marcaid,this.empresaid);
       this.producto.postProduct({
         
