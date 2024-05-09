@@ -59,7 +59,7 @@ export class CrearPerfilJefeComponent {
       this.perfiles.postPerfilAdmin({
         idusuario: this.usuarios.getUserActive().idusuario,
         nombre: this.usuarios.getUserActive().nombre,
-        passadmin: this.pass1,
+        passadmin: this.usuarios.encryptContra(this.pass1),
         estado: 0
       }).subscribe();
       this.route.navigate(['./Perfiles']);
