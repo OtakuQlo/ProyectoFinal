@@ -20,7 +20,7 @@ StockProducts.init({
         allowNull:false
     },
     cantidadtotal:{
-        type:DataTypes.DATE,
+        type:DataTypes.INTEGER,
         allowNull:false
     },
     idusuario:{

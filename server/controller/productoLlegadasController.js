@@ -8,6 +8,7 @@ exports.creandoProductosLlegada= async (req,res)=>{
         let producto;
         producto = new ProductoLlegadas(req.body);
         let productounico = await Producto.findOne({where: {barcode: producto.barcode}});
+        let producto2
         if (productounico == null){
             
             let productounico1 = new Producto({
@@ -17,24 +18,23 @@ exports.creandoProductosLlegada= async (req,res)=>{
                 "barcode": producto.barcode
             });
             await productounico1.save();
+            producto2 = productounico1;
+        } else {
+            producto2 = productounico;
         }
-        let products = await Producto.findAll();
 
-        for (let producto of products) {
-            if (producto.idproducto) {
-                let productostock = await Stock.findOne({where: {idproducto: producto.idproducto}});
-                
-                if (!productostock){
-                    let productstock = new Stock({
-                        "idproducto": producto.idproducto,
-                        "cantidadtotal": 0,
-                        "idusuario": producto.idusuario
-                    });
-                    await productstock.save();
-                }
-            } else {
-                console.log(`El producto con id ${producto.id} no tiene un idproducto válido.`);
-            }
+        let test = await Stock.findOne({where: {idproducto: producto2.idproducto, idusuario: producto.idusuario }})
+
+        if (test == null) {
+            let productstock = new Stock({
+                                "idproducto": producto2.idproducto,
+                                "cantidadtotal": producto.cantidad,
+                                "idusuario": producto.idusuario
+                            });
+            await productstock.save();
+        } else {
+            test.cantidadtotal += producto.cantidad;
+            await test.save();
         }
         
         await producto.save();
