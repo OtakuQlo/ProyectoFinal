@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { PerfilusuarioService } from '../../service/perfilusuario.service';
+import { interval, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +17,27 @@ export class AppComponent {
   userA: any = this.perfilS.getPerfilActivo()
   
   constructor(private route:Router, private perfilS:PerfilusuarioService){    
+  }
+
+  ngOnInit() {
+    // Crea un Observable que emite un valor cada segundo utilizando interval()
+    interval(5000) // Intervalo de 10 segundos
+      .pipe(
+        switchMap(() => {
+          // Lee el valor del localStorage cada vez que se emite un valor en el intervalo
+          const perfilA = parseInt(localStorage.getItem('pActivo'));
+          // Verifica si el valor es válido antes de realizar la consulta
+          if (!isNaN(perfilA)) {
+            return this.perfilS.getPerfiles(perfilA);
+          } else {
+            // Si el valor no es válido, retorna un observable vacío
+            return EMPTY;
+          }
+        })
+      )
+      .subscribe((perfiles) => {
+        this.perfiles = perfiles;
+      });
   }
 
   inactivateUser(){
