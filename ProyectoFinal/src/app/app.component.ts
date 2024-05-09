@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { PerfilusuarioService } from '../../service/perfilusuario.service';
-import { interval, switchMap } from 'rxjs';
+import { Observable, interval, map, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -14,36 +14,29 @@ import { interval, switchMap } from 'rxjs';
 export class AppComponent {
   title = 'ProyectoFinal';
 
-  userA: any = this.perfilS.getPerfilActivo()
+  userA: any = this.perfilS.getPerfilActivo() 
   
   constructor(private route:Router, private perfilS:PerfilusuarioService){    
   }
 
+  // Esta función devuelve un observable que emite el valor del LocalStorage cada cierto intervalo de tiempo
+  getLocalStorageValuePeriodically( intervalTime: number): Observable<any> {
+    return interval(intervalTime).pipe(
+      map(() => this.perfilS.getPerfilActivo())
+    );
+  }
+  
   ngOnInit() {
-    // Crea un Observable que emite un valor cada segundo utilizando interval()
-    interval(5000) // Intervalo de 10 segundos
-      .pipe(
-        switchMap(() => {
-          // Lee el valor del localStorage cada vez que se emite un valor en el intervalo
-          const perfilA = parseInt(localStorage.getItem('pActivo'));
-          // Verifica si el valor es válido antes de realizar la consulta
-          if (!isNaN(perfilA)) {
-            return this.perfilS.getPerfiles(perfilA);
-          } else {
-            // Si el valor no es válido, retorna un observable vacío
-            return EMPTY;
-          }
-        })
-      )
-      .subscribe((perfiles) => {
-        this.perfiles = perfiles;
-      });
+    // Llama a la función del servicio para obtener el valor del LocalStorage cada 5 segundos (por ejemplo)
+    this.getLocalStorageValuePeriodically(100).subscribe(value => {
+      this.userA = value;
+      // Haz lo que necesites con el valor del LocalStorage aquí
+    });
   }
 
   inactivateUser(){
     this.perfilS.setInactiveProfile(parseInt(this.userA.id), {estado : false}).subscribe();
-    localStorage.removeItem('pActivo')
     this.route.navigate(['/Perfiles'])
-    console.log(localStorage.getItem('pActivo'));
+    localStorage.removeItem('pActivo')
   }
 }

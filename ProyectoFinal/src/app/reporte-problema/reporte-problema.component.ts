@@ -18,8 +18,8 @@ export class ReporteProblemaComponent {
   reporte: string= '';
   labelReporte: string= '';
   
-  constructor(public router: Router, private reportar:ReportesService, private userS:UsuarioService){
 
+  constructor(public router: Router, private reportar:ReportesService, private userS:UsuarioService){
   }
 
   ngOnInit(): void {
@@ -37,7 +37,9 @@ export class ReporteProblemaComponent {
   }
 
   crearReporte(){
-    let user : any = localStorage.getItem('usuario');
+    let user : any = this.userS.getUserActive();
+    console.log(user.idusuario);
+    
     this.reportar.crearReporte({
       idreporte: '',
       idusuario : user.idusuario,
