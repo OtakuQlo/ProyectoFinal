@@ -19,3 +19,14 @@ Esta aplicación está desarrollada en Angular. Para poder inicializarla, sigue 
 npm install 
 npm run dev
 ```
+
+## Inicialización del Cliente
+
+1. Abre otra instancia de terminal.
+2. Navega a la carpeta "proyectoFinal" del proyecto.
+3. Ejecuta el siguiente comando para instalar las dependencias del cliente:
+
+```bash
+npm install 
+ng serve
+```
