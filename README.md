@@ -1,3 +1,5 @@
+[Inicialización del Servidor](#inicialización-del-servidor)
+
 # OdenaloTodo
 OrdenaloTodo es una página web diseñada para facilitar la administración de tu bazar. Con nuestra plataforma, podrás llevar un control eficiente de tus productos, ventas, y clientes. OrdenaloTodo te permite organizar tu inventario, llevar un registro de tus ventas y compras, y mantener un contacto cercano con tus clientes. Además, nuestra interfaz es amigable y fácil de usar, lo que te permitirá manejar tu negocio de manera efectiva y sin complicaciones.
 # Instrucciones de Inicialización de la Aplicación
