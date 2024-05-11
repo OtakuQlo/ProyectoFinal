@@ -81,7 +81,6 @@ export class CrearCuentaComponent {
     email: any,
     telefono: any,
     idplan: any,
-    passadmin: any
   ) {
     this._serviceUsuario.getUserEmail(email).subscribe(data=>{
       console.log(data)
@@ -100,12 +99,17 @@ export class CrearCuentaComponent {
         email: email,
         rol: 1,
       }).subscribe()
-      setTimeout(() => {
+
         this._serviceUsuario.setUserActive(email).then(res => {
-          this._servicioToast.showSuccess("Cuenta Creda","cuenta creada con existo")
-          this.route.navigate(['/CrearJefe']);
+          console.log(res);
+          
+          if(res){
+            this._servicioToast.showSuccess("Cuenta Creda","cuenta creada con existo")
+            this.route.navigate(['/CrearJefe']);
+          }
+          
         })
-       }, 800);
+
       
      
     })
@@ -167,10 +171,7 @@ export class CrearCuentaComponent {
             usuario.correo,
             usuario.telefono,
             this.plan,
-            'sda'
           );
-          localStorage.setItem('nombre', usuario.nombre!)
-          // this.route.navigate(['./Perfiles']);
         }
       }
     }

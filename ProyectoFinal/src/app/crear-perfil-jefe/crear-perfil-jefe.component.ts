@@ -30,7 +30,9 @@ export class CrearPerfilJefeComponent {
   labelpass2: string = '';
 
   ngOnInit() {
-    this.labelnombre = localStorage.getItem('nombre')!
+    console.log(this.usuarios.getUserActive());
+    
+    this.labelnombre = this.usuarios.getUserActive().nombre
   }
 
   regexname: RegExp =

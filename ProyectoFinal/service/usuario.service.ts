@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import SimpleCrypto from 'simple-crypto-js';
 import { environment } from '../src/environments/environment';
+import { lastValueFrom, EMPTY } from 'rxjs';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -24,14 +26,19 @@ export class UsuarioService {
     return this.http.get(this.url + '/' + email);
   }
 
-  async setUserActive(email: any) {  
-    await this.getUserEmail(email).subscribe(data=>{
-        
-      localStorage.setItem('usuario', JSON.stringify(data))
-    })
-    
-
+  async setUserActive(email: any): Promise<boolean> {  
+    try {
+        const data = await lastValueFrom( this.getUserEmail(email));
+        localStorage.setItem('token', data.idusuario.toString());  
+        localStorage.setItem('usuario', JSON.stringify(data));
+        return true; // Indicar que la operación se realizó correctamente
+    } catch (error) {
+        console.error('Error al establecer usuario activo:', error);
+        return false; // Indicar que la operación no se realizó correctamente
+    }
   }
+
+
 
   deletUserActive() {
     let flag = localStorage.getItem('usuario') ? true : false;
