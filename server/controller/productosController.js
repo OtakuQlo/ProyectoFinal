@@ -36,7 +36,7 @@ exports.obtenerProductosMarca= async(req,res)=>{
 }
 
 
-exports.obtenerProductoID= async(req,res)=>{
+exports.obtenerProductoBarcode= async(req,res)=>{
     try{
         const { barcode } = req.params
         const productos = await Productos.findAll({
@@ -51,7 +51,17 @@ exports.obtenerProductoID= async(req,res)=>{
         res.status(500).send('HUBO UN ERROR EN ENCONTRAR PRODUCTOS')
     }
 }
+exports.obtenerProductoId= async(req,res)=>{
+    try{
+        const { id } = req.params; 
+        const productos = await Productos.findByPk(id);
+        res.json(productos)
 
+    }    catch(error){
+        console.log(error);
+        res.status(500).send('HUBO UN ERROR EN ENCONTRAR EL PRODUCTO')
+    }
+}
 // exports.actualizarProducto = async (req, res) => {
 //     try {
 //         const { idmarca, nombremarca } = req.body;

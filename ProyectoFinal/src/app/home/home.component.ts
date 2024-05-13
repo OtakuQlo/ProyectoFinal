@@ -31,22 +31,21 @@ export class HomeComponent implements OnInit {
 
   });
 
-  ngOnInit(): void { }
+  ngOnInit(): void { localStorage.removeItem('token')}
   inicioSesion() {
     let userInfo = this.registroForm.value;
     if (this.registroForm.status == 'VALID') {
       this._serviceUsuario.getUserEmail(userInfo.correo).subscribe((data) => {
-        console.log(this._serviceUsuario.desencryptContra(data.contra))
-        console.log(userInfo.pass)
-        console.log(this._serviceUsuario.desencryptContra(data.contra) === userInfo.pass)
-
         if (this._serviceUsuario.desencryptContra(data.contra) == userInfo.pass) {
-          this._serviceUsuario.setUserActive(userInfo.correo);
-          console.log(this._serviceUsuario.getUserActive());
-          console.log("2")
-          setTimeout(async () => {
-            this.route.navigate(['./Perfiles']);
-          }, 300);
+          console.log("set user active ");
+          
+          this._serviceUsuario.setUserActive(userInfo.correo).then(res=>{
+            if(res){
+              this.route.navigate(['./Perfiles']);
+            }
+            
+          })
+          // 
         }
         else {
           //  Alerta de error

@@ -36,6 +36,8 @@ export class SeccionPerfilesComponent {
   }
 
   getPerfiles(){
+    console.log(this.usuario);
+    
     this.perfilS.getPerfiles(parseInt(this.usuario.idusuario)).subscribe((perfiles) => {
       this.perfiles = perfiles
     })

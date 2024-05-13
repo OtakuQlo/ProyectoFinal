@@ -152,8 +152,23 @@ export class InventarioComponent {
   postPerdidas() {
     if (this.cant>=1) {
       if (this.barcode != "") {
-        this._servicePerdidas.postPerdidas({ idperdidas	:'',idproducto	:this.barcode, fecha:this.fechaFormateada,descripcion: this.desc, cantidad: this.cant }).subscribe()
-        this._serviceToast.showSuccess("Con exito","Reporte con exito")
+       this._servicePerdidas.postPerdidas(
+        { idperdidas	:'',idproducto	:1, fecha:this.fechaFormateada,descripcion: this.desc, cantidad: this.cant },
+        this.barcode
+      ).then(res=>{
+        console.log(res);
+        
+        if (res) {
+          this.barcode=''
+          this.cant =0
+          this.desc=''
+          this._serviceToast.showSuccess("Con exito","Reporte con exito")
+        }else{
+          this._serviceToast.errorSuccess("Error","Hubo un Error")
+        }
+      });
+       
+        
       }else{
         this._serviceToast.errorSuccess("Error","Hubo un Error")
       }

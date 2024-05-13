@@ -29,12 +29,16 @@ export class UsuarioService {
   async setUserActive(email: any): Promise<boolean> {  
     try {
         const data = await lastValueFrom( this.getUserEmail(email));
+        console.log(data);
+        
         localStorage.setItem('token', data.idusuario.toString());  
         localStorage.setItem('usuario', JSON.stringify(data));
-        return true; // Indicar que la operación se realizó correctamente
+        console.log(localStorage.getItem('usuario'));
+        
+        return true; 
     } catch (error) {
         console.error('Error al establecer usuario activo:', error);
-        return false; // Indicar que la operación no se realizó correctamente
+        return false; 
     }
   }
 
@@ -47,6 +51,7 @@ export class UsuarioService {
 
   getUserActive() {
     let activoU: any = localStorage.getItem('usuario');
+    
     return JSON.parse(activoU);
   }
 
