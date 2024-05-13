@@ -11,7 +11,7 @@ export class ReportesService {
 
   url = environment.url+'reportes';
 
-  enviarRespuesta(id: number, datos: any) {
+  enviarRespuesta(id: number, datos: any): Observable<any> {
     return this.http.put(`${this.url}/${id}`, datos);
   }
 
@@ -20,5 +20,8 @@ export class ReportesService {
   }
   getReportes(): Observable<any>{
     return this.http.get(this.url);
+  }
+  getReportesID(id:any): Observable<any>{
+    return this.http.get(this.url+'/'+id);
   }
 }

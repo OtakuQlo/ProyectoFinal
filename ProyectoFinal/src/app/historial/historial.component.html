@@ -3,7 +3,7 @@
 
         <div class="row">
             <div class="col-9">
-                <input min="" max="20205-12-31" type="date" class="btn colorB me-2" id="fecven" name="fecven">
+                <input [(ngModel)]= "opcionFecha"  (ngModelChange)="setFecha()" min="" max="20205-12-31" type="date" class="btn colorB me-2" id="fecven" name="fecven">
                 <label class="letra"></label>
 
 
@@ -25,11 +25,14 @@
                                     aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <input type="range" class="form-range" min="0" max="5" id="customRange2">
+                                <h5>Minimo</h5>
+                                <input [(ngModel)]= "opcioNumeroMinimo"  type="number" class="form-control-plaintext text-white  colorB">
+                                <h5>Maximo</h5>
+                                <input [(ngModel)]= "opcioNumeroMaximo"  type="number" class="form-control-plaintext text-white  colorB">
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">cerrar</button>
-                                <button type="button" class="btn colorB ">buscar</button>
+                                <button type="button" (click)="setRangoPrecio()" class="btn colorB "data-bs-dismiss="modal">buscar</button>
                             </div>
                         </div>
                     </div>
@@ -38,8 +41,7 @@
 
 
             <div class="col-3 text-center">
-                <select class="form-select card" aria-label="Default select example">
-                    <option selected>Seleccion de la opcion</option>
+                <select [(ngModel)]= "opcionHistorial" (ngModelChange)="changeTable()"class="form-select card" aria-label="Default select example" >
                     <option value="1">Ventas</option>
                     <option value="2">Ingresos</option>
                 </select>
@@ -49,64 +51,29 @@
             <table class="table text-center" style="color: white;">
                 <thead>
                     <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">First</th>
-                        <th scope="col">Last</th>
-                        <th scope="col">Handle</th>
-                        <th scope="col"></th>
+                        <th scope="col"*ngIf="opcionHistorial == 2">Barcode</th>
+                        <th scope="col" *ngIf="opcionHistorial == 2" >Nombre</th>
+                        <th scope="col"*ngIf="opcionHistorial == 2">Fecha Ingreso</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>asd</td>
+                    <tr *ngFor="let product of tablaActivo.slice(displacement, displacement+10)">
+                        <td *ngIf="opcionHistorial ==2">{{ product.barcode }}</td>
+                        <td *ngIf="opcionHistorial ==2">{{ product.nombre}}</td>
+                        <td *ngIf="opcionHistorial ==2">{{ product.fechaingreso}}</td>
+
                     </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>das</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td colspan="2">Larry the Bird</td>
-                        <td>df</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">4</th>
-                        <td colspan="2">Larry the Bird</td>
-                        <td>df</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">5</th>
-                        <td colspan="2">Larry the Bird</td>
-                        <td>df</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">6</th>
-                        <td colspan="2">Larry the Bird</td>
-                        <td>df</td>
-                    </tr>
-                    
-                        <th scope="row">7</th>
-                        <td colspan="2">Larry the Bird</td>
-                        <td>df</td>
-                    
                 </tbody>
             </table>
         </div>
         <div class="row mt-2 justify-content-center">
             <div class="col-3">
                 <nav aria-label="Page navigation example">
-                <ul class="pagination">
-                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                </ul>
+                    <ul class="pagination">
+                        <li class="page-item"><a class="page-link" (click)="previousPage()">Previous</a></li>
+                        <li class="page-item"><a class="page-link">{{actualPage}}</a></li>
+                        <li class="page-item"><a class="page-link" (click)="nextPage()">Next</a></li>
+                    </ul>
                 </nav>
             </div>
             
