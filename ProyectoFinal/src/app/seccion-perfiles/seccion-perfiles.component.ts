@@ -26,7 +26,7 @@ export class SeccionPerfilesComponent {
   }
 
   ngOnInit(){   
-    interval(5000) // Intervalo de 10 segundos
+    interval(1000) // Intervalo de 10 segundos
       .pipe(
         switchMap(() => this.perfilS.getPerfiles(parseInt(this.usuario.idusuario)))
       )

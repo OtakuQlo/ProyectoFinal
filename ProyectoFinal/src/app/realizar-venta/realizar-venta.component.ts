@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
 import { VentaService } from '../../../service/venta.service';
 import { ToastService } from '../../../service/toast.service';
 import { PerfilusuarioService } from '../../../service/perfilusuario.service';
 import { ProductoService } from '../../../service/producto.service';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-realizar-venta',
@@ -18,13 +18,17 @@ export class RealizarVentaComponent {
   constructor(private venta:VentaService, private alert:ToastService, private perfil:PerfilusuarioService, private productoS:ProductoService){
     this.alert.showSuccess('','Bienvenido '+this.perfilV.nombre)
     console.log(localStorage.getItem('pActivo'));
-   
+    
   }
 
   //Insert
   detalle : any;
   producto : any;
-  boleta : any;
+  boleta : any = [{
+      nombre: '',
+      fecha: '',
+      preciototal: 0,
+  }];
   total : number = 0;
 
   //Producto
@@ -63,6 +67,10 @@ export class RealizarVentaComponent {
     if(!bandera){
       this.alert.errorSuccess('','Asegurate de rellenar bien los campos')
     }else{
+      this.agregarProducto()
+      /* this.detalle.push(this.producto) */
+      console.log(this.producto);
+      console.log(this.total);      
       this.alert.showSuccess('','Se agrego el producto')
     }
 
@@ -75,16 +83,24 @@ export class RealizarVentaComponent {
   agregarProducto(){
     this.productoS.getProductoVenta(this.codebar).subscribe((producto) =>{
       this.producto = producto
+      if (this.producto && this.producto.precio !== undefined) {
+        this.total = this.total + this.producto.precio;
+        
+        console.log('Precio del producto:', this.producto.precio);
+      } else {
+        console.error('No se encontró el precio del producto o es undefined.');
+      }
     })
-    this.nombre = this.producto.nombre
-    console.log(this.producto);
     
   }
 
   cancelarPago(){
     this.boleta = []
     this.producto = []
-    this.boleta = []
+    this.detalle = []
+    console.log(this.producto);
+    console.log(this.boleta);
+    console.log(this.detalle);
   }
 
   detalleVenta(){
@@ -92,7 +108,12 @@ export class RealizarVentaComponent {
   }
 
   boletaVenta(){
-
+    let date = formatDate(new Date(), 'dd-MM-yyyy', 'en')
+    this.boleta = [{
+      nombre : this.perfilV.nombre,
+      fecha: date,
+      preciototal : 0
+    }]
   }
 
   stockProducto(){

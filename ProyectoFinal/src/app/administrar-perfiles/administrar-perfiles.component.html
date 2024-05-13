@@ -10,8 +10,8 @@
             <div *ngFor="let p of perfiles" class="col-sm-5 col-md-4 col-lg-4 col-xl-3 mt-5 ">
                 <img src="../../assets/Icon/usuario.png" alt="FotoPerfil" width="150" height="150">
                 <h3 class="txt mt-3">{{p.nombre}}</h3>
-                <img (click)="editarPerfil(p.id)" src="../../assets/Icon/editar.png" alt="editar" width="35"
-                    style="margin-left: 10px; margin-bottom: 8px;">
+                <!-- <img (click)="editarPerfil(p.id)" src="../../assets/Icon/editar.png" alt="editar" width="35"
+                    style="margin-left: 10px; margin-bottom: 8px;"> -->
                 <img (click)="borrarPerfil(p.id)" src="../../assets/Icon/borrar.png" alt="borrar" width="35"
                     style="margin-left: 10px;margin-bottom: 8px;">
             </div>

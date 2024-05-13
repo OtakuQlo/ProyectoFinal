@@ -39,7 +39,7 @@ exports.obtenerProductosMarca= async(req,res)=>{
 exports.obtenerProductoBarcode= async(req,res)=>{
     try{
         const { barcode } = req.params
-        const productos = await Productos.findAll({
+        const productos = await Productos.findOne({
             where : {
                 barcode : barcode,
             }

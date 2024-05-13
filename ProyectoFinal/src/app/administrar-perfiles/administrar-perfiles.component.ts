@@ -24,12 +24,12 @@ export class AdministrarPerfilesComponent {
   ngOnInit(): void {
   }
 
-  editarPerfil(id:any){
+  /* editarPerfil(id:any){
     console.log(id);
     this.perfilS.putPerfil(parseInt(id), {nombre : "Manuel" ,passadmin : null}).subscribe();
     console.log(this.perfiles);
     
-  }
+  } */
   
   getUSERS(){
     this.perfilS.getPerfiles(parseInt(this.usuario.idusuario)).subscribe((perfiles) => {
