@@ -1,7 +1,7 @@
 
 const Perdidas = require("../model/perdidas");
 
-exports.creandoReporte= async (req,res)=>{
+exports.creandoPerdida= async (req,res)=>{
     try{
         let reporte;
         reporte = new Perdidas(req.body);
@@ -12,7 +12,7 @@ exports.creandoReporte= async (req,res)=>{
         res.status(500).send('HUBO UN ERROR CREANDO REPORTES')
     }
 }
-exports.obtenerReportes= async(req,res)=>{
+exports.obtenerPerdida= async(req,res)=>{
     try{
         const reporte = await Perdidas.findAll();
         res.json(reporte)
@@ -22,7 +22,7 @@ exports.obtenerReportes= async(req,res)=>{
         res.status(500).send('HUBO UN ERROR EN BUSCAR REPORTES')
     }
 }
-exports.obtenerReporteId = async (req, res) => {
+exports.obtenerPerdidaId = async (req, res) => {
     try {
       const { id } = req.params; // Obtenemos el ID de los parámetros de la solicitud
       const reporte = await Perdidas.findByPk(id); // Buscamos la marca por su ID
@@ -38,7 +38,7 @@ exports.obtenerReporteId = async (req, res) => {
     }
   };
 
-  exports.actualizarReporte = async (req, res) => {
+  exports.actualizarPerdida = async (req, res) => {
     try {
         const { descripcion,fecha,cantidad } = req.body;
         let reporte = await Perdidas.findByPk(req.params.id);
@@ -65,7 +65,7 @@ exports.obtenerReporteId = async (req, res) => {
 };
 
 
-exports.borrarReporte = async (req, res) => {
+exports.borrarPerdida = async (req, res) => {
     try {
         // Buscar la marca por su ID
         const reporte = await Perdidas.findByPk(req.params.id);
