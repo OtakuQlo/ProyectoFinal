@@ -37,7 +37,6 @@ export class HomeComponent implements OnInit {
     if (this.registroForm.status == 'VALID') {
       this._serviceUsuario.getUserEmail(userInfo.correo).subscribe((data) => {
         if (this._serviceUsuario.desencryptContra(data.contra) == userInfo.pass) {
-          console.log("set user active ");
           
           this._serviceUsuario.setUserActive(userInfo.correo).then(res=>{
             if(res){

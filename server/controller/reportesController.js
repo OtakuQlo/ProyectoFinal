@@ -1,6 +1,6 @@
 
 const Reportes = require("../model/reportes");
-
+const usuarios = require("../model/usuarios");
 exports.creandoReporte= async (req,res)=>{
     try{
         let reporte;
@@ -14,7 +14,10 @@ exports.creandoReporte= async (req,res)=>{
 }
 exports.obtenerReportes= async(req,res)=>{
     try{
-        const reporte = await Reportes.findAll();
+        const reporte = await Reportes.findAll({
+            include:usuarios,
+            required: false
+        });
         res.json(reporte)
     }
     catch(error){

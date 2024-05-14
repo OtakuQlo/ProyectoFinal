@@ -13,18 +13,18 @@ import { AjustePlanesComponent } from './ajuste-planes/ajuste-planes.component';
 import { HistorialComponent } from './historial/historial.component';
 import { InventarioComponent } from './inventario/inventario.component';
 import { HistorialReportesComponent } from './historial-reportes/historial-reportes.component';
-import { authGuard } from './auth.guard';
+import { AdminGuard, HomeGuard, authGuard } from '../authGard/auth.guard';
 
 export const routes: Routes = [
     { path: 'Home', component: HomeComponent, }, 
-    { path: 'Registro', component: CrearCuentaComponent },
+    { path: 'Registro', component: CrearCuentaComponent,},
     { path: 'CrearJefe', component: CrearPerfilJefeComponent ,canActivate:[authGuard]},  
     { path: 'Venta', component: RealizarVentaComponent ,canActivate:[authGuard]},
     { path: 'Perfiles', component: SeccionPerfilesComponent,canActivate:[authGuard]},
     { path: 'CrearPerfil', component: CrearPerfilComponent,canActivate:[authGuard] },
     { path: 'AdministrarPerfiles', component: AdministrarPerfilesComponent ,canActivate:[authGuard]},
     { path: 'ReportarProblema', component: ReporteProblemaComponent ,canActivate:[authGuard]},
-    { path: 'Informes', component: GenerarInformeComponent ,canActivate:[authGuard]},
+    { path: 'Informes', component: GenerarInformeComponent ,canActivate:[AdminGuard,AdminGuard]},
     { path: 'AgregarProducto', component: AgregarProductoComponent ,canActivate:[authGuard]},
     { path: 'AjustePlan', component: AjustePlanesComponent ,canActivate:[authGuard]},
     { path: 'Historial', component: HistorialComponent ,canActivate:[authGuard]},

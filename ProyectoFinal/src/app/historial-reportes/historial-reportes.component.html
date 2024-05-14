@@ -1,12 +1,6 @@
 <div class="container-fluid mt-2">
     <div class="row ms-4 me-4 mt-3">
-        <div class="row mb-3">
-            <!-- Aqui deberia ir el menu que se despliega a la derecha-->
-            <div class="col-2">
-                <img src="../../assets/Icon/usuario.png" alt="Imagen perfil" class="float-start"
-                    style="width: 80px; height: 80px;">
-            </div>
-        </div>
+        
         <div class="row">
             <div class="col-3">
                 <input min="" max="20205-12-31" type="date" class="btn colorB" id="fecven" name="fecven">
@@ -18,22 +12,23 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">First</th>
-                        <th scope="col">Last</th>
-                        <th scope="col">Handle</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Correo</th>
+                        <th scope="col">Estado</th>
+                        
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th scope="row"> <button type="button" class="btn btn-primary colorB" data-bs-toggle="modal"
+                    <tr *ngFor="let reporte of reportes" >
+                        <th scope="row"> <button type="button" (click)="modalReportes(reporte.idreporte)" class="btn btn-primary colorB" data-bs-toggle="modal"
                                 data-bs-target="#exampleModal">
                                 <span class="material-symbols-outlined">
                                     open_in_full
                                 </span>
                             </button></th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>das</td>
+                        <td>{{reporte.Usuario.nombre}}</td>
+                        <td>{{reporte.Usuario.email}}</td>
+                        <td>{{reporte.solucion}}</td>
                     </tr>
 
                     <!-- modal -->
@@ -42,59 +37,30 @@
                         <div class="modal-dialog">
                             <div class="modal-content card">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Error codigo</h5>
+                                    <h5 class="modal-title" id="exampleModalLabel">Reporte</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
                                     <div>
-                                        <p >No funciona escanear el codigo</p>
-                                        
+                                        <p>{{modalText}}</p>
+
                                     </div>
                                     <div>
-                                        <input class="form-control colorB" id="nombre" name="nombre">
+                                        <input [(ngModel)]= "modalRes"class="form-control colorB" id="nombre" name="nombre">
                                     </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary"
                                         data-bs-dismiss="modal">cerrar</button>
-                                    <button type="button" class="btn colorB " (click)="enviarRespuesta">Responder</button>
+                                    <button type="button" class="btn colorB "
+                                        (click)=" enviarRespuesta()"data-bs-dismiss="modal">Responder</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <!-- modal -->
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>das </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td colspan="2">Larry the Bird</td>
-                        <td>df</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">4</th>
-                        <td colspan="2">Larry the Bird</td>
-                        <td>df</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">5</th>
-                        <td colspan="2">Larry the Bird</td>
-                        <td>df</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">6</th>
-                        <td colspan="2">Larry the Bird</td>
-                        <td>df</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">7</th>
-                        <td colspan="2">Larry the Bird</td>
-                        <td>df</td>
-                    </tr>
+
                 </tbody>
             </table>
         </div>
@@ -102,11 +68,9 @@
             <div class="col-3">
                 <nav aria-label="Page navigation example">
                     <ul class="pagination">
-                        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                        <li class="page-item"><a class="page-link" (click)="previousPage()">Previous</a></li>
+                        <li class="page-item"><a class="page-link">{{actualPage}}</a></li>
+                        <li class="page-item"><a class="page-link" (click)="nextPage()">Next</a></li>
                     </ul>
                 </nav>
             </div>
