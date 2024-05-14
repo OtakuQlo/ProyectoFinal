@@ -9,7 +9,7 @@ import { CommonModule, formatDate } from '@angular/common';
 @Component({
   selector: 'app-realizar-venta',
   standalone: true,
-  imports: [FormsModule,CommonModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './realizar-venta.component.html',
   styleUrl: './realizar-venta.component.css'
 })
@@ -17,12 +17,12 @@ export class RealizarVentaComponent {
 
   constructor(private venta: VentaService, private alert: ToastService, private perfil: PerfilusuarioService, private productoS: ProductoService) {
     this.alert.showSuccess('', 'Bienvenido ' + this.perfilV.nombre)
-    console.log(localStorage.getItem('pActivo'));
+    /* console.log(localStorage.getItem('pActivo')); */
 
   }
 
   //Insert
-  detalle: any = [];
+  detalle: any[] = [];
   producto: any;
   boleta: any = [{
     nombre: '',
@@ -35,6 +35,7 @@ export class RealizarVentaComponent {
   codebar: string = '';
   nombre: String = '';
   cantidad: number = 0;
+  id: number = 3;
 
   //Perfil
   perfilV: any = this.perfil.getPerfilActivo()
@@ -68,9 +69,9 @@ export class RealizarVentaComponent {
       this.alert.errorSuccess('', 'Asegurate de rellenar bien los campos')
     } else {
       this.agregarProducto()
-      console.log(this.producto);
+      /* console.log(this.producto);
       console.log(this.total);
-      console.log(this.detalle);
+      console.log(this.detalle); */
     }
 
   }
@@ -84,23 +85,29 @@ export class RealizarVentaComponent {
       this.producto = res
       if (this.producto && this.producto.precio !== undefined) {
         this.total = this.total + (this.producto.precio * this.cantidad);
-       /*  if (this.detalle.find(({ p }: any) => p.idproducto.idproducto === this.producto.id)) {
-          
-          
-          
+        let curr = this.detalle.find(p => p.idproducto.idproducto === this.producto.idproducto)
+        if (curr != undefined) {
+          this.detalle[this.detalle.findIndex(obj => obj.id == curr.iddetalle)].cantidad= this.detalle[this.detalle.findIndex(obj => obj.id == curr.iddetalle)].cantidad + this.cantidad
+
+
           this.alert.showSuccess('', 'Detalle Actualizado');
         } else {
-          
-        } */
-        this.detalle.push({
-          iddetalle: '',
-          idboleta: '',
-          idproducto: this.producto,
-          cantidad: this.cantidad
-        })
-        this.alert.showSuccess('', 'Producto Agregado');
-        console.log('Precio del producto:', this.producto.precio);
+          this.detalle.push({
+            iddetalle: this.id*3,
+            idboleta: '',
+            idproducto: this.producto,
+            cantidad: this.cantidad
+          })
+          this.id = this.id * 3;
+          this.alert.showSuccess('', 'Producto Agregado');
+          console.log('Precio del producto:', this.producto.precio);
+        }
+
         
+
+
+
+
       } else {
         console.error('No se encontró el precio del producto o es undefined.');
         this.alert.errorSuccess('', 'Producto no encontrado');
