@@ -35,7 +35,6 @@ export class RealizarVentaComponent {
   codebar: string = '';
   nombre: String = '';
   cantidad: number = 0;
-  id: number = 3;
 
   //Perfil
   perfilV: any = this.perfil.getPerfilActivo()
@@ -86,27 +85,29 @@ export class RealizarVentaComponent {
       if (this.producto && this.producto.precio !== undefined) {
         this.total = this.total + (this.producto.precio * this.cantidad);
         let curr = this.detalle.find(p => p.idproducto.idproducto === this.producto.idproducto)
+        console.log(curr);
+        
+        let index = this.detalle.findIndex(obj => obj.idproducto.idproducto === this.producto.idproducto)
+        console.log(index);
+        
         if (curr != undefined) {
-          this.detalle[this.detalle.findIndex(obj => obj.id == curr.iddetalle)].cantidad= this.detalle[this.detalle.findIndex(obj => obj.id == curr.iddetalle)].cantidad + this.cantidad
-
-
+          this.detalle[index].cantidad= this.detalle[index].cantidad + this.cantidad
+          
           this.alert.showSuccess('', 'Detalle Actualizado');
-        } else {
+        } 
+        if(curr == undefined) {
           this.detalle.push({
-            iddetalle: this.id*3,
+            iddetalle: '',
             idboleta: '',
             idproducto: this.producto,
             cantidad: this.cantidad
           })
-          this.id = this.id * 3;
+          
+          
+          
           this.alert.showSuccess('', 'Producto Agregado');
           console.log('Precio del producto:', this.producto.precio);
         }
-
-        
-
-
-
 
       } else {
         console.error('No se encontró el precio del producto o es undefined.');
