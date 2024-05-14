@@ -101,14 +101,13 @@
                                         <th scope="col"></th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        
-                                        <td>Detergente Omo 15LTs</td>
-                                        <td>2</td>
-                                        <td>$1500</td>
+                                <tbody >
+                                    <tr *ngFor="let i of detalle">
+                                        <td>{{i.idproducto.nombreproducto}}</td>
+                                        <td>{{i.cantidad}}</td>
+                                        <td>{{i.cantidad*i.idproducto.precio}}</td>
                                         <td><img src="../../assets/Icon/borrar.png" alt="Basurero" width="20"
-                                                height="20"></td>
+                                                height="20" ></td>
                                     </tr>
                                     
                                 </tbody>
