@@ -1,6 +1,6 @@
 <div class="container-fluid">
     <div class="row ms-3 me-3 mt-3">
-        
+
         <div class="row justify-content-center">
             <div class="col-sm-8 col-md-6 col-lg-4 col-xl-4">
                 <h1 class="txtT">¿Qué deseas hacer?</h1>
@@ -8,14 +8,21 @@
         </div>
         <div class="row mt-5 text-center justify-content-center justify-items-center">
             <div *ngFor="let p of perfiles" class="col-sm-5 col-md-4 col-lg-4 col-xl-3 mt-5">
-                <div >
-                    <img src="../../assets/Icon/usuario.png" alt="FotoPerfil" width="150" height="150" style="margin-left: 33px">
-                    <img (click)="borrarPerfil(p.id)" src="../../assets/Icon/borrar.png" alt="borrar" width="35" style="margin-bottom: 120px;">
-                
-                <h3 class="txt mt-3">{{p.nombre}}</h3>
-                <!-- <img (click)="editarPerfil(p.id)" src="../../assets/Icon/editar.png" alt="editar" width="35"
+                <div *ngIf="p.passadmin != null">
+                    <img src="../../assets/Icon/usuario.png" alt="FotoPerfil" width="150" height="150">
+                    <h3 class="txt mt-3 ms-3" >{{p.nombre}} <img src="../../assets/Icon/candado.png" alt="Block" class="img"></h3>
+                </div>
+                <div *ngIf="p.passadmin == null">
+                    <img src="../../assets/Icon/usuario.png" alt="FotoPerfil" width="150" height="150"
+                        style="margin-left: 33px">
+                    <img (click)="borrarPerfil(p.id)" src="../../assets/Icon/borrar.png" alt="borrar" width="35"
+                        style="margin-bottom: 110px;">
+                    <h3 class="txt mt-3" *ngIf="p.passadmin == null">{{p.nombre}}</h3>
+                    <!-- <img (click)="editarPerfil(p.id)" src="../../assets/Icon/editar.png" alt="editar" width="35"
                     style="margin-left: 10px; margin-bottom: 8px;"> -->
                 </div>
+                
+            
             </div>
         </div>
     </div>

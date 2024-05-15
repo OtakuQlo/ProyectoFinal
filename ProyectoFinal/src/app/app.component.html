@@ -9,22 +9,32 @@
                 <h5 class="offcanvas-title" id="offcanvasExampleLabel">OrdenaloTodo</h5>
                 <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
-            <div class="offcanvas-body">
+            <div class="offcanvas-body" *ngIf="userA.passadmin != null">
                 <div>
                     <ul class="list-group list-group-flush" style="font-size: 18px;">
                         <li class="list-group-item mt-2"><a href="/Venta">Venta</a></li>
                         <li class="list-group-item mt-2"><a href="/Inventario">Inventario</a></li>
+                        <li class="list-group-item mt-2"><a href="/AdministrarPerfiles">Administrar Perfiles</a></li>
+                        <li class="list-group-item mt-2"><a href="/CrearPerfil">Crear Perfiles</a></li>
                         <li class="list-group-item mt-2"><a href="/Historial">Historial</a></li>
                         <li class="list-group-item mt-2"><a href="/HistorialReportes">Historial Reporte</a></li>
                         <li class="list-group-item mt-2"><a href="/Informes">Generar Informe</a></li>
                         <li class="list-group-item mt-2"><a href="/ReportarProblema">Reportar un problema</a></li>
                     </ul>
-        
                 </div>
-        
+            </div>
+            <div class="offcanvas-body" *ngIf="userA.passadmin == null">
+                <div>
+                    <ul class="list-group list-group-flush" style="font-size: 18px;">
+                        <li class="list-group-item mt-2"><a href="/Venta">Venta</a></li>
+                    </ul>
+                </div>
             </div>
             <div class="offcanvas-footer mb-2">
-                <button class="btn" (click)="inactivateUser()">Cerrar Sesión</button>
+                <button class="btn" (click)="inactivateUser()">Cambiar Perfil</button>
+            </div>
+            <div class="offcanvas-footer mb-2">
+                <button class="btn" (click)="cerrarSesion()">Cerrar Sesión</button>
             </div>
         </div>
     </div>
