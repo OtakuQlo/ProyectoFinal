@@ -18,6 +18,8 @@ Esta aplicación está desarrollada en Angular. Para poder inicializarla, sigue 
 ```bash
 npm install 
 npm run dev
+npm install --save-dev @types/file-saver
+npm install exceljs 
 ```
 
 ## Inicialización del Cliente
