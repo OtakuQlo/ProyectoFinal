@@ -13,4 +13,8 @@ export class MarcaService {
   getMarca(): Observable<any> {
     return this.http.get(this.url);
   }
+
+  postMarca(datos: any): Observable<any> {
+    return this.http.post(this.url,datos);
+  }
 }

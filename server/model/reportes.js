@@ -29,6 +29,10 @@ Reportes.init({
     solucion:{
         type:DataTypes.BOOLEAN,
         allowNull:false
+    },
+    fecha:{
+        type:DataTypes.DATE,
+        allowNull:false
     }
 
 }, {

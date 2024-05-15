@@ -79,16 +79,16 @@
                                 <button class="btn colorBGC colorB" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#collapseExample" aria-expanded="false"
                                     aria-controls="collapseExample">
-                                    ¿No esta? ¡Añadela!
+                                    ¿No está? ¡Añadela!
                                 </button>
                             
                             <div class="row justify-content-center">
                                 <div class="col">
                                     <div class="collapse w-50 fondo2 mt-3" id="collapseExample">
                                         <input class="form-control colorBGC colorB mb-1" id="nombre"
-                                            placeholder="Nombre">
-                                        <button class="btn colorBGC colorB" type="button">
-                                            Marca
+                                            placeholder="Nombre" [(ngModel)] = "postmarca">
+                                        <button class="btn colorBGC colorB" type="button" (click) = "agregarMarca()">
+                                            Añadir
                                         </button>
                                     </div>
                                 </div>
@@ -116,12 +116,12 @@
                                 <button class="btn colorBGC colorB" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#collapseExample1" aria-expanded="false"
                                     aria-controls="collapseExample">
-                                    ¿No esta? ¡Añadela!
+                                    ¿No está? ¡Añadela!
                                 </button>
                             
                             <div class="collapse w-75 mt-3" id="collapseExample1">
-                                <input class="form-control colorBGC colorB mb-1" id="nombre" placeholder="Nombre">
-                                <button class="btn colorBGC colorB" type="button">
+                                <input class="form-control colorBGC colorB mb-1" id="nombre" placeholder="Nombre" [(ngModel)] = "postempresa" >
+                                <button class="btn colorBGC colorB" type="button" (click)="agregarEmpresa()">
                                     Añadir
                                 </button>
                             </div>

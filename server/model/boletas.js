@@ -1,4 +1,5 @@
 const { Sequelize, DataTypes, Model } = require('sequelize');
+const Usuarios = require('./usuarios');
 
 const sequelize = new Sequelize('ordenalo', 'root', '', {
     host: 'localhost',
@@ -24,11 +25,26 @@ Boletas.init({
     preciototal:{
         type: DataTypes.INTEGER,
         allowNull:false
+    },
+    estado:{
+        type: DataTypes.BOOLEAN,
+        allowNull:false
+    },
+    idusuario:{
+        type: DataTypes.INTEGER,
+        allowNull:false
     }
 }, {
     sequelize, // Pasar la instancia de Sequelize aquí
     modelName: 'Boletas',
     timestamps: false // Deshabilitar las marcas de tiempo automáticas // Nombre del modelo
+});
+
+Usuarios.hasMany(Boletas,{
+    foreignKey: 'idusuario'
+});
+Boletas.belongsTo(Usuarios,{
+    foreignKey: 'idusuario'
 });
 
 // Ahora el modelo está asociado con la instancia de Sequelize

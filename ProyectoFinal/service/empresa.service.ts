@@ -14,4 +14,8 @@ export class EmpresaService {
   getEmpresas(): Observable<any>{
     return this.http.get(this.url);
   }
+
+  postEmpresas(datos: any): Observable<any>{
+    return this.http.post(this.url,datos);
+  }
 }

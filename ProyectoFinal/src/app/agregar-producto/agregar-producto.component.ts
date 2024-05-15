@@ -36,9 +36,9 @@ export class AgregarProductoComponent {
 
   nombre: String = '';
   fecha:any;
-  cantidad: number = 0;
-  prelle: number = 0;
-  preven: number = 0;
+  cantidad: any;
+  prelle: any;
+  preven: any;
   codebar: string = '';
 
   //regex
@@ -73,6 +73,8 @@ export class AgregarProductoComponent {
 
   marcaid: number = 0;
   empresaid: number = 0;
+  postmarca: string = '';
+  postempresa: string = '';
 
   labelmarca: string = "";
   labelempresa: string = "";
@@ -90,6 +92,20 @@ export class AgregarProductoComponent {
       this.empresas = data
       console.log(this.empresas);
     })
+  }
+
+  agregarMarca(){
+    this._marcaservice.postMarca({
+      "nombremarca": this.postmarca
+    }).subscribe()
+    this.obtenermarcas();
+  }
+
+  agregarEmpresa(){
+    this.empresa.postEmpresas({
+      "nombreempresa": this.postempresa
+    }).subscribe();
+    this.obtenerEmpresas();
   }
 
 
