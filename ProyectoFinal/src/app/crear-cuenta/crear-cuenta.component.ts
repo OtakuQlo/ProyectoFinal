@@ -11,10 +11,12 @@ import { UsuarioService } from '../../../service/usuario.service';
 import { validateRut } from '@fdograph/rut-utilities';
 import { CommonModule } from '@angular/common';
 import { ToastService } from '../../../service/toast.service';
+import { RecaptchaModule } from 'ng-recaptcha';
+import { CaptchaService } from '../../../service/captcha.service';
 @Component({
   selector: 'app-crear-cuenta',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, FormsModule],
+  imports: [ReactiveFormsModule, CommonModule, FormsModule, RecaptchaModule],
   templateUrl: './crear-cuenta.component.html',
   styleUrl: './crear-cuenta.component.css',
 })
@@ -30,13 +32,21 @@ export class CrearCuentaComponent {
   checkboxFirst: boolean = false;
   checkboxSecond: boolean = false;
   checkboxThird: boolean = false;
+  captchaResolved: boolean = false;
   plan: number = 0;
   constructor(
     private route: Router,
     private _serviceUsuario: UsuarioService,
-    private _servicioToast : ToastService
-  ) {}
-
+    private _servicioToast: ToastService,
+    private _serviceCaptcha:CaptchaService
+  ) { }
+  resolved(captchaResponse: string) {
+    if (captchaResponse) {
+      this.captchaResolved =true;
+    }else{
+      this.captchaResolved =false;
+    }
+  }
   registroForm = new FormGroup({
     rut: new FormControl('202995470', [Validators.required]),
     correo: new FormControl('dadas@gmail.com', [
@@ -70,9 +80,11 @@ export class CrearCuentaComponent {
     ]),
   });
   ngOnInit(): void {
-    
+
   }
+
   // funcion de crear cuenta
+
   crearCuenta(
     nombre: any,
     apellido: any,
@@ -82,36 +94,36 @@ export class CrearCuentaComponent {
     telefono: any,
     idplan: any,
   ) {
-    this._serviceUsuario.getUserEmail(email).subscribe(data=>{
+    this._serviceUsuario.getUserEmail(email).subscribe(data => {
       console.log(data)
-      this._servicioToast.errorSuccess("Error","El correo ya está en uso")
-    },(error)=>{
+      this._servicioToast.errorSuccess("Error", "El correo ya está en uso")
+    }, (error) => {
       console.error('Error al obtener los datos del usuario:', error);
       this._serviceUsuario
-      .postUsuario({
-        idusaurio: '',
-        nombre: nombre,
-        apellido: apellido,
-        rut: rut,
-        contra: this._serviceUsuario.encryptContra(contra),
-        telefono: telefono,
-        idplan: idplan,
-        email: email,
-        rol: 1,
-      }).subscribe()
+        .postUsuario({
+          idusaurio: '',
+          nombre: nombre,
+          apellido: apellido,
+          rut: rut,
+          contra: this._serviceUsuario.encryptContra(contra),
+          telefono: telefono,
+          idplan: idplan,
+          email: email,
+          rol: 1,
+        }).subscribe()
 
-        this._serviceUsuario.setUserActive(email).then(res => {
-          console.log(res);
-          
-          if(res){
-            this._servicioToast.showSuccess("Cuenta Creda","cuenta creada con existo")
-            this.route.navigate(['/CrearJefe']);
-          }
-          
-        })
+      this._serviceUsuario.setUserActive(email).then(res => {
+        console.log(res);
 
-      
-     
+        if (res) {
+          this._servicioToast.showSuccess("Cuenta Creda", "cuenta creada con existo")
+          this.route.navigate(['/CrearJefe']);
+        }
+
+      })
+
+
+
     })
 
   }
@@ -125,6 +137,13 @@ export class CrearCuentaComponent {
     if (this.registroForm.status != 'VALID') {
       flag = false;
     }
+    if (!this.captchaResolved) {
+      flag = false;
+    }
+    console.log(this.captchaResolved);
+    
+
+    
     // Validar que rut sea el correcto
     this.validRut =
       this.registroForm.get('rut')?.status == 'VALID' ? false : true;

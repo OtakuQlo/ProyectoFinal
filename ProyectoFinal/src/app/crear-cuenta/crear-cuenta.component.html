@@ -1,6 +1,3 @@
-
-
-
 <div class="container">
     <div class="row mt-3">
         <div class="row ">
@@ -64,12 +61,14 @@
                             formControlName="pass1" placeholder="Confirme su contraseña">
                         <p *ngIf="validarPass2" style="color: yellow;">Valor no valido</p>
                     </div>
+                    <div class="mt-5  w-75 ">
+                        <re-captcha (resolved)="resolved($event)"  siteKey="6LdmJt4pAAAAADZN_CPqOQmsI-m5vftM-7yp3BJ5"></re-captcha>
+                    </div>
                     <div class="mt-2 mb-4 col-sm-5 col-md-4 col-lg-3 col-xl-2"><button type="submit"
                             class="btn colorBGC colorB ">Confirmar</button>
                     </div>
 
                 </form>
-
 
             </div>
 
