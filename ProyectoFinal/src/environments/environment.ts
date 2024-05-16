@@ -1,5 +1,7 @@
 export const environment = {
     production: true,
-    key: 'romeoyjulieta',
-    url: 'http://localhost:3000/api/'
+    // encriptar tus cuentas
+    key: '',
+    // api de tu base de datos
+    url: ''
   };
