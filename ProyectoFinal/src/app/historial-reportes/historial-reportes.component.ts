@@ -16,15 +16,20 @@ export class HistorialReportesComponent {
   modalRes:string=""
   
   reportes :any[]=[]
+  reportesC:any[]=[]
   reporteID:any
 
   totalPages: number = 0;
   displacement: number = 0;
   actualPage: number = 1;
+
+  selectedEstado:number = 3;
+  search : string =""
     constructor(private _servieceReportes: ReportesService){}
     ngOnInit() {
       this._servieceReportes.getReportes().subscribe(data=>{
         this.reportes = data;
+        this.reportesC = data;
         this.totalPages = this.totalPage();
         console.log(data);
       });
@@ -37,10 +42,35 @@ export class HistorialReportesComponent {
         this.reporteID = idReportes;
       });
     }
-  
+    
 
     enviarRespuesta(){
       this. _servieceReportes.enviarRespuesta(this.reporteID,{ respuesta: this.modalRes}).subscribe();
+    }
+
+    filtroEstado(){
+      if(this.selectedEstado == 3){
+        this.reportes = this.reportesC;
+      }
+      if(this.selectedEstado ==1){
+        this.reportes= this.reportesC.filter((reporte) => {
+          return reporte.solucion == true;
+        });
+      }
+      if(this.selectedEstado ==2){
+        this.reportes= this.reportesC.filter((reporte) => {
+          return reporte.solucion == false;
+        });
+      }
+      
+    }
+    filterSearch(){
+      this.reportes= this.reportesC.filter((reporte) => {
+        return reporte.Usuario.email.includes(this.search);
+      });
+    }
+    cleanFilter(){
+      this.reportes = this.reportesC;
     }
     totalPage() {
   

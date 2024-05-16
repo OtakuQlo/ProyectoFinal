@@ -16,13 +16,16 @@
                             </div>
                             <form class="d-flex ">
                                 <div class="modal-body">
-                                    <input [(ngModel)]="barcode" class="form-control me-2 "placeholder="Codigo de barras"  name="barcode">
-                                    <textarea  [(ngModel)]="desc" class="form-control me-2 mt-2 " placeholder="Descripción"name="desc"></textarea>
-                                    <input [(ngModel)]="cant" type="number" class="form-control me-2 mt-2 " placeholder="Cantidad"name="cant">
+                                    <input [(ngModel)]="barcode" class="form-control me-2 "
+                                        placeholder="Codigo de barras" name="barcode">
+                                    <textarea [(ngModel)]="desc" class="form-control me-2 mt-2 "
+                                        placeholder="Descripción" name="desc"></textarea>
+                                    <input [(ngModel)]="cant" type="number" class="form-control me-2 mt-2 "
+                                        placeholder="Cantidad" name="cant">
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn colorB " data-bs-dismiss="modal"
-                                    aria-label="Close" (click)="postPerdidas()">Generar</button>
+                                    <button type="button" class="btn colorB " data-bs-dismiss="modal" aria-label="Close"
+                                        (click)="postPerdidas()">Generar</button>
                                 </div>
                             </form>
                         </div>
@@ -48,6 +51,7 @@
             <table class="table text-center" style="color: white;">
                 <thead>
                     <tr>
+                        <th scope="col">#</th>
                         <th scope="col">Codigo</th>
                         <th scope="col">Nombre</th>
                         <th scope="col">Marca</th>
@@ -56,6 +60,12 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let product of productos.slice(displacement, displacement+10)">
+                        <th scope="row"> <button type="button" (click)="modalInventario(product.id)"
+                                class="btn btn-primary colorB" data-bs-toggle="modal" data-bs-target="#ModalInventario">
+                                <span class="material-symbols-outlined">
+                                    open_in_full
+                                </span>
+                            </button></th>
                         <td>{{ product.barcode }}</td>
                         <!-- <td>{{ product.idproducto}}</td> -->
                         <td>{{ product.nombreproducto }}</td>
@@ -64,7 +74,32 @@
                     </tr>
                 </tbody>
             </table>
+            <!-- modal -->
+            <div class="modal fade" id="ModalInventario" tabindex="-1" aria-labelledby="exampleModalInventario"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content card">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalInventario">Reporte</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div>
+                                <p></p>
 
+                            </div>
+                            <div>
+                                <input class="form-control colorB" id="nombre" name="nombre">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">cerrar</button>
+                            <button type="button" class="btn colorB " data-bs-dismiss="modal">Responder</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- modal -->
 
         </div>
         <div class="row mt-2 justify-content-center">

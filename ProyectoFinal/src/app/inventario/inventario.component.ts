@@ -176,4 +176,7 @@ export class InventarioComponent {
       this._serviceToast.errorSuccess("Error","Hubo un Error")
     }
   }
+  modalInventario(id:any){
+
+  }
 }
