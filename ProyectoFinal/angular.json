@@ -27,7 +27,7 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": ["https://www.google.com/recaptcha/api.js"]
+            "scripts": []
           },
           "configurations": {
             "production": {
