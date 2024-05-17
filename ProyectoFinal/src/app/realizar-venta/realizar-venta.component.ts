@@ -92,7 +92,7 @@ export class RealizarVentaComponent {
         
         if (curr != undefined) {
           this.detalle[index].cantidad= this.detalle[index].cantidad + this.cantidad
-          
+          this.cancelarVenta()
           this.alert.showSuccess('', 'Detalle Actualizado');
         } 
         if(curr == undefined) {
@@ -101,11 +101,9 @@ export class RealizarVentaComponent {
             idboleta: '',
             idproducto: this.producto,
             cantidad: this.cantidad
-          })
-          
-          
-          
+          })          
           this.alert.showSuccess('', 'Producto Agregado');
+          this.cancelarVenta()
           console.log('Precio del producto:', this.producto.precio);
         }
 
@@ -114,6 +112,7 @@ export class RealizarVentaComponent {
         this.alert.errorSuccess('', 'Producto no encontrado');
       }
     })
+    
 
   }
 
@@ -127,7 +126,6 @@ export class RealizarVentaComponent {
   }
 
   detalleVenta() {
-
   }
 
   boletaVenta(total: any) {
@@ -135,7 +133,8 @@ export class RealizarVentaComponent {
     this.boleta = [{
       nombre: this.perfilV.nombre,
       fecha: date,
-      preciototal: total
+      preciototal: total,
+      estado: false
     }]
   }
 

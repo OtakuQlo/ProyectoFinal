@@ -57,6 +57,11 @@ export class SeccionPerfilesComponent {
     
   }
 
+  irHome(){
+    this.userS.deletUserActive()
+    localStorage.removeItem('pActivo')
+    this.route.navigate(['/Home'])
+  }
   
 
 }

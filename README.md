@@ -29,4 +29,6 @@ npm run dev
 ```bash
 npm install 
 ng serve
+npm install --save-dev @types/file-saver
+npm install exceljs 
 ```

@@ -6,6 +6,25 @@
                 <input min="" max="20205-12-31" type="date" class="btn colorB" id="fecven" name="fecven">
                 <label class="letra"></label>
             </div>
+            <div class="col-3 text-center ">
+                <select style="color: aliceblue;" [(ngModel)]= "selectedEstado" (ngModelChange)="filtroEstado()"class="form-select card" aria-label="Default select example" >
+                    <option value="1">Resueltos</option>
+                    <option value="2">No resueltos</option>
+                    <option value="3">Todos</option>
+                </select>
+            </div>
+            <div class="col-3">
+                <button class="btn colorB me-2 ms-2" (click)="cleanFilter()">Limpiar Filtros</button>
+            </div>
+            <div class="col-3 text-center ">
+                <form class="d-flex ">
+                    <input [(ngModel)]= "search" class="form-control me-2" type="search" placeholder="Search"
+                        aria-label="Search" name="search">
+
+                    <button class="btn colorB" type="button" (click)="filterSearch()" >Search</button>
+
+                </form>
+            </div>
         </div>
         <div class="row card mt-2">
             <table class="table text-center" style="color: white;">
@@ -28,7 +47,9 @@
                             </button></th>
                         <td>{{reporte.Usuario.nombre}}</td>
                         <td>{{reporte.Usuario.email}}</td>
-                        <td>{{reporte.solucion}}</td>
+                        <td *ngIf="reporte.solucion; else elseBlock">resuelto</td>
+                        <ng-template #elseBlock><td> Por resolver</td></ng-template>
+
                     </tr>
 
                     <!-- modal -->
@@ -72,6 +93,7 @@
                         <li class="page-item"><a class="page-link">{{actualPage}}</a></li>
                         <li class="page-item"><a class="page-link" (click)="nextPage()">Next</a></li>
                     </ul>
+
                 </nav>
             </div>
 
