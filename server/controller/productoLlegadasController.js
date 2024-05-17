@@ -3,18 +3,18 @@ const ProductoLlegadas = require("../model/productollegadas");
 const Producto = require("../model/productos");
 const Stock = require("../model/stockproducts");
  
-exports.creandoProductosLlegada= async (req,res)=>{
-    try{
+exports.creandoProductosLlegada = async (req, res) => {
+    try {
         let producto;
         producto = new ProductoLlegadas(req.body);
-        let productounico = await Producto.findOne({where: {barcode: producto.barcode}});
-        let producto2
-        if (productounico == null){
-            
+        let productounico = await Producto.findOne({ where: { barcode: producto.barcode } });
+        let producto2;
+        
+        if (productounico == null) {
             let productounico1 = new Producto({
                 "nombreproducto": producto.nombre,
                 "idmarca": producto.idmarca,
-                "precio" : producto.precioaventa,
+                "precio": producto.precioaventa,
                 "barcode": producto.barcode
             });
             await productounico1.save();
@@ -23,26 +23,26 @@ exports.creandoProductosLlegada= async (req,res)=>{
             producto2 = productounico;
         }
 
-        let stock = await Stock.findOne({where: {idproducto: producto2.idproducto, idusuario: producto.idusuario }})
+        let stock = await Stock.findOne({ where: { idproducto: producto2.idproducto, idusuario: producto.idusuario } });
 
         if (stock == null) {
             let productstock = new Stock({
-                                "idproducto": producto2.idproducto,
-                                "cantidadtotal": producto.cantidad,
-                                "idusuario": producto.idusuario
-                            });
+                "idproducto": producto2.idproducto,
+                "cantidadtotal": producto.cantidad,
+                "idusuario": producto.idusuario
+            });
             await productstock.save();
         } else {
-            
-            stock.cantidadtotal += producto.cantidad;
+            // Convertir a números antes de sumar
+            stock.cantidadtotal = Number(stock.cantidadtotal) + Number(producto.cantidad);
             await stock.save();
         }
-        
+
         await producto.save();
-        res.send(producto)
-    }catch(error){
+        res.send(producto);
+    } catch (error) {
         console.log(error);
-        res.status(500).send('HUBO UN ERROR EN AÑADIR UN PRODUCTO AL INVENTARIO')
+        res.status(500).send('HUBO UN ERROR EN AÑADIR UN PRODUCTO AL INVENTARIO');
     }
 }
 
