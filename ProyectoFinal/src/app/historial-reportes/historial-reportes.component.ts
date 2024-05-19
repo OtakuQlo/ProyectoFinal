@@ -24,6 +24,7 @@ export class HistorialReportesComponent {
   actualPage: number = 1;
 
   selectedEstado:number = 3;
+  selectedDate:any;
   search : string =""
     constructor(private _servieceReportes: ReportesService){}
     ngOnInit() {
@@ -67,6 +68,11 @@ export class HistorialReportesComponent {
     filterSearch(){
       this.reportes= this.reportesC.filter((reporte) => {
         return reporte.Usuario.email.includes(this.search);
+      });
+    }
+    filterDate(){
+      this.reportes= this.reportesC.filter((reporte) => {
+        return reporte.fecha.includes(this.selectedDate);
       });
     }
     cleanFilter(){

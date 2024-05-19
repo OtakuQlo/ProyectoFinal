@@ -3,7 +3,7 @@
         
         <div class="row">
             <div class="col-3">
-                <input min="" max="20205-12-31" type="date" class="btn colorB" id="fecven" name="fecven">
+                <input min="" max="20205-12-31" [(ngModel)]= "selectedDate" (ngModelChange)="filterDate()" type="date" class="btn colorB" id="fecven" name="fecven">
                 <label class="letra"></label>
             </div>
             <div class="col-3 text-center ">
