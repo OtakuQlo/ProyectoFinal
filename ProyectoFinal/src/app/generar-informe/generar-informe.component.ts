@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ProductoService } from '../../../service/producto.service';
 import ExcelJS from 'exceljs';
 import { saveAs } from 'file-saver';
+import { HistorialService } from '../../../service/historial.service';
 
 @Component({
   selector: 'app-generar-informe',
@@ -12,7 +13,8 @@ import { saveAs } from 'file-saver';
 })
 export class GenerarInformeComponent {
   productozzz : any[] = []
-  constructor(private productoS:ProductoService) {    
+  productoLLegada:any[] = [];
+  constructor(private productoS:ProductoService, private llegada: HistorialService) {    
     
     this.productoS.getProductos().subscribe(data => {
       console.log(data);
@@ -21,7 +23,9 @@ export class GenerarInformeComponent {
       console.log(this.productozzz);
     })
     
-    this.productozzz
+    this.llegada.getProductoLLegadas().subscribe(data =>{
+      this.productoLLegada = data
+    })
   }
 
   async generarInforme() {
@@ -29,18 +33,20 @@ export class GenerarInformeComponent {
     const workbook = new ExcelJS.Workbook();
 
     // Agregar una hoja al libro de trabajo
-    const worksheet = workbook.addWorksheet('Sheet1');
+    const worksheet = workbook.addWorksheet('Informe Ingreso');
 
     //Establecer Columnas
     worksheet.columns = [
-      { header: 'ID', key: 'id', width: 10 },
-      { header: 'Name', key: 'name', width: 30 },
-      { header: 'Occupation', key: 'occupation', width: 20 }
+      { header: 'Codigo de Barras', key: 'codebar', width: 10 },
+      { header: 'Nombre Producto', key: 'nombreproducto', width: 30 },
+      { header: 'Precio', key: 'precio', width: 20 },
+      { header: 'Fecha llegada', key: 'fechallegada', width: 30 },
+      { header: 'Fecha Vencimiento', key: 'fechavencimiento', width: 30 },
     ];
 
     // Agregar datos a la hoja
-    this.productozzz.forEach(rowdata => {
-      worksheet.addRow([rowdata.idproducto, rowdata.nombreproducto, rowdata.precio]);
+    this.productoLLegada.forEach(rowdata => {
+      worksheet.addRow([rowdata.barcode, rowdata.nombre, rowdata.precioventa,rowdata.fechaingreso,rowdata.fechavencimiento]);
     })
     
 
@@ -51,7 +57,7 @@ export class GenerarInformeComponent {
       const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
 
       //Usar file-saver para descargar el archivo
-      saveAs(blob, 'output.xlsx')
+      saveAs(blob, 'InformeIngre'+'20/05/2024'+'.xlsx')
 
       console.log('Archivo Excel guardado.');
     } catch (error) {

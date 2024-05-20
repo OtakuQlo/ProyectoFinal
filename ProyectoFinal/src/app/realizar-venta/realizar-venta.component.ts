@@ -98,7 +98,7 @@ export class RealizarVentaComponent {
         let index = this.detalle.findIndex(obj => obj.idproducto.idproducto === this.producto.idproducto)
         
         if (curr != undefined) {
-          this.detalle[index].iddetalle = 
+          this.detalle[index].iddetalle = this.venta.getDetalle()
           this.detalle[index].cantidad = this.detalle[index].cantidad + this.cantidad
           console.log(Number(this.detalle[index].cantidad));
           this.venta.actualizarDetalle(this.detalle[index].idboleta, {cantidad : this.detalle[index].cantidad ,idproducto : this.detalle[index].idproducto.idproducto})
