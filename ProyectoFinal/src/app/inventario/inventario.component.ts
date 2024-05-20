@@ -65,6 +65,7 @@ export class InventarioComponent {
   barcode: string = "";
   desc: string = "";
   cant: number = 0;
+
   id: number = 0;
   // modal datos
   nombrePrdModal  : string = "";
@@ -184,6 +185,7 @@ export class InventarioComponent {
     }
   }
   modalInventario(productModal: any) {
+    this.id = productModal.idproducto
     this.barcodeModal = productModal.barcode
     this.nombreMarModal = productModal.Marca.nombremarca
     this.nombrePrdModal = productModal.nombreproducto
