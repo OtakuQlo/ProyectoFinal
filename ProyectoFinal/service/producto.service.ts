@@ -22,9 +22,6 @@ export class ProductoService {
     }catch(error){
       return console.error('Error al encontrar el producto:', error);
     }
-    
-
-    
   }
 
 }

@@ -1,5 +1,5 @@
 const { Sequelize, DataTypes, Model } = require('sequelize');
-const Usuarios = require('./usuarios');
+const Perfiles = require('./perfiles');
 
 const sequelize = new Sequelize('ordenalo', 'root', '', {
     host: 'localhost',
@@ -14,10 +14,6 @@ Boletas.init({
         type: DataTypes.INTEGER,
         primaryKey:true,
     },
-    nombretrabajador:{
-        type:DataTypes.STRING,
-        allowNull:false
-    },
     fecha:{
         type: DataTypes.DATE,
         allowNull:false
@@ -30,7 +26,7 @@ Boletas.init({
         type: DataTypes.BOOLEAN,
         allowNull:false
     },
-    idusuario:{
+    idperfil:{
         type: DataTypes.INTEGER,
         allowNull:false
     }
@@ -40,11 +36,11 @@ Boletas.init({
     timestamps: false // Deshabilitar las marcas de tiempo automáticas // Nombre del modelo
 });
 
-Usuarios.hasMany(Boletas,{
-    foreignKey: 'idusuario'
+Perfiles.hasMany(Boletas,{
+    foreignKey: 'idperfil'
 });
-Boletas.belongsTo(Usuarios,{
-    foreignKey: 'idusuario'
+Boletas.belongsTo(Perfiles,{
+    foreignKey: 'idperfil'
 });
 
 // Ahora el modelo está asociado con la instancia de Sequelize

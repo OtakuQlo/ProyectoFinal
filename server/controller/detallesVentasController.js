@@ -1,11 +1,20 @@
 
 const DetalleVentas = require("../model/boletas")
+const Stock = require("../model/stockproducts")
 exports.creandoDetalle= async (req,res)=>{
     try{
         let detalle;
         detalle = new DetalleVentas(req.body);
+
+        /* let stock = await Stock.findOne({ where: { idproducto: detalle.idproducto } }); */
+
+        // Convertir a números antes de sumar
+        /* stock.cantidadtotal = Number(stock.cantidadtotal) - Number(detalle.cantidad); */
+        /* await stock.save(); */
         await detalle.save();
+        
         res.send(detalle)
+        /* res.send(stock) */
     }catch(error){
         console.log(error);
         res.status(500).send('HUBO UN ERROR CREANDO DETALLE')
@@ -24,7 +33,7 @@ exports.obtenerDetalle= async(req,res)=>{
 
 exports.actualizarDetalle = async (req, res) => {
     try {
-        const { idboleta, idproducto, cantidad} = req.body;
+        const { cantidad } = req.body;
         let detalle = await DetalleVentas.findByPk(req.params.id);
 
         if (!detalle) {
@@ -32,8 +41,8 @@ exports.actualizarDetalle = async (req, res) => {
         }
 
         // Actualizar los campos de la marca
-        detalle.idboleta = idboleta;
-        detalle.idproducto = idproducto;
+        /* detalle.idboleta = idboleta;
+        detalle.idproducto = idproducto; */
         detalle.cantidad = cantidad;
         // Guardar los cambios en la base de datos
         await detalle.save();

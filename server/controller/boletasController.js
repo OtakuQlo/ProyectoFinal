@@ -13,7 +13,13 @@ exports.creandoBoletas= async (req,res)=>{
 }
 exports.obtenerBoleta= async(req,res)=>{
     try{
-        const boleta = await Boletas.findAll();
+        const { idperfil } = req.params
+        const boleta = await Boletas.findAll({
+            where : {
+                idperfil : idperfil,
+                estado : 0
+            }
+        });
         res.json(boleta)
     }
     catch(error){
@@ -24,22 +30,21 @@ exports.obtenerBoleta= async(req,res)=>{
 
 exports.actualizarBoleta = async (req, res) => {
     try {
-        const { nombretrabajador, fecha, preciototal} = req.body;
-        let boleta = await Boletas.findByPk(req.params.id);
+        const { preciototal } = req.body;
+        let boleta = await Boletas.findOne({where: {idboleta : req.params.id}});
 
         if (!boleta) {
             return res.status(404).json({ msg: 'No existe la boleta' });
         }
 
         // Actualizar los campos de la marca
-        boleta.nombretrabajador = nombretrabajador;
-        boleta.fecha = fecha;
-        boleta.preciototal = preciototal;
+        
+        boleta.preciototal = preciototal ;
+        boleta.estado = true;
+        
 
         // Guardar los cambios en la base de datos
         await boleta.save();
-
-        res.json(boleta);
     } catch (error) {
         console.error(error);
         res.status(500).send('Hubo un error al actualizar la boleta');

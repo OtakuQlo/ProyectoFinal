@@ -17,19 +17,21 @@ export class RealizarVentaComponent {
 
   constructor(private venta: VentaService, private alert: ToastService, private perfil: PerfilusuarioService, private productoS: ProductoService) {
     this.alert.showSuccess('', 'Bienvenido ' + this.perfilV.nombre)
+    
     /* console.log(localStorage.getItem('pActivo')); */
 
+  }
+
+  ngOnInit(): void {
+    this.boletaVenta()
   }
 
   //Insert
   detalle: any[] = [];
   producto: any;
-  boleta: any = [{
-    nombre: '',
-    fecha: '',
-    preciototal: 0,
-  }];
-  total: number = 0;
+  boleta: any;
+  total: any = 0;
+
 
   //Producto
   codebar: string = '';
@@ -68,15 +70,19 @@ export class RealizarVentaComponent {
       this.alert.errorSuccess('', 'Asegurate de rellenar bien los campos')
     } else {
       this.agregarProducto()
-      /* console.log(this.producto);
-      console.log(this.total);
-      console.log(this.detalle); */
+      
     }
 
   }
 
-  pagarVenta() {
-    this.boletaVenta(this.total)
+  async pagarVenta() {     
+    let boletin = this.boleta[0]
+    boletin.preciototal = this.total
+    console.log(boletin.preciototal);
+
+    await this.venta.actualizarBoleta(boletin.idboleta, {preciototal : boletin.preciototal}).subscribe()
+    
+    
   }
 
   agregarProducto() {
@@ -85,34 +91,40 @@ export class RealizarVentaComponent {
       if (this.producto && this.producto.precio !== undefined) {
         this.total = this.total + (this.producto.precio * this.cantidad);
         let curr = this.detalle.find(p => p.idproducto.idproducto === this.producto.idproducto)
-        console.log(curr);
         
         let index = this.detalle.findIndex(obj => obj.idproducto.idproducto === this.producto.idproducto)
-        console.log(index);
         
         if (curr != undefined) {
           this.detalle[index].cantidad= this.detalle[index].cantidad + this.cantidad
+          this.venta.actualizarDetalle(this.detalle[index].iddetalle, {cantidad : this.detalle[index].cantidad}).subscribe()
           this.cancelarVenta()
           this.alert.showSuccess('', 'Detalle Actualizado');
         } 
         if(curr == undefined) {
+          console.log(this.boleta[0]);
+          
           this.detalle.push({
             iddetalle: '',
-            idboleta: '',
+            idboleta: this.boleta[0].idboleta,
             idproducto: this.producto,
             cantidad: this.cantidad
-          })          
+          })
+          this.venta.realizarCompra({
+            iddetalle: '',
+            idboleta: this.boleta[0].idboleta,
+            idproducto: this.producto.idproducto,
+            cantidad: this.cantidad
+          }).subscribe()
           this.alert.showSuccess('', 'Producto Agregado');
           this.cancelarVenta()
-          console.log('Precio del producto:', this.producto.precio);
         }
-
       } else {
-        console.error('No se encontró el precio del producto o es undefined.');
         this.alert.errorSuccess('', 'Producto no encontrado');
       }
     })
-    
+  }
+
+  borrarDetalle(){
 
   }
 
@@ -120,26 +132,24 @@ export class RealizarVentaComponent {
     this.boleta = []
     this.producto = []
     this.detalle = []
-    console.log(this.producto);
-    console.log(this.boleta);
-    console.log(this.detalle);
+    this.total = 0
   }
 
-  detalleVenta() {
-  }
 
-  boletaVenta(total: any) {
-    let date = formatDate(new Date(), 'dd-MM-yyyy', 'en')
-    this.boleta = [{
-      nombre: this.perfilV.nombre,
-      fecha: date,
-      preciototal: total,
-      estado: false
-    }]
-  }
-
-  stockProducto() {
-
+  async boletaVenta() {
+    await this.venta.getboletas(this.perfilV.id).then(datos =>{
+      this.boleta = datos
+      if (this.boleta.length === 0){
+        let date = formatDate(new Date(), 'yyyy-MM-dd', 'en')
+        this.venta.crearBoleta({
+          idboleta: '',
+          fecha: date,
+          preciototal: this.total,
+          estado: false,
+          idperfil: this.perfilV.id
+        }).subscribe()
+      }
+    })
   }
 
   cancelarVenta() {
