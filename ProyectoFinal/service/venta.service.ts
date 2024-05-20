@@ -20,7 +20,7 @@ export class VentaService {
     return this.http.post(this.url+'boletas', boletas)
   }
 
-  async getboletas(id: any){
+  async getboleta(id: any){
     try{
       const boleta = await lastValueFrom(this.http.get(this.url+'boletas/'+id))
       console.log(boleta);

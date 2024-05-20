@@ -80,7 +80,7 @@ export class RealizarVentaComponent {
     boletin.preciototal = this.total
     console.log(boletin.preciototal);
 
-    await this.venta.actualizarBoleta(boletin.idboleta, {preciototal : boletin.preciototal}).subscribe()
+    await this.venta.actualizarBoleta(boletin.idboleta, {"preciototal" : boletin.preciototal}).subscribe()
     
     
   }
@@ -101,22 +101,24 @@ export class RealizarVentaComponent {
           this.alert.showSuccess('', 'Detalle Actualizado');
         } 
         if(curr == undefined) {
-          console.log(this.boleta[0]);
-          
-          this.detalle.push({
-            iddetalle: '',
-            idboleta: this.boleta[0].idboleta,
-            idproducto: this.producto,
-            cantidad: this.cantidad
+          this.venta.getboleta(this.perfilV.id).then(()=> {
+            console.log(this.boleta[0].idboleta);          
+            this.detalle.push({
+              iddetalle: '',
+              idboleta: this.boleta[0].idboleta,
+              idproducto: this.producto,
+              cantidad: this.cantidad
+            })
+            this.venta.realizarCompra({
+              "iddetalle": '',
+              "idboleta": this.boleta[0].idboleta,
+              "idproducto": this.producto.idproducto,
+              "cantidad": this.cantidad
+            }).subscribe()
+            this.alert.showSuccess('', 'Producto Agregado');
+            this.cancelarVenta()
           })
-          this.venta.realizarCompra({
-            iddetalle: '',
-            idboleta: this.boleta[0].idboleta,
-            idproducto: this.producto.idproducto,
-            cantidad: this.cantidad
-          }).subscribe()
-          this.alert.showSuccess('', 'Producto Agregado');
-          this.cancelarVenta()
+          
         }
       } else {
         this.alert.errorSuccess('', 'Producto no encontrado');
@@ -137,16 +139,16 @@ export class RealizarVentaComponent {
 
 
   async boletaVenta() {
-    await this.venta.getboletas(this.perfilV.id).then(datos =>{
-      this.boleta = datos
+    await this.venta.getboleta(this.perfilV.id).then(boleta =>{
+      this.boleta = boleta
       if (this.boleta.length === 0){
         let date = formatDate(new Date(), 'yyyy-MM-dd', 'en')
         this.venta.crearBoleta({
-          idboleta: '',
-          fecha: date,
-          preciototal: this.total,
-          estado: false,
-          idperfil: this.perfilV.id
+          "idboleta": '',
+          "fecha": date,
+          "preciototal": this.total,
+          "estado": false,
+          "idperfil": this.perfilV.id
         }).subscribe()
       }
     })
