@@ -1,5 +1,7 @@
 
 const Boletas = require("../model/boletas")
+const Detalle = require("../model/detalleventas")
+const Producto = require("../model/productos")
 exports.creandoBoletas= async (req,res)=>{
     try{
         let boleta;
@@ -18,6 +20,30 @@ exports.obtenerBoleta= async(req,res)=>{
             where : {
                 idperfil : idperfil,
                 estado : 0
+            }
+        });
+        res.json(boleta)
+    }
+    catch(error){
+        console.log(error);
+        res.status(500).send('HUBO UN ERROR')
+    }
+}
+
+exports.obtenerBoletas= async(req,res)=>{
+    try{
+        const boleta = await Boletas.findAll({
+            include:[{
+                model:Detalle,
+                require:false,
+                include:[{
+                    model:Producto,
+                    require:false,
+                }]
+            }],
+            where:{
+                idperfil: 1,
+                estado : 1
             }
         });
         res.json(boleta)

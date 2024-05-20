@@ -29,7 +29,9 @@ export class VentaService {
       return console.error('Error al encontrar el producto:', error);
     }
   }
-
+  getBoletas(): Observable<any>{
+    return this.http.get(this.url+"boletas/boletas/"+1);
+  }
   actualizarBoleta(id:any, preciototal:any): Observable<any>{
     return this.http.put(this.url+'boletas/'+id, preciototal)
   }
