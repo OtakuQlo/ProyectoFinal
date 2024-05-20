@@ -12,7 +12,7 @@ export class VentaService {
   
   url = environment.url;
 
-  realizarCompra(productos: any): Observable<any>{
+  realizarCompra(productos: any){
     return this.http.post(this.url+'detalleventas', productos)
   }
 
@@ -34,7 +34,11 @@ export class VentaService {
     return this.http.put(this.url+'boletas/'+id, preciototal)
   }
 
-  actualizarDetalle(id:any, cantidad:any): Observable<any>{
-    return this.http.put(this.url+'detallesventa/'+id, cantidad)
+  actualizarDetalle(id:any, datos:any){
+    return this.http.put(this.url+'detalleventas/'+id, datos)   
+  }
+
+  getDetalle(){
+    
   }
 }

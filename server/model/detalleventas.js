@@ -1,6 +1,7 @@
 const { Sequelize, DataTypes, Model } = require('sequelize');
 const Productos = require('./productos');
 const Boletas = require('./boletas')
+
 const sequelize = new Sequelize('ordenalo', 'root', '', {
     host: 'localhost',
     dialect:'mysql',
@@ -24,7 +25,7 @@ DetalleVentas.init({
         allowNull:false
     },
     cantidad:{
-        type:DataTypes.DATE,
+        type:DataTypes.INTEGER,
         allowNull:false
     }
 

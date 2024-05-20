@@ -5,6 +5,7 @@ import { ToastService } from '../../../service/toast.service';
 import { PerfilusuarioService } from '../../../service/perfilusuario.service';
 import { ProductoService } from '../../../service/producto.service';
 import { CommonModule, formatDate } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-realizar-venta',
@@ -15,7 +16,7 @@ import { CommonModule, formatDate } from '@angular/common';
 })
 export class RealizarVentaComponent {
 
-  constructor(private venta: VentaService, private alert: ToastService, private perfil: PerfilusuarioService, private productoS: ProductoService) {
+  constructor(private venta: VentaService, private alert: ToastService, private perfil: PerfilusuarioService, private productoS: ProductoService, private route:Router) {
     this.alert.showSuccess('', 'Bienvenido ' + this.perfilV.nombre)
     
     /* console.log(localStorage.getItem('pActivo')); */
@@ -61,7 +62,7 @@ export class RealizarVentaComponent {
 
     if (!this.regexnumeros.test(this.cantidad.toString()) || this.cantidad <= 0 || this.cantidad > 50) {
       bandera = false;
-      this.labelcantidad = "Solo se acepta numeros y mayor de 0 hasta 50"
+      this.labelcantidad = "Escoge la cantidad a agregar con un maximo de 50"
     } else {
       this.labelcantidad = "";
     }
@@ -80,9 +81,11 @@ export class RealizarVentaComponent {
     boletin.preciototal = this.total
     console.log(boletin.preciototal);
 
-    await this.venta.actualizarBoleta(boletin.idboleta, {"preciototal" : boletin.preciototal}).subscribe()
-    
-    
+    await this.venta.actualizarBoleta(boletin.idboleta, {"preciototal" : boletin.preciototal}).subscribe(() =>{
+    })
+    this.cancelarPago()
+    this.route.navigate(['/Venta'])
+   
   }
 
   agregarProducto() {
@@ -95,29 +98,33 @@ export class RealizarVentaComponent {
         let index = this.detalle.findIndex(obj => obj.idproducto.idproducto === this.producto.idproducto)
         
         if (curr != undefined) {
-          this.detalle[index].cantidad= this.detalle[index].cantidad + this.cantidad
-          this.venta.actualizarDetalle(this.detalle[index].iddetalle, {cantidad : this.detalle[index].cantidad}).subscribe()
+          this.detalle[index].iddetalle = 
+          this.detalle[index].cantidad = this.detalle[index].cantidad + this.cantidad
+          console.log(Number(this.detalle[index].cantidad));
+          this.venta.actualizarDetalle(this.detalle[index].idboleta, {cantidad : this.detalle[index].cantidad ,idproducto : this.detalle[index].idproducto.idproducto})
           this.cancelarVenta()
           this.alert.showSuccess('', 'Detalle Actualizado');
         } 
         if(curr == undefined) {
-          this.venta.getboleta(this.perfilV.id).then(()=> {
+          this.boletaVenta().then(()=>{
             console.log(this.boleta[0].idboleta);          
-            this.detalle.push({
-              iddetalle: '',
-              idboleta: this.boleta[0].idboleta,
-              idproducto: this.producto,
-              cantidad: this.cantidad
-            })
             this.venta.realizarCompra({
               "iddetalle": '',
               "idboleta": this.boleta[0].idboleta,
               "idproducto": this.producto.idproducto,
               "cantidad": this.cantidad
             }).subscribe()
+            this.detalle.push({
+              iddetalle: '',
+              idboleta: this.boleta[0].idboleta,
+              idproducto: this.producto,
+              cantidad: this.cantidad
+            })
+            console.log(this.detalle);
             this.alert.showSuccess('', 'Producto Agregado');
             this.cancelarVenta()
           })
+          
           
         }
       } else {
@@ -131,7 +138,6 @@ export class RealizarVentaComponent {
   }
 
   cancelarPago() {
-    this.boleta = []
     this.producto = []
     this.detalle = []
     this.total = 0

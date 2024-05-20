@@ -1,19 +1,18 @@
 
-const DetalleVentas = require("../model/boletas")
+const DetalleVentas = require("../model/detalleventas")
 const Stock = require("../model/stockproducts")
 exports.creandoDetalle= async (req,res)=>{
     try{
         let detalle;
         detalle = new DetalleVentas(req.body);
 
+        await detalle.save();
+        res.send(detalle)
         /* let stock = await Stock.findOne({ where: { idproducto: detalle.idproducto } }); */
 
         // Convertir a números antes de sumar
         /* stock.cantidadtotal = Number(stock.cantidadtotal) - Number(detalle.cantidad); */
         /* await stock.save(); */
-        await detalle.save();
-        
-        res.send(detalle)
         /* res.send(stock) */
     }catch(error){
         console.log(error);
@@ -22,7 +21,7 @@ exports.creandoDetalle= async (req,res)=>{
 }
 exports.obtenerDetalle= async(req,res)=>{
     try{
-        const detalle = await DetalleVentas.findAll();
+        const detalle = await DetalleVentas.findAll({where : { idboleta : req.params.idboleta}});
         res.json(detalle)
     }
     catch(error){
@@ -33,8 +32,13 @@ exports.obtenerDetalle= async(req,res)=>{
 
 exports.actualizarDetalle = async (req, res) => {
     try {
-        const { cantidad } = req.body;
-        let detalle = await DetalleVentas.findByPk(req.params.id);
+        const { cantidad, idproducto } = req.body;
+        let detalle = await DetalleVentas.findOne({
+            where : {
+                idboleta : req.params.id,
+                idproducto : idproducto
+            }
+        });
 
         if (!detalle) {
             return res.status(404).json({ msg: 'No existe el detalle' });

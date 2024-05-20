@@ -43,6 +43,9 @@ Boletas.belongsTo(Perfiles,{
     foreignKey: 'idperfil'
 });
 
+
+
+
 // Ahora el modelo está asociado con la instancia de Sequelize
 // Puedes exportar el modelo si lo deseas
 module.exports = Boletas;
