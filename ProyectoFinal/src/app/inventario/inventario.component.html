@@ -60,7 +60,7 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let product of productos.slice(displacement, displacement+10)">
-                        <th scope="row"> <button type="button" (click)="modalInventario(product.id)"
+                        <th scope="row"> <button type="button" (click)="modalInventario(product)"
                                 class="btn btn-primary colorB" data-bs-toggle="modal" data-bs-target="#ModalInventario">
                                 <span class="material-symbols-outlined">
                                     open_in_full
@@ -80,16 +80,30 @@
                 <div class="modal-dialog">
                     <div class="modal-content card">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalInventario">Reporte</h5>
+                            <h5 class="modal-title" id="exampleModalInventario" style="color: aliceblue;">Producto</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <div>
-                                <p></p>
-
-                            </div>
-                            <div>
-                                <input class="form-control colorB" id="nombre" name="nombre">
+                            <div style="color: aliceblue;">
+                                <div class="row">
+                                    <h5>Nombre : {{nombrePrdModal}}</h5>
+                                </div>
+                                <div class="row">
+                                    <h5>Marca : {{ nombreMarModal }}</h5>
+                                </div>
+                                <div class="row">
+                                    <h5>Barcode : {{barcodeModal }}</h5>
+                                </div>
+                                <div class="row">
+                                    <h5>Stock  : {{cantidadPrdModal }}</h5>
+                                </div>
+                                <div class="row">
+                                    <h5>Editar <span (click)="editProduct()" data-bs-dismiss="modal" style="color: aliceblue;"
+                                        class="material-symbols-outlined">
+                                        edit
+                                    </span> </h5>
+                                </div>
+                                
                             </div>
                         </div>
                         <div class="modal-footer">

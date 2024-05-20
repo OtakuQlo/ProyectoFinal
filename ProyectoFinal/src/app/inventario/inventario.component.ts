@@ -65,8 +65,12 @@ export class InventarioComponent {
   barcode: string = "";
   desc: string = "";
   cant: number = 0;
-
-
+  id: number = 0;
+  // modal datos
+  nombrePrdModal  : string = "";
+  nombreMarModal  : string = "";
+  barcodeModal    : string = "";
+  cantidadPrdModal: number = 0;
 
   //formato fecha para dar el minimo al input
   fechahoy: Date = new Date();
@@ -79,26 +83,26 @@ export class InventarioComponent {
     private router: Router,
     private _serviceProduto: ProductoService,
     private _servicePerdidas: PerdidasService,
-    private _serviceToast:ToastService
+    private _serviceToast: ToastService
   ) { }
 
   ngOnInit(): void {
     this.getProduct();
-    
-    
+
+
     this.pageGenerator()
   }
 
   getProduct() {
     this._serviceProduto.getProductos().subscribe(data => {
       console.log(data);
-      
+
       this.productos = data;
       console.log(this.productos);
-      
+
       this.productosO = data;
       this.totalPages = this.totalPage();
-    console.log(this.totalPages);
+      console.log(this.totalPages);
     });
   }
 
@@ -123,6 +127,9 @@ export class InventarioComponent {
   addProduct() {
     this.router.navigate(['/AgregarProducto'])
   }
+  editProduct() {
+    this.router.navigate(['/AgregarProducto'], { queryParams: { id: this.id } });
+  }
 
   // pagination
   totalPage() {
@@ -136,7 +143,7 @@ export class InventarioComponent {
   }
 
   nextPage() {
-    
+
     if (this.actualPage + 1 <= this.totalPages) {
       this.actualPage = this.actualPage + 1;
       this.pageGenerator();
@@ -150,33 +157,36 @@ export class InventarioComponent {
     }
   }
   postPerdidas() {
-    if (this.cant>=1) {
+    if (this.cant >= 1) {
       if (this.barcode != "") {
-       this._servicePerdidas.postPerdidas(
-        { idperdidas	:'',idproducto	:1, fecha:this.fechaFormateada,descripcion: this.desc, cantidad: this.cant },
-        this.barcode
-      ).then(res=>{
-        console.log(res);
-        
-        if (res) {
-          this.barcode=''
-          this.cant =0
-          this.desc=''
-          this._serviceToast.showSuccess("Con exito","Reporte con exito")
-        }else{
-          this._serviceToast.errorSuccess("Error","Hubo un Error")
-        }
-      });
-       
-        
-      }else{
-        this._serviceToast.errorSuccess("Error","Hubo un Error")
+        this._servicePerdidas.postPerdidas(
+          { idperdidas: '', idproducto: 1, fecha: this.fechaFormateada, descripcion: this.desc, cantidad: this.cant },
+          this.barcode
+        ).then(res => {
+          console.log(res);
+
+          if (res) {
+            this.barcode = ''
+            this.cant = 0
+            this.desc = ''
+            this._serviceToast.showSuccess("Con exito", "Reporte con exito")
+          } else {
+            this._serviceToast.errorSuccess("Error", "Hubo un Error")
+          }
+        });
+
+
+      } else {
+        this._serviceToast.errorSuccess("Error", "Hubo un Error")
       }
-    }else{
-      this._serviceToast.errorSuccess("Error","Hubo un Error")
+    } else {
+      this._serviceToast.errorSuccess("Error", "Hubo un Error")
     }
   }
-  modalInventario(id:any){
-
+  modalInventario(productModal: any) {
+    this.barcodeModal = productModal.barcode
+    this.nombreMarModal = productModal.Marca.nombremarca
+    this.nombrePrdModal = productModal.nombreproducto
+    this.cantidadPrdModal = productModal.StockProducts[0].cantidadtotal
   }
 }

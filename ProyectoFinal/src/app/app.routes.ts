@@ -26,6 +26,7 @@ export const routes: Routes = [
     { path: 'ReportarProblema', component: ReporteProblemaComponent ,canActivate:[authGuard]},
     { path: 'Informes', component: GenerarInformeComponent ,canActivate:[AdminGuard,AdminGuard]},
     { path: 'AgregarProducto', component: AgregarProductoComponent ,canActivate:[authGuard]},
+    { path: 'AgregarProducto/:id', component: AgregarProductoComponent ,canActivate:[authGuard]},
     { path: 'AjustePlan', component: AjustePlanesComponent ,canActivate:[authGuard]},
     { path: 'Historial', component: HistorialComponent ,canActivate:[authGuard]},
     { path: 'Inventario', component: InventarioComponent ,canActivate:[authGuard]},
