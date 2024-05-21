@@ -6,6 +6,7 @@ import { PerfilusuarioService } from '../../../service/perfilusuario.service';
 import { ProductoService } from '../../../service/producto.service';
 import { CommonModule, formatDate } from '@angular/common';
 import { Router } from '@angular/router';
+import { Observable, interval, map } from 'rxjs';
 
 @Component({
   selector: 'app-realizar-venta',
@@ -25,7 +26,22 @@ export class RealizarVentaComponent {
 
   ngOnInit(): void {
     this.boletaVenta()
+    
   }
+
+
+  /* ngOnInit(): void {
+    this.boletaActiva(10000).subscribe(data => {
+      this.boleta = data
+    })
+    
+  }
+
+  boletaActiva( intervalTime: number): Observable<any> {
+    return interval(intervalTime).pipe(
+      map(() => this.boletaVenta())
+    );
+  } */
 
   //Insert
   detalle: any[] = [];
@@ -84,10 +100,9 @@ export class RealizarVentaComponent {
       let boletin = this.boleta[0]
       boletin.preciototal = this.total
       console.log(boletin.preciototal);
-      await this.venta.actualizarBoleta(boletin.idboleta, {"preciototal" : boletin.preciototal}).subscribe(() =>{
-          })
+      await this.venta.actualizarBoleta(boletin.idboleta, {"preciototal" : boletin.preciototal}).subscribe()
       this.cancelarPago()
-      this.route.navigate(['/Venta'])
+      window.location.reload()
     }
     console.log('nada');
     
