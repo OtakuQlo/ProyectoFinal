@@ -77,15 +77,20 @@ export class RealizarVentaComponent {
   }
 
   async pagarVenta() {     
-    let boletin = this.boleta[0]
-    boletin.preciototal = this.total
-    console.log(boletin.preciototal);
-
-    await this.venta.actualizarBoleta(boletin.idboleta, {"preciototal" : boletin.preciototal}).subscribe(() =>{
-    })
-    this.cancelarPago()
-    this.route.navigate(['/Venta'])
-   
+    
+    if(this.total > 0){
+      console.log('pasa');
+      
+      let boletin = this.boleta[0]
+      boletin.preciototal = this.total
+      console.log(boletin.preciototal);
+      await this.venta.actualizarBoleta(boletin.idboleta, {"preciototal" : boletin.preciototal}).subscribe(() =>{
+          })
+      this.cancelarPago()
+      this.route.navigate(['/Venta'])
+    }
+    console.log('nada');
+    
   }
 
   agregarProducto() {
@@ -98,12 +103,19 @@ export class RealizarVentaComponent {
         let index = this.detalle.findIndex(obj => obj.idproducto.idproducto === this.producto.idproducto)
         
         if (curr != undefined) {
-          this.detalle[index].iddetalle = this.venta.getDetalle()
-          this.detalle[index].cantidad = this.detalle[index].cantidad + this.cantidad
-          console.log(Number(this.detalle[index].cantidad));
-          this.venta.actualizarDetalle(this.detalle[index].idboleta, {cantidad : this.detalle[index].cantidad ,idproducto : this.detalle[index].idproducto.idproducto})
-          this.cancelarVenta()
-          this.alert.showSuccess('', 'Detalle Actualizado');
+          let detallin : any [] = []
+          this.venta.getDetalle(this.boleta[0].idboleta).subscribe(res => {
+            detallin = res
+            this.detalle[index].iddetalle = detallin.find(det => det.idproducto === this.producto.idproducto).iddetalle
+            this.detalle[index].cantidad = this.detalle[index].cantidad + this.cantidad
+            console.log(this.detalle[index].iddetalle);
+            console.log(this.detalle[index].cantidad);
+            this.venta.actualizarDetalle(this.detalle[index].iddetalle, {"cantidad" : this.detalle[index].cantidad}).subscribe()
+            this.cancelarVenta()
+            this.alert.showSuccess('', 'Detalle Actualizado');
+          })
+          
+          
         } 
         if(curr == undefined) {
           this.boletaVenta().then(()=>{
@@ -133,7 +145,7 @@ export class RealizarVentaComponent {
     })
   }
 
-  borrarDetalle(){
+  borrarDetalles(){
 
   }
 

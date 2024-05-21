@@ -5,4 +5,5 @@ const stockController = require('../controller/stockProducts')
 
 
 router.get('/:id',stockController.obtenerStock);
+
 module.exports = router;
