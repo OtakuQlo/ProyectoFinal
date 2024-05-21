@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastService } from '../../../service/toast.service';
 import { HistorialService } from '../../../service/historial.service';
+import { VentaService } from '../../../service/venta.service';
 
 @Component({
   selector: 'app-historial',
@@ -21,13 +22,22 @@ export class HistorialComponent {
   opcioNumeroMaximo:number=0;
   opcioNumeroMinimo:number=0;
   opcionFecha:any;
+  opcionFechaIngreso:any;
+  opcionFechaVencimiento:any;
   productoLLegada:any[]=[];
   ventasRealizadas:any[]=[];
   tablaActivo:any[]=[];
-  constructor(private _serviceToast : ToastService,private _serviceHistoria:HistorialService){}
+  detalleSelected:any[]=[];
+  constructor(
+    private _serviceToast : ToastService,
+    private _serviceHistoria:HistorialService,
+    private _serviceVenta:VentaService
+  ){}
   ngOnInit() {
     this.getProductoLLegada();
     this.pageGenerator()
+    this.getVentas();
+    this.setTabla();
   }
 
   // funcion de cabiar de tabla
@@ -43,7 +53,34 @@ export class HistorialComponent {
   }
   // funcion para seleccionar la fecha
   setFecha(){
-    console.log(this.opcionFecha);
+    if (this.opcionHistorial ==2) {
+      this.tablaActivo=this.productoLLegada.filter(product=>{
+        if (this.opcionFechaIngreso && this.opcionFechaVencimiento) {
+        return product.fechaingreso.includes(this.opcionFechaIngreso)&&product.fechavencimiento == this.opcionFechaVencimiento;          
+        }else{
+          return product.fechaingreso.includes(this.opcionFechaIngreso)||product.fechavencimiento == this.opcionFechaVencimiento;
+
+        }
+      })
+    }
+    if(this.opcionHistorial == 1){
+      this.tablaActivo = this.ventasRealizadas.filter(venta=>{
+        return venta.fecha == this.opcionFecha
+      })
+    }
+  }
+  cleanFilter(){
+    if (this.opcionHistorial==2) {
+      this.opcionFechaIngreso = "";
+      this.opcionFechaVencimiento="";
+      this.opcioNumeroMinimo=0;
+      this.opcioNumeroMaximo=0;
+      this.setTabla();
+    }
+    if (this.opcionHistorial==1) {
+      this.opcionFecha = "";
+      this.setTabla();
+    }
   }
   // funcion para obtener producto de llegada
   getProductoLLegada(){
@@ -53,7 +90,15 @@ export class HistorialComponent {
       this.totalPages = this.totalPage();
     })
   }
-
+  getVentas(){
+    this._serviceVenta.getBoletas().subscribe(data=>{
+      this.ventasRealizadas = data;
+      this.tablaActivo=data;
+      this.totalPages = this.totalPage();
+      console.log(data);
+      
+    })
+  }
   // funciones en tabla
   setTabla(){
     this.totalPages=1;
@@ -65,6 +110,11 @@ export class HistorialComponent {
       this.tablaActivo=this.ventasRealizadas;
       this.totalPages = this.totalPage();
     }
+  }
+  setTablaDetalle(detalle:any){
+    console.log(detalle);
+    
+    this.detalleSelected = detalle;
   }
   totalPage() {
     return Math.ceil(this.tablaActivo.length / 10);

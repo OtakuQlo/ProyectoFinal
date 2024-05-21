@@ -3,17 +3,26 @@
 
         <div class="row">
             <div class="col-9">
-                <input [(ngModel)]= "opcionFecha"  (ngModelChange)="setFecha()" min="" max="20205-12-31" type="date" class="btn colorB me-2" id="fecven" name="fecven">
+                <input *ngIf="opcionHistorial ==1" [(ngModel)]="opcionFecha" (ngModelChange)="setFecha()" min=""
+                    max="20205-12-31" type="date" class="btn colorB me-2" id="fecven" name="fecven">
                 <label class="letra"></label>
 
 
+                <input *ngIf="opcionHistorial ==2" [(ngModel)]="opcionFechaIngreso" (ngModelChange)="setFecha()" min=""
+                    max="20205-12-31" type="date" class="btn colorB me-2" id="fecven" name="fecven">
+                <label class="letra"></label>
+
+
+                <input *ngIf="opcionHistorial ==2" [(ngModel)]="opcionFechaVencimiento" (ngModelChange)="setFecha()"
+                    min="" max="20205-12-31" type="date" class="btn colorB me-2" id="fecven" name="fecven">
+                <label class="letra"></label>
 
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary colorB ms-2" data-bs-toggle="modal"
-                    data-bs-target="#exampleModal">
+                <button *ngIf="opcionHistorial == 2" type="button" class="btn btn-primary colorB ms-2"
+                    data-bs-toggle="modal" data-bs-target="#exampleModal">
                     Buscar Monto
                 </button>
-
+                <button class="btn colorB me-2 ms-2" (click)="cleanFilter()">Limpiar Filtros</button>
                 <!-- Modal -->
                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                     aria-hidden="true">
@@ -26,13 +35,16 @@
                             </div>
                             <div class="modal-body">
                                 <h5>Minimo</h5>
-                                <input [(ngModel)]= "opcioNumeroMinimo"  type="number" class="form-control-plaintext text-white  colorB">
+                                <input [(ngModel)]="opcioNumeroMinimo" type="number"
+                                    class="form-control-plaintext text-white  colorB">
                                 <h5>Maximo</h5>
-                                <input [(ngModel)]= "opcioNumeroMaximo"  type="number" class="form-control-plaintext text-white  colorB">
+                                <input [(ngModel)]="opcioNumeroMaximo" type="number"
+                                    class="form-control-plaintext text-white  colorB">
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">cerrar</button>
-                                <button type="button" (click)="setRangoPrecio()" class="btn colorB "data-bs-dismiss="modal">buscar</button>
+                                <button type="button" (click)="setRangoPrecio()" class="btn colorB "
+                                    data-bs-dismiss="modal">buscar</button>
                             </div>
                         </div>
                     </div>
@@ -41,31 +53,84 @@
 
 
             <div class="col-3 text-center">
-                <select [(ngModel)]= "opcionHistorial" (ngModelChange)="changeTable()"class="form-select card" aria-label="Default select example" >
+                <select [(ngModel)]="opcionHistorial" (ngModelChange)="changeTable()" class="form-select card"
+                    aria-label="Default select example">
                     <option value="1">Ventas</option>
                     <option value="2">Ingresos</option>
                 </select>
             </div>
         </div>
-        <div class="row card mt-2 ">
-            <table class="table text-center" style="color: white;">
+        <div class="row card mt-2 table-responsive">
+            <table class="table text-center " style="color: white;">
                 <thead>
                     <tr>
-                        <th scope="col"*ngIf="opcionHistorial == 2">Barcode</th>
-                        <th scope="col" *ngIf="opcionHistorial == 2" >Nombre</th>
-                        <th scope="col"*ngIf="opcionHistorial == 2">Fecha Ingreso</th>
+                        <th scope="col" *ngIf="opcionHistorial == 2">Barcode</th>
+                        <th scope="col" *ngIf="opcionHistorial == 2">Nombre</th>
+                        <th scope="col" *ngIf="opcionHistorial == 2">Fecha Ingreso</th>
+                        <th scope="col" *ngIf="opcionHistorial == 2">Fecha Venc</th>
+                        <th scope="col" *ngIf="opcionHistorial == 1">#</th>
+                        <th scope="col" *ngIf="opcionHistorial == 1">id</th>
+                        <th scope="col" *ngIf="opcionHistorial == 1">Fecha de la venta</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let product of tablaActivo.slice(displacement, displacement+10)">
+                        <th *ngIf="opcionHistorial == 1" scope="row">
+                            <button  (click)="setTablaDetalle(product.DetalleVentas)" type="button" class="btn btn-primary colorB" data-bs-toggle="modal"
+                                data-bs-target="#ModalInventario">
+                                <span class="material-symbols-outlined">
+                                    open_in_full
+                                </span>
+                            </button>
+                        </th>
                         <td *ngIf="opcionHistorial ==2">{{ product.barcode }}</td>
                         <td *ngIf="opcionHistorial ==2">{{ product.nombre}}</td>
                         <td *ngIf="opcionHistorial ==2">{{ product.fechaingreso}}</td>
-
+                        <td *ngIf="opcionHistorial ==2">{{ product.fechavencimiento}}</td>
+                        <td scope="col" *ngIf="opcionHistorial == 1">{{product.idboleta}}</td>
+                        <td scope="col" *ngIf="opcionHistorial == 1">{{ product.fecha}}</td>
                     </tr>
                 </tbody>
             </table>
         </div>
+        <!-- modal -->
+        <div class="modal fade" id="ModalInventario" tabindex="-1" aria-labelledby="exampleModalInventario"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content card">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalInventario" style="color: aliceblue;">Producto</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div style="color: aliceblue;">
+
+                                <table class="table text-center " style="color: white;">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Producto</th>
+                                            <th scope="col">Cantidad</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let detalle of detalleSelected">
+                                            <td>{{detalle.Producto.nombreproducto}}</td>
+                                            <td>
+                                                {{detalle.cantidad}}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- modal -->
         <div class="row mt-2 justify-content-center">
             <div class="col-3">
                 <nav aria-label="Page navigation example">
@@ -76,7 +141,7 @@
                     </ul>
                 </nav>
             </div>
-            
+
         </div>
     </div>
 </div>
