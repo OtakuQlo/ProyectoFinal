@@ -32,11 +32,10 @@ exports.obtenerDetalle= async(req,res)=>{
 
 exports.actualizarDetalle = async (req, res) => {
     try {
-        const { cantidad, idproducto } = req.body;
+        const { cantidad } = req.body;
         let detalle = await DetalleVentas.findOne({
             where : {
-                idboleta : req.params.id,
-                idproducto : idproducto
+                iddetalle : req.params.id
             }
         });
 
@@ -81,8 +80,13 @@ exports.borrarDetalle = async (req, res) => {
 
 exports.obtenerDetalleId = async (req, res) => {
     try {
-      const { id } = req.params; // Obtenemos el ID de los parámetros de la solicitud
-      const detalle = await DetalleVentas.findByPk(id); // Buscamos la marca por su ID
+      
+      const detalle = await DetalleVentas.findAll({
+        where:
+        {
+            idboleta : req.params.id,
+        }
+    }); // Buscamos la marca por su ID
   
       if (!detalle) { // Si no se encontró la marca
         return res.status(404).json({ error: 'Detalle no encontrada' });

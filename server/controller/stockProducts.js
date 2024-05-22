@@ -18,5 +18,4 @@ exports.obtenerStock = async (req, res) => {
       res.status(500).send('HUBO UN ERROR');
     }
   };
-
-  
+ 

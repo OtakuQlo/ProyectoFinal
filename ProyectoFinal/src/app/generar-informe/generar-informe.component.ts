@@ -3,6 +3,8 @@ import { ProductoService } from '../../../service/producto.service';
 import ExcelJS from 'exceljs';
 import { saveAs } from 'file-saver';
 import { HistorialService } from '../../../service/historial.service';
+import { ProdcutosllegadaService } from '../../../service/prodcutosllegada.service';
+import { UsuarioService } from '../../../service/usuario.service';
 
 @Component({
   selector: 'app-generar-informe',
@@ -12,20 +14,23 @@ import { HistorialService } from '../../../service/historial.service';
   styleUrl: './generar-informe.component.css'
 })
 export class GenerarInformeComponent {
-  productozzz : any[] = []
+  productozzz : any[] = [];
   productoLLegada:any[] = [];
-  constructor(private productoS:ProductoService, private llegada: HistorialService) {    
+  stock: any[] = [];
+  
+  
+
+  constructor(private productoS:ProductoService,private productLL: ProdcutosllegadaService,private userA:UsuarioService) {    
     
     this.productoS.getProductos().subscribe(data => {
       console.log(data);
-      
       this.productozzz = data
       console.log(this.productozzz);
     })
-    
-    this.llegada.getProductoLLegadas().subscribe(data =>{
-      this.productoLLegada = data
-    })
+    this.productLL.getProduct(this.userA.getUserActive().idusuario).subscribe(dataLLeg =>{
+      this.productoLLegada = dataLLeg;
+      console.log(this.productoLLegada);  
+    })       
   }
 
   async generarInforme() {
@@ -37,16 +42,18 @@ export class GenerarInformeComponent {
 
     //Establecer Columnas
     worksheet.columns = [
-      { header: 'Codigo de Barras', key: 'codebar', width: 10 },
+      { header: 'Codigo de Barras', key: 'codebar', width: 18 },
       { header: 'Nombre Producto', key: 'nombreproducto', width: 30 },
       { header: 'Precio', key: 'precio', width: 20 },
       { header: 'Fecha llegada', key: 'fechallegada', width: 30 },
       { header: 'Fecha Vencimiento', key: 'fechavencimiento', width: 30 },
+      { header: 'Stock Entrante', key: 'stockE', width: 30 },
+      { header: 'Stock Actual', key: 'stockA', width: 30 },
     ];
 
     // Agregar datos a la hoja
     this.productoLLegada.forEach(rowdata => {
-      worksheet.addRow([rowdata.barcode, rowdata.nombre, rowdata.precioventa,rowdata.fechaingreso,rowdata.fechavencimiento]);
+      worksheet.addRow([rowdata.barcode, rowdata.nombre, rowdata.precioaventa,rowdata.fechaingreso,rowdata.fechavencimiento,rowdata.cantidad,10]);
     })
     
 
@@ -57,7 +64,7 @@ export class GenerarInformeComponent {
       const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
 
       //Usar file-saver para descargar el archivo
-      saveAs(blob, 'InformeIngre'+'20/05/2024'+'.xlsx')
+      saveAs(blob, 'InformeIngre'+'21/05/2024'+'.xlsx')
 
       console.log('Archivo Excel guardado.');
     } catch (error) {

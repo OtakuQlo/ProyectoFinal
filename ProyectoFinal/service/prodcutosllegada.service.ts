@@ -10,9 +10,13 @@ export class ProdcutosllegadaService {
 
   constructor(private http: HttpClient) { }
 
-  url = environment.url+'productollegadas';
+  url = environment.url;
 
   postProduct(datos:any): Observable<any>{
-    return this.http.post(this.url, datos)
+    return this.http.post(this.url+'productollegadas', datos)
+  }
+
+  getProduct(id:any): Observable<any>{
+    return this.http.get(this.url+'productollegadas/'+id)
   }
 }

@@ -2,6 +2,7 @@
 const ProductoLlegadas = require("../model/productollegadas");
 const Producto = require("../model/productos");
 const Stock = require("../model/stockproducts");
+const Usuarios = require("../model/usuarios");
  
 exports.creandoProductosLlegada = async (req, res) => {
     try {
@@ -47,8 +48,14 @@ exports.creandoProductosLlegada = async (req, res) => {
 }
 
 exports.obtenerInventario= async(req,res)=>{
+    
     try{
-        const producto = await ProductoLlegadas.findAll();
+        const producto = await ProductoLlegadas.findAll({
+            
+            where : {
+                idusuario : req.params.id
+            }
+        });
         res.json(producto)
     }
     catch(error){
