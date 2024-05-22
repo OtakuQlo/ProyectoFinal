@@ -16,4 +16,8 @@ export class PlansService {
   getPlansId(id:any): Observable<any>{
     return this.http.get(this.url+"/"+id);
   }
+
+  getPlans(): Observable<any>{
+    return this.http.get(this.url+"/");
+  }
 }
