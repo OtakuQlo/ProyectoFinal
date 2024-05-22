@@ -26,6 +26,7 @@ export class AjustePlanesComponent {
     this.userplannuevo = this.usuarios.getUserActive();
     this.userplannuevo.idplan = datos;
     localStorage.setItem('usuario', JSON.stringify(this.userplannuevo));
+    this.planUser();
     console.log(this.usuarios.getUserActive());
     console.log(datos);
 
@@ -33,11 +34,7 @@ export class AjustePlanesComponent {
 
   ngOnInit(){
 
-    this.planS.getPlansId(this.usuarios.getUserActive().idplan).subscribe(data => {
-      this.planactual = data;
-      console.log(data);
-
-    })
+    this.planUser();
     this.planS.getPlans().subscribe(data =>{
 
       this.planes = data;
@@ -46,7 +43,13 @@ export class AjustePlanesComponent {
     })
   }
 
-  
+  planUser(){
+    this.planS.getPlansId(this.usuarios.getUserActive().idplan).subscribe(data => {
+      this.planactual = data;
+      console.log(data);
+
+    })
+  }
 
 
 }
