@@ -4,6 +4,7 @@ import { Router, RouterOutlet } from '@angular/router';
 import { PerfilusuarioService } from '../../service/perfilusuario.service';
 import { Observable, interval, map, switchMap } from 'rxjs';
 import { UsuarioService } from '../../service/usuario.service';
+import { PlansService } from '../../service/plans.service';
 
 @Component({
   selector: 'app-root',
@@ -16,8 +17,11 @@ export class AppComponent {
   title = 'ProyectoFinal';
 
   userA: any ; 
+  plan:any;
+  cantperfiles:any;
   
-  constructor(private route:Router, private perfilS:PerfilusuarioService, private userS:UsuarioService){    
+  constructor(private route:Router, private perfilS:PerfilusuarioService, private userS:UsuarioService, private planS: PlansService
+  ){    
   }
 
   // Esta función devuelve un observable que emite el valor del LocalStorage cada cierto intervalo de tiempo
@@ -32,8 +36,21 @@ export class AppComponent {
       // Llama a la función del servicio para obtener el valor del LocalStorage cada 5 segundos (por ejemplo)
         this.getLocalStorageValuePeriodically(100).subscribe(value => {
         this.userA = value;
+        
         // Haz lo que necesites con el valor del LocalStorage aquí
       });
+
+      this.planS.getPlansId(this.userS.getUserActive().idplan).subscribe(data => {
+        this.plan = data;
+      });
+
+
+      this.perfilS.cantidadPerfiles(this.userS.getUserActive().idusuario).subscribe(data => {
+        this.cantperfiles = data;
+      });
+
+
+      
     }else{
       
     }

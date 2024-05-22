@@ -5,6 +5,8 @@ import { FormsModule } from '@angular/forms'; // <== ¡Añade las importaciones!
 import { NavigationExtras, Router } from '@angular/router';
 import { PerfilusuarioService } from '../../../service/perfilusuario.service';
 import { UsuarioService } from '../../../service/usuario.service';
+import { PlansService } from '../../../service/plans.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-crear-perfil',
@@ -15,13 +17,31 @@ import { UsuarioService } from '../../../service/usuario.service';
 })
 export class CrearPerfilComponent {
 
-  constructor(private route: Router, private perfil: PerfilusuarioService, private user: UsuarioService) {
+  constructor(private route: Router, private perfil: PerfilusuarioService, private user: UsuarioService, private plan: PlansService) {
     console.log(localStorage.getItem('usuario'));
     
   }
 
-  nombre: string = '';
+  ngOnInit() {
+    // Combina las dos llamadas asincrónicas
+    forkJoin([
+      this.plan.getPlansId(this.user.getUserActive().idplan),
+      this.perfil.cantidadPerfiles(this.user.getUserActive().idusuario)
+    ]).subscribe(([planData, perfilesData]) => {
+      this.planuser = planData;
+      this.cantperfiles = perfilesData;
   
+      // Realiza la validación aquí
+      if (this.cantperfiles >= this.planuser.cantidademp) {
+        this.route.navigate(['./Perfiles']);
+      }
+    });
+  }
+
+  nombre: string = '';
+  planuser:any;
+  cantperfiles:any;
+
 
   labelnombre: string = '';
   

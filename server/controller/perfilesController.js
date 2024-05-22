@@ -121,3 +121,22 @@ exports.crearPerfilAdmin= async (req,res)=>{
     }
 }
 
+
+exports.cantidadPerfiles = async (req, res) => {
+  try {
+    let { idusuario } = req.params; // Asegúrate de que el nombre del parámetro sea correcto
+    const cantidadempCount = await Perfiles.count({
+      where: {
+        idusuario: idusuario,
+        passadmin: null
+      }
+    });
+    res.json(cantidadempCount);
+  } catch (error) {
+    console.log('Error:', error); // Muestra el error completo para identificar la causa
+    res.status(500).send('HUBO UN ERROR');
+  }
+};
+
+
+

@@ -15,7 +15,9 @@
                         <li class="list-group-item mt-2"><a href="/Venta">Venta</a></li>
                         <li class="list-group-item mt-2"><a href="/Inventario">Inventario</a></li>
                         <li class="list-group-item mt-2"><a href="/AdministrarPerfiles">Administrar Perfiles</a></li>
-                        <li class="list-group-item mt-2"><a href="/CrearPerfil">Crear Perfiles</a></li>
+
+                        <li class="list-group-item mt-2" *ngIf="cantperfiles < plan.cantidademp"><a href="/CrearPerfil">Crear Perfiles</a></li>
+                        
                         <li class="list-group-item mt-2"><a href="/Historial">Historial</a></li>
                         <li class="list-group-item mt-2"><a href="/HistorialReportes">Historial Reporte</a></li>
                         <li class="list-group-item mt-2"><a href="/Informes">Generar Informe</a></li>

@@ -44,4 +44,9 @@ export class PerfilusuarioService {
     let activoP: any = localStorage.getItem('pActivo')
     return JSON.parse(activoP);
   }
+
+  cantidadPerfiles(id:any): Observable<any> {
+    return this.http.get(this.url+"/"+id+"/cantidad");
+
+}
 }
