@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { UsuarioService } from '../../../service/usuario.service';
 import { PlansService } from '../../../service/plans.service';
 import { CommonModule } from '@angular/common';
+import { ToastService } from '../../../service/toast.service';
 
 @Component({
   selector: 'app-ajuste-planes',
@@ -11,7 +12,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './ajuste-planes.component.css'
 })
 export class AjustePlanesComponent {
-  constructor(private usuarios: UsuarioService, private planS : PlansService) {
+  constructor(private usuarios: UsuarioService, private planS : PlansService, private toastS: ToastService) {
     
     
   }
@@ -27,8 +28,8 @@ export class AjustePlanesComponent {
     this.userplannuevo.idplan = datos;
     localStorage.setItem('usuario', JSON.stringify(this.userplannuevo));
     this.planUser();
-    console.log(this.usuarios.getUserActive());
-    console.log(datos);
+    this.toastS.showSuccess('Su plan ha sido cambiado con exito.','Cambio existoso')
+    
 
   }
 
@@ -38,15 +39,13 @@ export class AjustePlanesComponent {
     this.planS.getPlans().subscribe(data =>{
 
       this.planes = data;
-      console.log(this.planes);
-
+      
     })
   }
 
   planUser(){
     this.planS.getPlansId(this.usuarios.getUserActive().idplan).subscribe(data => {
       this.planactual = data;
-      console.log(data);
 
     })
   }

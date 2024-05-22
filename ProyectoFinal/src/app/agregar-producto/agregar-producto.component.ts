@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { EmpresaService } from '../../../service/empresa.service';
 import { ProdcutosllegadaService } from '../../../service/prodcutosllegada.service';
 import { UsuarioService } from '../../../service/usuario.service';
+import { ToastService } from '../../../service/toast.service';
 
 @Component({
   selector: 'app-agregar-producto',
@@ -23,7 +24,8 @@ export class AgregarProductoComponent {
     private _marcaservice: MarcaService,
     private empresa: EmpresaService,
     private producto: ProdcutosllegadaService,
-    private usuario: UsuarioService
+    private usuario: UsuarioService,
+    private toastS: ToastService
   ) {
     
   }
@@ -191,6 +193,7 @@ export class AgregarProductoComponent {
 
       }).subscribe();
       this.router.navigate(['/Inventario']);
+      this.toastS.showSuccess('Su producto ha sido agregado con exito','Producto añadido');
     }
   }
   
