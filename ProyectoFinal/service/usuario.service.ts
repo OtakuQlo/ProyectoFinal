@@ -10,14 +10,14 @@ import { lastValueFrom, EMPTY } from 'rxjs';
 })
 export class UsuarioService {
   url = 'http://localhost:3000/api/usuarios';
-  
 
-  constructor(private http: HttpClient) {}
+
+  constructor(private http: HttpClient) { }
 
   // publicar el nuevo usuario
 
-  postUsuario(usuario: any): Observable<any>{
-   return this.http.post(this.url, usuario)
+  postUsuario(usuario: any): Observable<any> {
+    return this.http.post(this.url, usuario)
   }
 
   // validar el nuevo usuario
@@ -26,19 +26,19 @@ export class UsuarioService {
     return this.http.get(this.url + '/' + email);
   }
 
-  async setUserActive(email: any): Promise<boolean> {  
+  async setUserActive(email: any): Promise<boolean> {
     try {
-        const data = await lastValueFrom( this.getUserEmail(email));
-        console.log(data);
-        
-        localStorage.setItem('token', data.idusuario.toString());  
-        localStorage.setItem('usuario', JSON.stringify(data));
-        console.log(localStorage.getItem('usuario'));
-        
-        return true; 
+      const data = await lastValueFrom(this.getUserEmail(email));
+      console.log(data);
+
+      localStorage.setItem('token', data.idusuario.toString());
+      localStorage.setItem('usuario', JSON.stringify(data));
+      console.log(localStorage.getItem('usuario'));
+
+      return true;
     } catch (error) {
-        console.error('Error al establecer usuario activo:', error);
-        return false; 
+      console.error('Error al establecer usuario activo:', error);
+      return false;
     }
   }
 
@@ -51,7 +51,7 @@ export class UsuarioService {
 
   getUserActive() {
     let activoU: any = localStorage.getItem('usuario');
-    
+
     return JSON.parse(activoU);
   }
 
@@ -67,12 +67,18 @@ export class UsuarioService {
     return simpleCrypto.decrypt(pass);
   }
 
-  
-  editarPlanes(id:any,datos:any): Observable<any> {
-    return this.http.put(this.url+"/planes/"+id,datos);
 
-}
+  editarPlanes(id: any, datos: any): Observable<any> {
+    return this.http.put(this.url + "/planes/" + id, datos);
 
-  
+  }
+
+  getUsuarioId(id:any): Observable<any>{
+    return this.http.get(this.url+"/usuarioid/"+id)
+  }
+  actualizarContra(id:any,pass:any): Observable<any>{
+    return this.http.put(this.url+"/"+id,{contra:pass})
+  }
+
 
 }

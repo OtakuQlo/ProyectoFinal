@@ -42,7 +42,7 @@ exports.obtenerBoletas= async(req,res)=>{
                 }]
             }],
             where:{
-                idperfil: 1,
+                idperfil: req.params.id,
                 estado : 1
             }
         });

@@ -20,7 +20,7 @@ app.use('/api/stockproducts',require('./routes/stockproducts'));
 app.use('/api/boletas',require('./routes/boletas'));
 app.use('/api/detalleventas',require('./routes/detalleVentas.js'));
 app.use('/api/reportes',require('./routes/reportes'));
-
+app.use('/api/mail',require('./resend/routesMail.js'))
 app.get('/api/marca', (req, res) => {
   res.send('HOLA');
 });

@@ -1,14 +1,40 @@
 <div class="d-flex justify-content-center pt-1 pb-1" id="bar">
     <h2>¡Bienvenido a OrdenaloTodo!</h2>
 </div>
-<div id="fondo">
+<div *ngIf="!setPage" id="fondo">
+    <div class="container pt-3 pb-3">
+        <div class="row">
+            <div class="col-4"></div>
+            <div class="col-4">
+                <form class="ms-3" [formGroup]="cambiarpass" (ngSubmit)="reestablecePass()">
+                    <div class="modal-body">
+
+                        <div>
+                            <input class="form-control colorBGC colorB"  id="pass"
+                                formControlName="pass"  type="password" placeholder="Ingrese su Correo Electronico">
+                        </div>
+                        
+                        <div>
+                            <input class="form-control colorBGC colorB"  id="pass2"
+                                formControlName="passr" type="password" placeholder="Ingrese su Correo Electronico">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn colorB ">Enviar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="fondo" *ngIf="setPage">
     <div class="container pt-3 pb-3">
 
         <div class="row">
             <div class="col-8 mt-3">
-                <div *ngIf="validSesion;"class="alert alert-warning" role="alert">
-                   Contraseña o Correo incorrecto
-                  </div>
+                <div *ngIf="validSesion;" class="alert alert-warning" role="alert">
+                    Contraseña o Correo incorrecto
+                </div>
                 <div class="row mb-5">
                     <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
                         <div class="carousel-inner">
@@ -71,7 +97,8 @@
                                             </div>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="submit" class="btn colorB " data-bs-dismiss="modal">Iniciar</button>
+                                            <button type="submit" class="btn colorB "
+                                                data-bs-dismiss="modal">Iniciar</button>
                                         </div>
                                     </form>
                                 </div>
@@ -82,39 +109,39 @@
                             <button type="submit" class="btn colorB " (click)="irCrearCuenta()">Crear Cuenta</button>
                         </div>
                         <div class="col mt-2 mb-1">
-<!-- recuperar contra -->
-<div class="col  mt-3 mb-2">
-    <a type="submit" data-bs-toggle="modal"
-        data-bs-target="#recuperarCuentaModal" style="color: yellow;">¿Olvidaste tu contraseña?</a>
-</div>
-<!-- modal -->
-<div class="modal fade " id="recuperarCuentaModal" tabindex="-1"
-    aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content card">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Iniciar sesion</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                    aria-label="Close" id="omg"></button>
-            </div>
-            <form class="ms-3" [formGroup]="registroForm" (ngSubmit)="inicioSesion()">
-                <div class="modal-body">
+                            <!-- recuperar contra -->
+                            <div class="col  mt-3 mb-2">
+                                <a type="submit" data-bs-toggle="modal" data-bs-target="#recuperarCuentaModal"
+                                    style="color: yellow;">¿Olvidaste tu contraseña?</a>
+                            </div>
+                            <!-- modal -->
+                            <div class="modal fade " id="recuperarCuentaModal" tabindex="-1"
+                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content card">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Recuperar Cuenta</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close" id="omg"></button>
+                                        </div>
+                                        <form class="ms-3" [formGroup]="recuperarCuenta" (ngSubmit)="formMailRecuperar()">
+                                            <div class="modal-body">
 
-                    <div>
-                        <input class="form-control colorBGC colorB" type="email" id="corsreo"
-                            formControlName="correo"
-                            placeholder="Ingrese su Correo Electronico">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn colorB ">Iniciar</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+                                                <div>
+                                                    <input class="form-control colorBGC colorB" type="email"
+                                                        id="corsreo" formControlName="correo"
+                                                        placeholder="Ingrese su Correo Electronico">
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn colorB " data-bs-dismiss="modal">Iniciar</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
