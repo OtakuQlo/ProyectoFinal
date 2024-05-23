@@ -98,7 +98,9 @@ export class HomeComponent implements OnInit {
   irCrearCuenta() {
     this.route.navigate(['./Registro']);
   }
-
+  irHome(){
+    this.route.navigate(['./Home']);
+  }
   reestablecePass() {
     let pass = this.cambiarpass.value;
     console.log(this.cambiarpass.status);
@@ -107,10 +109,13 @@ export class HomeComponent implements OnInit {
       if (pass.pass == pass.passr) {
         this._serviceUsuario.getUsuarioId(this.userPass).subscribe(data => {
           console.log(data);
-          this._serviceUsuario.actualizarContra(this.userPass, this._serviceUsuario.encryptContra(pass.pass)).subscribe()
+          this._serviceUsuario.actualizarContra(this.userPass, this._serviceUsuario.encryptContra(pass.pass)).subscribe(data=>{
+            this.irHome()
+          })
+          this._serviceToast.showSuccess("Exito", "Actualizacion de contraseñas realizada")
         })
 
-        this._serviceToast.showSuccess("Exito", "Actualizacion de contraseñas realizada")
+
       }
     } else {
       this._serviceToast.errorSuccess("Error", "Error en los datos")
@@ -119,9 +124,9 @@ export class HomeComponent implements OnInit {
   }
 
 
-  formMailRecuperar() { 
+  formMailRecuperar() {
     let user = this.recuperarCuenta.value
-    this._serviceUsuario.getUserEmail(user.correo).subscribe(data=>{
+    this._serviceUsuario.getUserEmail(user.correo).subscribe(data => {
       console.log(data);
       this._serviceMail.recuperarCuenta(data.idusuario)
     })
