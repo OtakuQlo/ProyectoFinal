@@ -128,7 +128,7 @@ export class HomeComponent implements OnInit {
     let user = this.recuperarCuenta.value
     this._serviceUsuario.getUserEmail(user.correo).subscribe(data => {
       console.log(data);
-      this._serviceMail.recuperarCuenta(data.idusuario)
+      this._serviceMail.recuperarCuenta(data.idusuario).subscribe()
     })
   }
 }

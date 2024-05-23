@@ -5,11 +5,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class MailService {
-  url = 'http://localhost:3000/api/api/mail';
+  url = 'http://localhost:3000/api/mail';
   constructor(private http: HttpClient) { }
   recuperarCuenta(id:any): Observable<any>{
-    console.log(id);
-    
     return this.http.post(this.url,{id:id})
   }
 }
