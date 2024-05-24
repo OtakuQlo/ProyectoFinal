@@ -30,31 +30,41 @@ export class AppComponent {
       map(() => this.perfilS.getPerfilActivo())
     );
   }
+
+  ngAfterViewInit(){
+    this.planEnUso();
+    this.cantidadDePlanes();
+  }
   
   ngOnInit() {
     if (this.perfilS.getPerfilActivo()){
       // Llama a la función del servicio para obtener el valor del LocalStorage cada 5 segundos (por ejemplo)
         this.getLocalStorageValuePeriodically(100).subscribe(value => {
         this.userA = value;
-        
         // Haz lo que necesites con el valor del LocalStorage aquí
       });
 
-      this.planS.getPlansId(this.userS.getUserActive().idplan).subscribe(data => {
-        this.plan = data;
-      });
-
-
-      this.perfilS.cantidadPerfiles(this.userS.getUserActive().idusuario).subscribe(data => {
-        this.cantperfiles = data;
-      });
-
-
-      
+      this.planEnUso();
+      this.cantidadDePlanes();
     }else{
       
     }
     
+  }
+
+
+  planEnUso(){
+    this.planS.getPlansId(this.userS.getUserActive().idplan).subscribe(data => {
+      this.plan = data;
+      console.log(this.plan);
+    });
+  }
+
+  cantidadDePlanes(){
+    this.perfilS.cantidadPerfiles(this.userS.getUserActive().idusuario).subscribe(data => {
+      this.cantperfiles = data;
+      
+    });
   }
 
   inactivateUser(){
