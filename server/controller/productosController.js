@@ -71,30 +71,36 @@ exports.obtenerProductoId = async (req, res) => {
         res.status(500).send('HUBO UN ERROR EN ENCONTRAR EL PRODUCTO')
     }
 }
-// exports.actualizarProducto = async (req, res) => {
-//     try {
-//         const { idmarca, nombremarca } = req.body;
-//         let marca = await Marca.findByPk(req.params.id);
 
-//         if (!marca) {
-//             return res.status(404).json({ msg: 'La marca no existe' });
-//         }
 
-//         // Actualizar los campos de la marca
-//         marca.idmarca = idmarca;
-//         marca.nombremarca = nombremarca;
+exports.actualizarProducto = async (req, res) => {
+    try {
+        const { nombreproducto, idmarca, precio, barcode } = req.body;
+        let producto = await Productos.findByPk(req.params.id);
 
-//         // Guardar los cambios en la base de datos
-//         await marca.save();
+        if (!producto) {
+            return res.status(404).json({ msg: 'La marca no existe' });
+        }
 
-//         res.json(marca);
-//     } catch (error) {
-//         console.error(error);
-//         res.status(500).send('Hubo un error al actualizar la marca');
-//     }
-// };
+        // Actualizar los campos de la marca
+        producto.nombreproducto = nombreproducto;
+        producto.idmarca = idmarca;
+        producto.precio = precio;
+        producto.barcode = barcode;
+
+        // Guardar los cambios en la base de datos
+        await producto.save();
+
+        res.json(producto);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Hubo un error al actualizar la marca');
+    }
+};
 
 //en teoria esto no es necesario pero en caso de algo perdon
+
+//miguel del 23-05 el weon de arriba se equivocó (yo, igual estaba carreteado mi compa, perdonenlo) 
 
 exports.borrarProducto = async (req, res) => {
     try {

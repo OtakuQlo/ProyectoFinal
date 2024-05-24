@@ -9,6 +9,8 @@ import { EmpresaService } from '../../../service/empresa.service';
 import { ProdcutosllegadaService } from '../../../service/prodcutosllegada.service';
 import { UsuarioService } from '../../../service/usuario.service';
 import { ToastService } from '../../../service/toast.service';
+import { ActivatedRoute } from '@angular/router';
+import { ProductoService } from '../../../service/producto.service';
 
 @Component({
   selector: 'app-agregar-producto',
@@ -25,17 +27,46 @@ export class AgregarProductoComponent {
     private empresa: EmpresaService,
     private producto: ProdcutosllegadaService,
     private usuario: UsuarioService,
-    private toastS: ToastService
+    private toastS: ToastService,
+    private route: ActivatedRoute,
+    private prod: ProductoService
   ) {
     
+
   }
   ngOnInit(): void {
     this.obtenermarcas();
     this.obtenerEmpresas();
+    this.id = '';
+    this.route.queryParams.subscribe(params => {
+      this.id = params['id'];
+      this.isEditMode = this.id !== null && this.id !== undefined;
+
+      if (this.isEditMode) {
+        // Lógica para el modo de edición
+        
+        this.edit = true;
+
+        this.prod.getProductoId(this.id).subscribe(data => {
+          this.productoedit = data;
+          
+          this.nombre = this.productoedit.nombreproducto;
+          this.codebar = this.productoedit.barcode;
+          this.marcaid = this.productoedit.idmarca;
+          this.preven = this.productoedit.precio;
+        });
+        
+
+
+        // Aquí puedes cargar los datos del producto para editar
+      }
+    });
   }
 
-  
-
+  productoedit: any;
+  edit = false;
+  id:String = '';
+  isEditMode: boolean = false;
   nombre: String = '';
   fecha:any;
   cantidad: any;
@@ -85,14 +116,14 @@ export class AgregarProductoComponent {
   obtenermarcas(){
     this._marcaservice.getMarca().subscribe(data=>{
       this.marcas = data
-      console.log(this.marcas);
+      
     })
   }
 
   obtenerEmpresas(){
     this.empresa.getEmpresas().subscribe(data=>{
       this.empresas = data
-      console.log(this.empresas);
+      
     })
   }
 
@@ -112,7 +143,7 @@ export class AgregarProductoComponent {
 
 
   agregarProducto(){
-
+    console.log(2)
     let bandera = true;//bandera que permite guardar un articulo, en caso de ser true es porque las validaciones son correctas y se añade el producto
 
     // validacion de que se seleccione una fecha de vencimiento
@@ -177,7 +208,6 @@ export class AgregarProductoComponent {
 
     if(bandera){
       
-      console.log(this.marcaid,this.empresaid);
       this.producto.postProduct({
         
         "nombre": this.nombre,
@@ -195,6 +225,52 @@ export class AgregarProductoComponent {
       this.router.navigate(['/Inventario']);
       this.toastS.showSuccess('Su producto ha sido agregado con exito','Producto añadido');
     }
+  }
+
+
+  editarProducto(){
+    
+    let bandera = true;
+
+    if(this.nombre.length <= 0){
+      bandera = false;
+      this.labelnombre = "El nombre del producto no debe estar vacio";
+    }else{
+      this.labelnombre = ""
+    }
+
+    if(!this.regexcode.test(this.codebar)){
+      bandera = false;
+      this.labelcodebar = "Solo se pueden ingresar numeros y letras en el codigo de barras"
+    }else{
+      this.labelcodebar = " ";
+    }
+
+    if (!this.regexnumeros.test(this.preven.toString()) || this.preven <=0 || this.preven > 100000) {
+      bandera = false;
+      this.labelpreven = "Solo se acepta numeros y mayor de 0 hasta 100000"
+    }else{
+      this.labelpreven = " ";
+    }
+
+    if (this.marcaid == 0) {
+      bandera = false;
+      this.labelmarca = "Se debe ingresar una marca.";
+    }else{
+      this.labelmarca = "";
+    }
+
+
+    if(bandera){
+      
+      
+
+      this.prod.editProduct(this.id,{nombreproducto: this.nombre,idmarca: this.marcaid, precio: this.preven, barcode: this.codebar}).subscribe();
+
+      this.router.navigate(['/Inventario']);
+      this.toastS.showSuccess('Su producto ha sido editado con exito.','Producto editado');
+    }
+
   }
   
 }

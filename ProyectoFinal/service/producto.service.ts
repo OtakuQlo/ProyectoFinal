@@ -24,4 +24,12 @@ export class ProductoService {
     }
   }
 
+  getProductoId(id:any):Observable<any>{
+    return this.http.get(this.url+"/id/"+id);
+  }
+
+  editProduct(id:any,datos:any):Observable<any>{
+    return this.http.put(this.url+"/"+id,datos);
+  }
+
 }
