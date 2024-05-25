@@ -22,20 +22,12 @@ ProductoLlegadas.init({
         type: DataTypes.STRING,
         allowNull:false
     },
-    nombre:{
-        type:DataTypes.STRING,
-        allowNull:false
-    },
     fechaingreso:{
         type:DataTypes.DATE,
         allowNull:false
     },
     fechavencimiento:{
         type:DataTypes.DATE,
-        allowNull:false
-    },
-    idempresa:{
-        type: DataTypes.INTEGER,
         allowNull:false
     },
     idempresa:{
