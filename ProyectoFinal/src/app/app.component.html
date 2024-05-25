@@ -1,17 +1,17 @@
-<div *ngIf="userA" class="row mt-2">
+<div *ngIf="userA" class="row mt-2" >
     <div class="col-1 text-center ms-5 mt-2">
         <a data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample"><img
                 src="../../assets/Icon/usuario.png" alt="FotoPerfil" width="90" height="90">
         </a>
-        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+        <div class="navO  offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
             <div class="offcanvas-header">
                 <img src="../../assets/Icon/usuario.png" alt="FotoPerfil" width="60" height="60">
                 <h5 class="offcanvas-title" id="offcanvasExampleLabel">OrdenaloTodo</h5>
-                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                <button type="button" class="btn-close text-reset " data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body" *ngIf="userA.passadmin != null">
-                <div>
-                    <ul class="list-group list-group-flush" style="font-size: 18px;">
+                <div >
+                    <ul class="list-group list-group-flush" style="font-size: 18px;" >
                         <li class="list-group-item mt-2"><a href="/AjustePlan">Cambiar plan</a></li>
                         <li class="list-group-item mt-2"><a href="/Venta">Venta</a></li>
                         <li class="list-group-item mt-2"><a href="/Inventario">Inventario</a></li>

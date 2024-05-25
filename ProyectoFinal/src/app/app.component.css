@@ -1,0 +1,26 @@
+.navO{
+    background-color: #1d313c;
+}
+.navO li{
+    background-color: #1d313c;
+}
+.navO h5 {
+    color: aliceblue;
+}
+.offcanvas a {
+    color: aliceblue;
+    text-decoration: none;
+   
+}
+
+.offcanvas a:hover{
+    color:rgba(196, 59, 57);
+    text-decoration:underline;
+    font-weight: bold;
+}
+.offcanvas-footer button{
+    color: aliceblue;
+}
+.offcanvas-footer button:hover{
+    color:rgba(196, 59, 57);
+}
