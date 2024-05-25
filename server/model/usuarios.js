@@ -46,6 +46,10 @@ Usuarios.init({
         type:DataTypes.INTEGER,
         allowNull:false
     },
+    estado:{
+        type:DataTypes.INTEGER,
+        allowNull:false
+    },
 
 }, {
     sequelize, // Pasar la instancia de Sequelize aquí
