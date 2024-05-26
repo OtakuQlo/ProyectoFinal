@@ -20,13 +20,12 @@ export class SeccionPerfilesComponent {
     
 
   constructor(private route:Router, private perfilS:PerfilusuarioService, private userS:UsuarioService, private alert:ToastService){ 
-    this.getPerfiles()
-    console.log(this.userS.getUserActive());
     
   }
 
-  ngOnInit(){   
-    interval(1000) // Intervalo de 10 segundos
+  ngOnInit(){  
+
+    interval(200) // Intervalo de 10 segundos
       .pipe(
         switchMap(() => this.perfilS.getPerfiles(parseInt(this.usuario.idusuario)))
       )
@@ -36,8 +35,6 @@ export class SeccionPerfilesComponent {
   }
 
   getPerfiles(){
-    console.log(this.usuario);
-    
     this.perfilS.getPerfiles(parseInt(this.usuario.idusuario)).subscribe((perfiles) => {
       this.perfiles = perfiles
     })
@@ -52,9 +49,8 @@ export class SeccionPerfilesComponent {
       localStorage.setItem('pActivo', JSON.stringify(this.perfiles.find(({id} : any) => id === idP)))
       this.perfilS.setActivateUser(parseInt(idP), {estado : true}).subscribe();
       this.route.navigate(['/Venta'])
-      console.log(localStorage.getItem('pActivo'));
+      window.location.href = '/Venta'
     }
-    
   }
 
   irHome(){
@@ -62,6 +58,5 @@ export class SeccionPerfilesComponent {
     localStorage.removeItem('pActivo')
     this.route.navigate(['/Home'])
   }
-  
 
 }

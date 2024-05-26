@@ -6,7 +6,6 @@ import { PerfilusuarioService } from '../../../service/perfilusuario.service';
 import { ProductoService } from '../../../service/producto.service';
 import { CommonModule, formatDate } from '@angular/common';
 import { Router } from '@angular/router';
-import { Observable, interval, map } from 'rxjs';
 
 @Component({
   selector: 'app-realizar-venta',
@@ -17,38 +16,20 @@ import { Observable, interval, map } from 'rxjs';
 })
 export class RealizarVentaComponent {
 
-  constructor(private venta: VentaService, private alert: ToastService, private perfil: PerfilusuarioService, private productoS: ProductoService, private route:Router) {
+  constructor( private venta: VentaService, private alert: ToastService, private perfil: PerfilusuarioService, private productoS: ProductoService, private route:Router) {
     this.alert.showSuccess('', 'Bienvenido ' + this.perfilV.nombre)
-    
-    /* console.log(localStorage.getItem('pActivo')); */
-
   }
 
   ngOnInit(): void {
     this.boletaVenta()
-    
   }
-
-
-  /* ngOnInit(): void {
-    this.boletaActiva(10000).subscribe(data => {
-      this.boleta = data
-    })
-    
-  }
-
-  boletaActiva( intervalTime: number): Observable<any> {
-    return interval(intervalTime).pipe(
-      map(() => this.boletaVenta())
-    );
-  } */
 
   //Insert
   detalle: any[] = [];
   producto: any;
   boleta: any;
   total: any = 0;
-
+  date = formatDate(new Date(), 'dd-MM-yyyy', 'en')
 
   //Producto
   codebar: string = '';
@@ -75,28 +56,21 @@ export class RealizarVentaComponent {
     } else {
       this.labelcodebar = " ";
     }
-
     if (!this.regexnumeros.test(this.cantidad.toString()) || this.cantidad <= 0 || this.cantidad > 50) {
       bandera = false;
       this.labelcantidad = "Escoge la cantidad a agregar con un maximo de 50"
     } else {
       this.labelcantidad = "";
     }
-
     if (!bandera) {
       this.alert.errorSuccess('', 'Asegurate de rellenar bien los campos')
     } else {
       this.agregarProducto()
-      
     }
-
   }
 
-  async pagarVenta() {     
-    
+  async pagarVenta() {
     if(this.total > 0){
-      console.log('pasa');
-      
       let boletin = this.boleta[0]
       boletin.preciototal = this.total
       console.log(boletin.preciototal);
@@ -104,8 +78,6 @@ export class RealizarVentaComponent {
       this.cancelarPago()
       window.location.reload()
     }
-    console.log('nada');
-    
   }
 
   agregarProducto() {
@@ -114,7 +86,6 @@ export class RealizarVentaComponent {
       if (this.producto && this.producto.precio !== undefined) {
         this.total = this.total + (this.producto.precio * this.cantidad);
         let curr = this.detalle.find(p => p.idproducto.idproducto === this.producto.idproducto)
-        
         let index = this.detalle.findIndex(obj => obj.idproducto.idproducto === this.producto.idproducto)
         
         if (curr != undefined) {
@@ -129,12 +100,9 @@ export class RealizarVentaComponent {
             this.cancelarVenta()
             this.alert.showSuccess('', 'Detalle Actualizado');
           })
-          
-          
         } 
         if(curr == undefined) {
-          this.boletaVenta().then(()=>{
-            console.log(this.boleta[0].idboleta);          
+          this.boletaVenta().then(()=>{        
             this.venta.realizarCompra({
               "iddetalle": '',
               "idboleta": this.boleta[0].idboleta,
@@ -147,12 +115,9 @@ export class RealizarVentaComponent {
               idproducto: this.producto,
               cantidad: this.cantidad
             })
-            console.log(this.detalle);
             this.alert.showSuccess('', 'Producto Agregado');
             this.cancelarVenta()
           })
-          
-          
         }
       } else {
         this.alert.errorSuccess('', 'Producto no encontrado');
@@ -170,15 +135,14 @@ export class RealizarVentaComponent {
     this.total = 0
   }
 
-
   async boletaVenta() {
     await this.venta.getboleta(this.perfilV.id).then(boleta =>{
       this.boleta = boleta
       if (this.boleta.length === 0){
-        let date = formatDate(new Date(), 'yyyy-MM-dd', 'en')
+        let datebol = formatDate(new Date(), 'yyyy-MM-dd', 'en')
         this.venta.crearBoleta({
           "idboleta": '',
-          "fecha": date,
+          "fecha": datebol,
           "preciototal": this.total,
           "estado": false,
           "idperfil": this.perfilV.id
