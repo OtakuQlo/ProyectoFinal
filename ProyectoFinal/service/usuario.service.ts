@@ -63,7 +63,6 @@ export class UsuarioService {
   desencryptContra(pass: any) {
     const secretKey = environment.key;
     const simpleCrypto = new SimpleCrypto(secretKey);
-    console.log(simpleCrypto.decrypt(pass))
     return simpleCrypto.decrypt(pass);
   }
 

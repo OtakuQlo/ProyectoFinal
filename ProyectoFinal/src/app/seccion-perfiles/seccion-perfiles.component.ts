@@ -4,11 +4,12 @@ import { UsuarioService } from '../../../service/usuario.service';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { ToastService } from '../../../service/toast.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-seccion-perfiles',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,FormsModule],
   templateUrl: './seccion-perfiles.component.html',
   styleUrl: './seccion-perfiles.component.css'
 })
@@ -16,7 +17,7 @@ export class SeccionPerfilesComponent {
 
   usuario: any;
   perfiles: any;
-    
+  pass: any;
 
   constructor(private route:Router, private perfilS:PerfilusuarioService, private userS:UsuarioService, private alert:ToastService){ 
     
@@ -34,7 +35,6 @@ export class SeccionPerfilesComponent {
   }
 
   activarUser(idP:any){
-    console.log(idP);
     this.perfilS.getPerfil(idP).subscribe(data=>{
       let perfil = data
       if (perfil.estado ==false) {
@@ -44,6 +44,26 @@ export class SeccionPerfilesComponent {
           window.location.href = '/Venta'
         })
 
+      }else{
+        return this.alert.errorSuccess('Seleccione otro','Perfil ya en uso')
+      }
+        
+    })
+  }
+
+  activarAdmin(idP:any){
+    this.perfilS.getPerfil(idP).subscribe(data=>{
+      let perfil = data
+      if (perfil.estado == false) {
+        if(this.userS.desencryptContra(perfil.passadmin) == this.pass){
+          this.perfilS.setActivateUser(idP,{estado : true}).subscribe(data=>{
+            localStorage.setItem('pActivo', JSON.stringify(this.perfiles.find(({id} : any) => id === idP)))
+            this.perfilS.setActivateUser(parseInt(idP), {estado : true}).subscribe();
+            window.location.href = '/Venta'
+          })
+        }else{
+          this.alert.errorSuccess('','Contraseña Incorrecta')
+        }
       }else{
         return this.alert.errorSuccess('Seleccione otro','Perfil ya en uso')
       }

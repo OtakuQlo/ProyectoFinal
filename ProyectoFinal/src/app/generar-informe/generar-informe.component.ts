@@ -17,7 +17,7 @@ export class GenerarInformeComponent {
   productozzz : any[] = [];
   productoLLegada:any[] = [];
   stock: any[] = [];
-  
+  empleados: any [] = [];
   
 
   constructor(private productoS:ProductoService,private productLL: ProdcutosllegadaService,private userA:UsuarioService) {    
@@ -50,13 +50,10 @@ export class GenerarInformeComponent {
       { header: 'Stock Entrante', key: 'stockE', width: 30 },
       { header: 'Stock Actual', key: 'stockA', width: 30 },
     ];
-
     // Agregar datos a la hoja
     this.productoLLegada.forEach(rowdata => {
       worksheet.addRow([rowdata.barcode, rowdata.nombre, rowdata.precioaventa,rowdata.fechaingreso,rowdata.fechavencimiento,rowdata.cantidad,10]);
     })
-    
-
     try {
       const buffer = await workbook.xlsx.writeBuffer();
 
@@ -66,6 +63,33 @@ export class GenerarInformeComponent {
       //Usar file-saver para descargar el archivo
       saveAs(blob, 'InformeIngre'+'21/05/2024'+'.xlsx')
 
+      console.log('Archivo Excel guardado.');
+    } catch (error) {
+      console.error('Error al guardar el archivo Excel:', error);
+    }
+  }
+
+  async generarInformeEmpleados() {
+    // Crear un nuevo libro de trabajo
+    const workbook = new ExcelJS.Workbook();
+    // Agregar una hoja al libro de trabajo
+    const worksheet = workbook.addWorksheet('Informe Ingreso');
+    //Establecer Columnas
+    worksheet.columns = [
+      { header: 'Nombre del Empleado', key: 'nombre_emp', width: 20 },
+      { header: 'Cantidad de Ventas', key: 'cant_vent', width: 30 },
+      { header: 'Total', key: 'total', width: 16 }
+    ];
+    // Agregar datos a la hoja
+    this.productoLLegada.forEach(rowdata => {
+      worksheet.addRow([rowdata.barcode, rowdata.nombre, rowdata.precioaventa]);
+    })
+    try {
+      const buffer = await workbook.xlsx.writeBuffer();
+      // Crear un Blob a partir del buffer
+      const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+      //Usar file-saver para descargar el archivo
+      saveAs(blob, 'InformeIngre'+'21/05/2024'+'.xlsx')
       console.log('Archivo Excel guardado.');
     } catch (error) {
       console.error('Error al guardar el archivo Excel:', error);
