@@ -4,7 +4,6 @@ import { UsuarioService } from '../../../service/usuario.service';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { ToastService } from '../../../service/toast.service';
-import { interval, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-seccion-perfiles',
@@ -15,7 +14,7 @@ import { interval, switchMap } from 'rxjs';
 })
 export class SeccionPerfilesComponent {
 
-  usuario: any = this.userS.getUserActive()
+  usuario: any;
   perfiles: any;
     
 
@@ -24,14 +23,8 @@ export class SeccionPerfilesComponent {
   }
 
   ngOnInit(){  
-
-    interval(200) // Intervalo de 10 segundos
-      .pipe(
-        switchMap(() => this.perfilS.getPerfiles(parseInt(this.usuario.idusuario)))
-      )
-      .subscribe((perfiles) => {
-        this.perfiles = perfiles;
-      });
+    this.usuario = this.userS.getUserActive() 
+    this.getPerfiles();
   }
 
   getPerfiles(){
@@ -41,16 +34,24 @@ export class SeccionPerfilesComponent {
   }
 
   activarUser(idP:any){
-    /* this.getPerfiles */
-    let perfil : any = this.perfiles.find(({id} : any) => id === idP)
-    if (perfil.estado === true){
-      return this.alert.errorSuccess('Seleccione otro','Perfil ya en uso')
-    }else {
-      localStorage.setItem('pActivo', JSON.stringify(this.perfiles.find(({id} : any) => id === idP)))
-      this.perfilS.setActivateUser(parseInt(idP), {estado : true}).subscribe();
-      this.route.navigate(['/Venta'])
-      window.location.href = '/Venta'
-    }
+    console.log(idP);
+    this.perfilS.getPerfil(idP).subscribe(data=>{
+      let perfil = data
+      console.log(data);
+      
+      if (perfil.estado ==false) {
+        this.perfilS.setActivateUser(idP,{estado : true}).subscribe(data=>{
+          localStorage.setItem('pActivo', JSON.stringify(this.perfiles.find(({id} : any) => id === idP)))
+          this.perfilS.setActivateUser(parseInt(idP), {estado : true}).subscribe();
+          this.route.navigate(['/Venta'])
+          window.location.href = '/Venta'
+        })
+
+      }else{
+        return this.alert.errorSuccess('Seleccione otro','Perfil ya en uso')
+      }
+        
+    })
   }
 
   irHome(){

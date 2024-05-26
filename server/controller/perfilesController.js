@@ -27,6 +27,17 @@ exports.obtenerPerfil= async(req,res)=>{
     }
 }
 
+exports.obtenerPerfilId= async(req,res)=>{
+  try{
+      const perfil = await Perfiles.findByPk(req.params.id);
+      res.json(perfil)
+  }
+  catch(error){
+      console.log(error);
+      res.status(500).send('HUBO UN ERROR')
+  }
+}
+
 exports.actualizarPerfil = async (req, res) => {
     try {
       const { nombre , passadmin } = req.body // Obtenemos el ID de los parámetros de la solicitud

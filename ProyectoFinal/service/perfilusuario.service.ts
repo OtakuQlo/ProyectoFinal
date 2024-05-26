@@ -24,6 +24,10 @@ export class PerfilusuarioService {
     return this.http.get(this.url+"/"+id)
   }
 
+  getPerfil(id:any): Observable<any>{
+    return this.http.get(this.url+'/perfil/'+id)
+  }
+
   putPerfil(id:any, perfil:any){
     return this.http.put(this.url+"/"+id, perfil);
   }
@@ -48,5 +52,5 @@ export class PerfilusuarioService {
   cantidadPerfiles(id:any): Observable<any> {
     return this.http.get(this.url+"/"+id+"/cantidad");
 
-}
+  }
 }
