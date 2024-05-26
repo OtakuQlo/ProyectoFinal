@@ -36,14 +36,11 @@ export class SeccionPerfilesComponent {
   activarUser(idP:any){
     console.log(idP);
     this.perfilS.getPerfil(idP).subscribe(data=>{
-      let perfil = data
-      console.log(data);
-      
+      let perfil = data 
       if (perfil.estado ==false) {
         this.perfilS.setActivateUser(idP,{estado : true}).subscribe(data=>{
           localStorage.setItem('pActivo', JSON.stringify(this.perfiles.find(({id} : any) => id === idP)))
           this.perfilS.setActivateUser(parseInt(idP), {estado : true}).subscribe();
-          this.route.navigate(['/Venta'])
           window.location.href = '/Venta'
         })
 
