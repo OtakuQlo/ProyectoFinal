@@ -22,7 +22,7 @@ import { MailService } from '../../../service/mail.service';
 export class HomeComponent implements OnInit {
 
   validSesion: boolean = false;
-  setPage: boolean = false;
+  setPage: boolean = true;
   userPass: any;
   constructor(private _serviceUsuario: UsuarioService,
     private route: Router,
@@ -55,18 +55,25 @@ export class HomeComponent implements OnInit {
   });
 
   ngOnInit(): void {
+    console.log(this.setPage);
+    
     localStorage.removeItem('token');
     this._serviceUsuario.deletUserActive()
     this._activeroute.queryParams.subscribe(data => {
-      console.log(data);
+      this._serviceUsuario.getUsuarioId(data['id']).subscribe(data1 => {
+        console.log( data1);
+        
+        if (data['id'] && data1.estado == 1) {
 
-      if (data['id']) {
-        this.userPass = data['id']
-        this.setPage = false;
-      } else {
-        this.setPage = true;
+          this.userPass = data['id']
 
-      }
+          
+          this.setPage = false;
+        } else {
+          this.setPage = true;
+        }
+      })
+
     })
 
 
@@ -98,21 +105,37 @@ export class HomeComponent implements OnInit {
   irCrearCuenta() {
     this.route.navigate(['./Registro']);
   }
-  irHome(){
-    this.route.navigate(['./Home']);
+  irHome() {
+    window.location.href ="http://localhost:4200/Home"
   }
   reestablecePass() {
+    console.log(this.userPass);
     let pass = this.cambiarpass.value;
     console.log(this.cambiarpass.status);
 
     if (this.cambiarpass.status == 'VALID') {
       if (pass.pass == pass.passr) {
+        console.log(this.userPass);
+        
         this._serviceUsuario.getUsuarioId(this.userPass).subscribe(data => {
-          console.log(data);
-          this._serviceUsuario.actualizarContra(this.userPass, this._serviceUsuario.encryptContra(pass.pass)).subscribe(data=>{
-            this.irHome()
-          })
-          this._serviceToast.showSuccess("Exito", "Actualizacion de contraseñas realizada")
+          console.log(data.estado);
+          if(data.estado==1){
+            this._serviceUsuario.actualizarContra(this.userPass, {contra:this._serviceUsuario.encryptContra(pass.pass)}).subscribe(data => {
+              if (data) {
+                this._serviceToast.showSuccess("Exito", "Actualizacion de contraseñas realizada")
+                setTimeout(async () => {this.irHome()}, 1000);
+                
+               
+              }
+              
+            })
+          }else{
+            this._serviceToast.errorSuccess("Error","No esta permitido cambiar contraseña")
+            setTimeout(async () => {this.irHome()}, 1000);
+            
+          }
+         
+          
         })
 
 
@@ -128,6 +151,7 @@ export class HomeComponent implements OnInit {
     let user = this.recuperarCuenta.value
     this._serviceUsuario.getUserEmail(user.correo).subscribe(data => {
       console.log(data);
+      this._serviceUsuario.actualizarEstado(data.idusuario,{contra:data.contra  }).subscribe()
       this._serviceMail.recuperarCuenta(data.idusuario).subscribe()
     })
   }

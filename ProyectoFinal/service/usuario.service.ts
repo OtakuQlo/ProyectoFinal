@@ -23,7 +23,7 @@ export class UsuarioService {
   // validar el nuevo usuario
 
   getUserEmail(email: any): Observable<any> {
-    return this.http.get(this.url + '/' + email);
+    return this.http.get(this.url + '/email/' + email);
   }
 
   async setUserActive(email: any): Promise<boolean> {
@@ -76,8 +76,11 @@ export class UsuarioService {
   getUsuarioId(id:any): Observable<any>{
     return this.http.get(this.url+"/usuarioid/"+id)
   }
-  actualizarContra(id:any,pass:any): Observable<any>{
-    return this.http.put(this.url+"/"+id,{contra:pass})
+  actualizarContra(id:any,newData:any): Observable<any>{
+    return this.http.put(this.url+"/"+id,{contra:newData.contra,estado:0})
+  }
+  actualizarEstado(id:any,newData:any): Observable<any>{
+    return this.http.put(this.url+"/"+id,{contra:newData.contra,estado:1})
   }
   usuarioExistente(email:any,rut:any){
     return this.http.get(this.url+"/existente?email="+email+"&rut="+rut)
