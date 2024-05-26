@@ -23,7 +23,7 @@ export class UsuarioService {
   // validar el nuevo usuario
 
   getUserEmail(email: any): Observable<any> {
-    return this.http.get(this.url + '/' + email);
+    return this.http.get(this.url + '/email/' + email);
   }
 
   async setUserActive(email: any): Promise<boolean> {

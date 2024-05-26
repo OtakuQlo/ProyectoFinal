@@ -15,7 +15,7 @@ import { interval, switchMap } from 'rxjs';
 })
 export class SeccionPerfilesComponent {
 
-  usuario: any = this.userS.getUserActive()
+  usuario: any;
   perfiles: any;
     
 
@@ -24,14 +24,8 @@ export class SeccionPerfilesComponent {
   }
 
   ngOnInit(){  
-
-    interval(200) // Intervalo de 10 segundos
-      .pipe(
-        switchMap(() => this.perfilS.getPerfiles(parseInt(this.usuario.idusuario)))
-      )
-      .subscribe((perfiles) => {
-        this.perfiles = perfiles;
-      });
+    this.usuario = this.userS.getUserActive() 
+    this.getPerfiles();
   }
 
   getPerfiles(){
@@ -41,22 +35,25 @@ export class SeccionPerfilesComponent {
   }
 
   activarUser(idP:any){
-    /* this.getPerfiles */
-    let perfil : any = this.perfiles.find(({id} : any) => id === idP)
-    if (perfil.estado === true){
-      return this.alert.errorSuccess('Seleccione otro','Perfil ya en uso')
-    }else {
-      localStorage.setItem('pActivo', JSON.stringify(this.perfiles.find(({id} : any) => id === idP)))
-      this.perfilS.setActivateUser(parseInt(idP), {estado : true}).subscribe();
-      this.route.navigate(['/Venta'])
-      window.location.href = '/Venta'
-    }
+    console.log(idP);
+    this.perfilS.getPerfiles(idP).subscribe(data=>{
+      if (data[0].estado ==false) {
+        this.perfilS.setActivateUser(this.usuario.idusuario,{}).subscribe(data=>{
+          console.log(data);
+        })
+      }else{
+        console.log("ya inicio");
+        
+      }
+       
+      
+    })
   }
 
   irHome(){
-    this.userS.deletUserActive()
-    localStorage.removeItem('pActivo')
-    this.route.navigate(['/Home'])
+    // this.userS.deletUserActive()
+    // localStorage.removeItem('pActivo')
+    // this.route.navigate(['/Home'])
   }
 
 }
