@@ -41,18 +41,23 @@ export class SeccionPerfilesComponent {
       
       if (perfil.estado ==false) {
         this.perfilS.setActivateUser(idP,{estado : true}).subscribe(data=>{
-          console.log(data);
+          localStorage.setItem('pActivo', JSON.stringify(this.perfiles.find(({id} : any) => id === idP)))
+          this.perfilS.setActivateUser(parseInt(idP), {estado : true}).subscribe();
+          this.route.navigate(['/Venta'])
+          window.location.href = '/Venta'
         })
+
       }else{
-        console.log("ya inicio");
-      }      
+        return this.alert.errorSuccess('Seleccione otro','Perfil ya en uso')
+      }
+        
     })
   }
 
   irHome(){
-    // this.userS.deletUserActive()
-    // localStorage.removeItem('pActivo')
-    // this.route.navigate(['/Home'])
+    this.userS.deletUserActive()
+    localStorage.removeItem('pActivo')
+    this.route.navigate(['/Home'])
   }
 
 }
