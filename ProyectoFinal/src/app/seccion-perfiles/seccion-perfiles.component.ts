@@ -4,7 +4,6 @@ import { UsuarioService } from '../../../service/usuario.service';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { ToastService } from '../../../service/toast.service';
-import { interval, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-seccion-perfiles',
@@ -36,17 +35,17 @@ export class SeccionPerfilesComponent {
 
   activarUser(idP:any){
     console.log(idP);
-    this.perfilS.getPerfiles(idP).subscribe(data=>{
-      if (data[0].estado ==false) {
-        this.perfilS.setActivateUser(this.usuario.idusuario,{}).subscribe(data=>{
+    this.perfilS.getPerfil(idP).subscribe(data=>{
+      let perfil = data
+      console.log(data);
+      
+      if (perfil.estado ==false) {
+        this.perfilS.setActivateUser(idP,{estado : true}).subscribe(data=>{
           console.log(data);
         })
       }else{
         console.log("ya inicio");
-        
-      }
-       
-      
+      }      
     })
   }
 
