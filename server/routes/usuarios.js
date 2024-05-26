@@ -5,8 +5,10 @@ const usuariosController = require('../controller/usuariosController')
 
 router.post('/',usuariosController.creandoUsuarios);
 router.get('/',usuariosController.obtenerUsuarios);
-router.get('/:email',usuariosController.obtenerUsuariosEmail);
+router.get('/email/:email',usuariosController.obtenerUsuariosEmail);
 router.get('/usuarioid/:id',usuariosController.obtenerUsuariosId);
+router.get('/existente/',usuariosController.usuarioExistenete)
 router.put('/:id',usuariosController.actualizarContra);
 router.put('/planes/:id',usuariosController.actualizarPlan);
+
 module.exports = router;

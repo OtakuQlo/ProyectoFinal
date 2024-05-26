@@ -79,6 +79,7 @@ export class UsuarioService {
   actualizarContra(id:any,pass:any): Observable<any>{
     return this.http.put(this.url+"/"+id,{contra:pass})
   }
-
-
+  usuarioExistente(email:any,rut:any){
+    return this.http.get(this.url+"/existente?email="+email+"&rut="+rut)
+  }
 }

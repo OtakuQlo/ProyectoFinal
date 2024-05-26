@@ -82,9 +82,11 @@ export class CrearCuentaComponent {
     telefono: any,
     idplan: any,
   ) {
-    this._serviceUsuario.getUserEmail(email).subscribe(data=>{
-      console.log(data)
-      this._servicioToast.errorSuccess("Error","El correo ya está en uso")
+    this._serviceUsuario.usuarioExistente(email,rut).subscribe(data=>{
+      console.log(data);
+      
+      this._servicioToast.errorSuccess("Error","El correo ya está en uso o el rut")
+      
     },(error)=>{
       console.error('Error al obtener los datos del usuario:', error);
       this._serviceUsuario
@@ -172,7 +174,11 @@ export class CrearCuentaComponent {
             usuario.telefono,
             this.plan,
           );
+        }else{
+          this._servicioToast.errorSuccess("Error","Seleccione el plan a pagar")
         }
+      }else{
+        this._servicioToast.errorSuccess("Error","Acepte los terminos")
       }
     }
   }

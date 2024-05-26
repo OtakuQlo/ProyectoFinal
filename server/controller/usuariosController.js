@@ -1,4 +1,5 @@
 
+const { Op } = require("sequelize");
 const Usuarios = require("../model/usuarios");
 
 
@@ -76,6 +77,25 @@ exports.obtenerUsuariosId = async (req, res) => {
     }
 };
 
+exports.usuarioExistenete = async(req,res)=>{
+  try {
+    const { email ,rut} = req.query; // Get the email from request parameters
+    const usuario = await Usuarios.findAll({ 
+      where: {
+        [Op.or]: [{email:email }, { rut: rut }],
+      },
+     }); // Find the user by email
+  
+    if (!usuario) { // If user not found
+      return res.status(404).json({ error: 'Usuario no encontrado' });
+    }
+  
+    res.json(usuario); // Send the found user as response
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Hubo un error');
+  }
+}
 
 exports.actualizarPlan = async (req, res) => {
   try {
