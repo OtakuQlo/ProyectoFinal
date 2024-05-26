@@ -1,5 +1,6 @@
 const { Sequelize, DataTypes, Model } = require('sequelize');
-const Productos = require('./productos')
+const Productos = require('./productos');
+const Usuarios = require('./usuarios');
 const sequelize = new Sequelize('ordenalo', 'root', '', {
     host: 'localhost',
     dialect:'mysql',
@@ -29,12 +30,23 @@ Perdidas.init({
     idproducto:{
         type:DataTypes.INTEGER,
         allowNull:false
+    },
+    idusuario:{
+        type:DataTypes.INTEGER,
+        allowNull:false
     }
 
 }, {
     sequelize, // Pasar la instancia de Sequelize aquí
     modelName: 'Perdidas',
     timestamps: false // Deshabilitar las marcas de tiempo automáticas // Nombre del modelo
+});
+
+Usuarios.hasMany(Perdidas,{
+    foreignKey: 'idusuario'
+});
+Perdidas.belongsTo(Usuarios,{
+    foreignKey: 'idusuario'
 });
 
 Productos.hasMany(Perdidas,{
