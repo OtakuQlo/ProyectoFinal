@@ -22,7 +22,7 @@ import { MailService } from '../../../service/mail.service';
 export class HomeComponent implements OnInit {
 
   validSesion: boolean = false;
-  setPage: boolean = false;
+  setPage: boolean = true;
   userPass: any;
   constructor(private _serviceUsuario: UsuarioService,
     private route: Router,
@@ -55,18 +55,25 @@ export class HomeComponent implements OnInit {
   });
 
   ngOnInit(): void {
+    console.log(this.setPage);
+    
     localStorage.removeItem('token');
     this._serviceUsuario.deletUserActive()
     this._activeroute.queryParams.subscribe(data => {
-      console.log(data);
+      this._serviceUsuario.getUsuarioId(data['id']).subscribe(data1 => {
+        console.log( data1);
+        
+        if (data['id'] && data1.estado == 1) {
 
-      if (data['id']) {
-        this.userPass = data['id']
-        this.setPage = false;
-      } else {
-        this.setPage = true;
+          this.userPass = data['id']
 
-      }
+          
+          this.setPage = false;
+        } else {
+          this.setPage = true;
+        }
+      })
+
     })
 
 
@@ -107,8 +114,10 @@ export class HomeComponent implements OnInit {
   }
   irHome() {
     this.route.navigate(['./Home']);
+
   }
   reestablecePass() {
+    console.log(this.userPass);
     let pass = this.cambiarpass.value;
     console.log(this.cambiarpass.status);
 
@@ -138,6 +147,7 @@ export class HomeComponent implements OnInit {
 
 
           }
+
         })
 
 
@@ -173,6 +183,7 @@ export class HomeComponent implements OnInit {
         this._serviceToast.errorSuccess("Error", "Error en los datos")
       },
     });
+
   }
 
 }

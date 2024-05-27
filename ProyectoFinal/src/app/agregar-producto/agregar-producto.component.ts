@@ -16,7 +16,7 @@ import { ProductoService } from '../../../service/producto.service';
   selector: 'app-agregar-producto',
   standalone: true,
   imports: [
-    FormsModule,CommonModule],
+    FormsModule, CommonModule],
   templateUrl: './agregar-producto.component.html',
   styleUrl: './agregar-producto.component.css'
 })
@@ -31,7 +31,7 @@ export class AgregarProductoComponent {
     private route: ActivatedRoute,
     private prod: ProductoService
   ) {
-    
+
 
   }
   ngOnInit(): void {
@@ -44,18 +44,18 @@ export class AgregarProductoComponent {
 
       if (this.isEditMode) {
         // Lógica para el modo de edición
-        
+
         this.edit = true;
 
         this.prod.getProductoId(this.id).subscribe(data => {
           this.productoedit = data;
-          
+
           this.nombre = this.productoedit.nombreproducto;
           this.codebar = this.productoedit.barcode;
           this.marcaid = this.productoedit.idmarca;
           this.preven = this.productoedit.precio;
         });
-        
+
 
 
         // Aquí puedes cargar los datos del producto para editar
@@ -65,10 +65,10 @@ export class AgregarProductoComponent {
 
   productoedit: any;
   edit = false;
-  id:String = '';
+  id: String = '';
   isEditMode: boolean = false;
   nombre: String = '';
-  fecha:any;
+  fecha: any;
   cantidad: any;
   prelle: any;
   preven: any;
@@ -78,7 +78,7 @@ export class AgregarProductoComponent {
 
   regexcode: RegExp = /^[a-zA-Z0-9]+$/;
   regexnumeros: RegExp = /^\d+$/;
-  
+
 
   //label de error
   labelnombre: string = '';
@@ -89,10 +89,10 @@ export class AgregarProductoComponent {
   labelfecha: string = '';
 
 
-  
+
 
   //formato fecha para dar el minimo al input
-  fechahoy: Date = new Date();  
+  fechahoy: Date = new Date();
 
   dia: String = ("0" + this.fechahoy.getDate()).slice(-2); // Día del mes
   mes: String = ("0" + (this.fechahoy.getMonth() + 1)).slice(-2); // Los meses en JavaScript empiezan en 0
@@ -113,103 +113,145 @@ export class AgregarProductoComponent {
   labelempresa: string = "";
 
 
-  obtenermarcas(){
-    this._marcaservice.getMarca().subscribe(data=>{
+  obtenermarcas() {
+    this._marcaservice.getMarca().subscribe(data => {
       this.marcas = data
-      
+
     })
   }
 
-  obtenerEmpresas(){
-    this.empresa.getEmpresas().subscribe(data=>{
+  obtenerEmpresas() {
+    this.empresa.getEmpresas().subscribe(data => {
       this.empresas = data
-      
+
     })
   }
 
-  agregarMarca(){
-    this._marcaservice.postMarca({
-      "nombremarca": this.postmarca
-    }).subscribe()
-    this.obtenermarcas();
+
+
+  agregarMarca() {
+
+
+    let bandera = true;
+
+    this._marcaservice.getMarca().subscribe(data => {
+      let info: any;
+      info = data;
+
+      for (let i = 0; i < info.length; i++) {
+
+        if (this.postmarca.toUpperCase() === info[i].nombremarca.toUpperCase()) {
+          bandera = false;
+          break;
+        }
+      }
+
+      if (bandera === true) {
+        this._marcaservice.postMarca({
+          "nombremarca": this.postmarca
+        }).subscribe(() => {
+          this.obtenermarcas();
+        });
+      }
+    });
+
   }
 
-  agregarEmpresa(){
-    this.empresa.postEmpresas({
-      "nombreempresa": this.postempresa
-    }).subscribe();
-    this.obtenerEmpresas();
+
+  agregarEmpresa() {
+    let bandera = true;
+
+    this.empresa.getEmpresas().subscribe(data => {
+      let info: any;
+      info = data;
+
+      for (let i = 0; i < info.length; i++) {
+        if (this.postempresa.toUpperCase() === info[i].nombreempresa.toUpperCase()) {
+          bandera = false;
+          break;
+        }
+      }
+      if (bandera === true) {
+        this.empresa.postEmpresas({
+          "nombreempresa": this.postempresa
+        }).subscribe(() => {
+          this.obtenerEmpresas();
+        });
+      }
+    })
   }
 
 
-  agregarProducto(){
-    console.log(2)
+
+
+
+  agregarProducto() {
     let bandera = true;//bandera que permite guardar un articulo, en caso de ser true es porque las validaciones son correctas y se añade el producto
 
     // validacion de que se seleccione una fecha de vencimiento
-    if(!this.fecha){
+    if (!this.fecha) {
       bandera = false;
       this.labelfecha = "Debe haber una fecha selecionada";
-    }else{
+    } else {
       this.labelfecha = "";
     }
 
     // validacion que nombre del producto no este vacio
 
-    if(this.nombre.length <= 0){
+    if (this.nombre.length <= 0) {
       bandera = false;
       this.labelnombre = "El nombre del producto no debe estar vacio";
-    }else{
+    } else {
       this.labelnombre = ""
     }
 
     if (this.marcaid == 0) {
       bandera = false;
       this.labelmarca = "Se debe ingresar una marca.";
-    }else{
+    } else {
       this.labelmarca = "";
     }
 
     if (this.empresaid == 0) {
       bandera = false;
       this.labelempresa = "Se debe ingresar una empresa.";
-    }else{
+    } else {
       this.labelempresa = "";
     }
 
-    if(!this.regexcode.test(this.codebar)){
+    if (!this.regexcode.test(this.codebar)) {
       bandera = false;
       this.labelcodebar = "Solo se pueden ingresar numeros y letras en el codigo de barras"
-    }else{
+    } else {
       this.labelcodebar = " ";
     }
 
-    if (!this.regexnumeros.test(this.cantidad.toString()) || this.cantidad <=0 || this.cantidad > 999) {
+    if (!this.regexnumeros.test(this.cantidad.toString()) || this.cantidad <= 0 || this.cantidad > 999) {
       bandera = false;
       this.labelcantidad = "Solo se acepta numeros y mayor de 0 hasta 999"
-    }else{
+    } else {
       this.labelcantidad = " ";
     }
 
-    if (!this.regexnumeros.test(this.preven.toString()) || this.preven <=0 || this.preven > 100000) {
+    if (!this.regexnumeros.test(this.preven.toString()) || this.preven <= 0 || this.preven > 100000) {
       bandera = false;
       this.labelpreven = "Solo se acepta numeros y mayor de 0 hasta 100000"
-    }else{
+    } else {
       this.labelpreven = " ";
     }
 
-    if (!this.regexnumeros.test(this.prelle.toString()) || this.prelle <=0 || this.prelle > 100000) {
+    if (!this.regexnumeros.test(this.prelle.toString()) || this.prelle <= 0 || this.prelle > 100000) {
       bandera = false;
       this.labelprelle = "Solo se acepta numeros y mayor de 0 hasta 100000"
-    }else{
+    } else {
       this.labelprelle = " ";
     }
 
 
-    if(bandera){
-      
+    if (bandera) {
+
       this.producto.postProduct({
-        
+
         "nombre": this.nombre,
         "fechaingreso": this.fechaFormateada,
         "fechavencimiento": this.fecha,
@@ -223,54 +265,56 @@ export class AgregarProductoComponent {
 
       }).subscribe();
       this.router.navigate(['/Inventario']);
-      this.toastS.showSuccess('Su producto ha sido agregado con exito','Producto añadido');
+      this.toastS.showSuccess('Su producto ha sido agregado con exito', 'Producto añadido');
     }
   }
 
 
-  editarProducto(){
-    
+  editarProducto() {
+
     let bandera = true;
 
-    if(this.nombre.length <= 0){
+    if (this.nombre.length <= 0) {
       bandera = false;
       this.labelnombre = "El nombre del producto no debe estar vacio";
-    }else{
+    } else {
       this.labelnombre = ""
     }
 
-    if(!this.regexcode.test(this.codebar)){
+    if (!this.regexcode.test(this.codebar)) {
       bandera = false;
       this.labelcodebar = "Solo se pueden ingresar numeros y letras en el codigo de barras"
-    }else{
+    } else {
       this.labelcodebar = " ";
     }
 
-    if (!this.regexnumeros.test(this.preven.toString()) || this.preven <=0 || this.preven > 100000) {
+    if (!this.regexnumeros.test(this.preven.toString()) || this.preven <= 0 || this.preven > 100000) {
       bandera = false;
       this.labelpreven = "Solo se acepta numeros y mayor de 0 hasta 100000"
-    }else{
+    } else {
       this.labelpreven = " ";
     }
 
     if (this.marcaid == 0) {
       bandera = false;
       this.labelmarca = "Se debe ingresar una marca.";
-    }else{
+    } else {
       this.labelmarca = "";
     }
 
 
-    if(bandera){
-      
-      
+    if (bandera) {
 
-      this.prod.editProduct(this.id,{nombreproducto: this.nombre,idmarca: this.marcaid, precio: this.preven, barcode: this.codebar}).subscribe();
+
+
+      this.prod.editProduct(this.id, { nombreproducto: this.nombre, idmarca: this.marcaid, precio: this.preven, barcode: this.codebar }).subscribe();
 
       this.router.navigate(['/Inventario']);
-      this.toastS.showSuccess('Su producto ha sido editado con exito.','Producto editado');
+      this.toastS.showSuccess('Su producto ha sido editado con exito.', 'Producto editado');
     }
 
   }
-  
+
+
+
 }

@@ -18,7 +18,6 @@ import { forkJoin } from 'rxjs';
 export class CrearPerfilComponent {
 
   constructor(private route: Router, private perfil: PerfilusuarioService, private user: UsuarioService, private plan: PlansService) {
-    console.log(localStorage.getItem('usuario'));
     
   }
 
@@ -62,7 +61,6 @@ export class CrearPerfilComponent {
    }
 
    if (bandera) {
-    console.log("pasa");
      this.perfil.postPerfil({
       "idusuario": this.user.getUserActive().idusuario,
       "nombre": this.nombre,
