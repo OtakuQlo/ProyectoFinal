@@ -75,13 +75,14 @@ export class UsuarioService {
   getUsuarioId(id:any): Observable<any>{
     return this.http.get(this.url+"/usuarioid/"+id)
   }
-  actualizarContra(id:any,newData:any): Observable<any>{
-    return this.http.put(this.url+"/"+id,{contra:newData.contra,estado:0})
+
+  actualizarContra(id:any,pass:any): Observable<any>{
+    console.log("actualizar contra");
+    
+    return this.http.put(this.url+"/"+id,pass)
+
   }
-  actualizarEstado(id:any,newData:any): Observable<any>{
-    return this.http.put(this.url+"/"+id,{contra:newData.contra,estado:1})
-  }
-  usuarioExistente(email:any,rut:any){
+  usuarioExistente(email:any,rut:any): Observable<any>{
     return this.http.get(this.url+"/existente?email="+email+"&rut="+rut)
   }
 }

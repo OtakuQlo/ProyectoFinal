@@ -26,3 +26,18 @@ export const AdminGuard:CanActivateChildFn  = (route, state) => {
     return false
   }
 };
+
+export const AdminOrdenaloGuard:CanActivateChildFn  = (route, state) => {
+  let activo :any =localStorage.getItem('usuario');
+  console.log(JSON.parse(activo).rol);
+  if (JSON.parse(activo).rol == 2) {
+    return true
+  }else{
+    return false;
+  }
+  
+  // if (localStorage.getItem('token')) {
+  //   return true;
+  // }
+  // return false;
+};

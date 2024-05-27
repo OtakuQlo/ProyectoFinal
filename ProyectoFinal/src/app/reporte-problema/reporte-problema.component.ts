@@ -47,7 +47,7 @@ export class ReporteProblemaComponent {
       descripcion : this.reporte,
       respuesta : '',
       solucion : false,
-      fecha:formatDate(new Date(), 'yyyy-MM-dd', 'en')
+      fecha: formatDate(new Date(), 'yyyy-MM-dd', 'en')
     }).subscribe((response) => {
       console.log('Si',response);
     },

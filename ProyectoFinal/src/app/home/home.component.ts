@@ -39,7 +39,7 @@ export class HomeComponent implements OnInit {
 
   });
   recuperarCuenta = new FormGroup({
-    correo: new FormControl('dadas@gmail.com', [Validators.required]),
+    correo: new FormControl('proyectofinal118@gmail.com', [Validators.required]),
     pass: new FormControl('7SOB4SLdi7i27KO@', [Validators.required]),
 
   });
@@ -81,32 +81,40 @@ export class HomeComponent implements OnInit {
   inicioSesion() {
     let userInfo = this.registroForm.value;
     if (this.registroForm.status == 'VALID') {
-      this._serviceUsuario.getUserEmail(userInfo.correo).subscribe((data) => {
-        if (this._serviceUsuario.desencryptContra(data.contra) == userInfo.pass) {
+      this._serviceUsuario.getUserEmail(userInfo.correo).subscribe({
+        next: (data) => {
+          if (this._serviceUsuario.desencryptContra(data.contra) == userInfo.pass) {
+            
+            
+            this._serviceUsuario.setUserActive(userInfo.correo).then(res => {
+              if (data.rol==2) {
+                this.route.navigate(['./HistorialReportes']);
+                
+              }else{
+                if (res) {
+                  this.route.navigate(['./Perfiles']);
+                }
+              }
 
-          this._serviceUsuario.setUserActive(userInfo.correo).then(res => {
-            if (res) {
-              this.route.navigate(['./Perfiles']);
-            }
 
-          })
-          // 
-        }
-        else {
-          //  Alerta de error
-          this.validSesion = true;
-          setTimeout(async () => {
-            this.validSesion = false;
-          }, 3000);
-        }
-      });
+            })
+            // 
+          }
+          else {
+            this._serviceToast.errorSuccess("Error", "Usuario invalido")
+          }
+        },
+        error: (e) => { this._serviceToast.errorSuccess("Error", "Usuario no valido") },
+      }
+      )
     }
   }
   irCrearCuenta() {
     this.route.navigate(['./Registro']);
   }
   irHome() {
-    window.location.href ="http://localhost:4200/Home"
+    this.route.navigate(['./Home']);
+
   }
   reestablecePass() {
     console.log(this.userPass);
@@ -115,27 +123,31 @@ export class HomeComponent implements OnInit {
 
     if (this.cambiarpass.status == 'VALID') {
       if (pass.pass == pass.passr) {
-        console.log(this.userPass);
-        
-        this._serviceUsuario.getUsuarioId(this.userPass).subscribe(data => {
-          console.log(data.estado);
-          if(data.estado==1){
-            this._serviceUsuario.actualizarContra(this.userPass, {contra:this._serviceUsuario.encryptContra(pass.pass)}).subscribe(data => {
-              if (data) {
-                this._serviceToast.showSuccess("Exito", "Actualizacion de contraseñas realizada")
-                setTimeout(async () => {this.irHome()}, 1000);
-                
-               
+        this._serviceUsuario.getUsuarioId(this.userPass).subscribe({
+          next: (data) => {
+            if (data.estado == true) {
+              this._serviceUsuario.actualizarContra(this.userPass, { contra: this._serviceUsuario.encryptContra(pass.pass), estado: false }).subscribe({
+                next: (data) => {
+                  console.log(data);
+
+                },
+                error: (e) => {
+                  this._serviceToast.errorSuccess("Error", "Error en los datos")
+                },
+                complete: () => {
+                  this._serviceToast.showSuccess("Exito", "Los datos cambiado")
+                  this.irHome()
+                },
               }
-              
-            })
-          }else{
-            this._serviceToast.errorSuccess("Error","No esta permitido cambiar contraseña")
-            setTimeout(async () => {this.irHome()}, 1000);
-            
+              )
+            }else{
+              this._serviceToast.errorSuccess("Error", "Error en los datos")
+              this.irHome()
+            }
+
+
           }
-         
-          
+
         })
 
 
@@ -148,12 +160,31 @@ export class HomeComponent implements OnInit {
 
 
   formMailRecuperar() {
-    let user = this.recuperarCuenta.value
-    this._serviceUsuario.getUserEmail(user.correo).subscribe(data => {
-      console.log(data);
-      this._serviceUsuario.actualizarEstado(data.idusuario,{contra:data.contra  }).subscribe()
-      this._serviceMail.recuperarCuenta(data.idusuario).subscribe()
-    })
+    let user = this.recuperarCuenta.value;
+    this._serviceUsuario.getUserEmail(user.correo).subscribe({
+      next: (data) => {
+        this._serviceUsuario.actualizarContra(data.idusuario, { contra: "", estado: true }).subscribe({
+          error: (e) => {
+            this._serviceToast.errorSuccess("Error", "Error en los datos")
+          },
+          complete: () => {
+            this._serviceToast.showSuccess("Exito", "Revisar correo electronico") 
+            this._serviceMail.recuperarCuenta(data.idusuario).subscribe({
+              next: (data) => {},
+              error: (e) => {
+                this._serviceToast.errorSuccess("Error", "Error en los datos")
+              },
+              complete: () => {this._serviceToast.showSuccess("Exito", "Revisar correo electronico")}
+            })
+            
+          },
+        })
+      }, error: (e) => {
+        this._serviceToast.errorSuccess("Error", "Error en los datos")
+      },
+    });
+
   }
+
 }
 

@@ -52,7 +52,7 @@ exports.recuperarCuenta = async (req, res) => {
         <div class="container">
           <h1>¡Recuperar cuenta!</h1>
           <p>Para recuperar cuenta ingresa en el enlace:</p>
-          <a class="button" href="http://localhost:4200/Home?id=`+id+`cal">Restablecer contraseña</a>
+          <a class="button" href="http://localhost:4200/Home?id=`+id+`">Restablecer contraseña</a>
         </div>
       </body>
     </html>

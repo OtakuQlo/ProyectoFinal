@@ -36,7 +36,7 @@ export class SeccionPerfilesComponent {
 
   activarUser(idP:any){
     this.perfilS.getPerfil(idP).subscribe(data=>{
-      let perfil = data
+      let perfil = data 
       if (perfil.estado ==false) {
         this.perfilS.setActivateUser(idP,{estado : true}).subscribe(data=>{
           localStorage.setItem('pActivo', JSON.stringify(this.perfiles.find(({id} : any) => id === idP)))

@@ -47,20 +47,33 @@ exports.obtenerUsuariosEmail = async (req, res) => {
     if (!usuario) { // If user not found
       return res.status(404).json({ error: 'Usuario no encontrado' });
     }
+  };
+  exports.actualizarContra = async (req, res) => {
+    try {
+        const { contra, estado } = req.body;
+        let usuarios = await Usuarios.findByPk(req.params.id);
 
-    res.json(usuario); // Send the found user as response
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('Hubo un error');
-  }
-};
-exports.actualizarContra = async (req, res) => {
-  try {
-    const { contra, estado } = req.body;
-    let usuarios = await Usuarios.findByPk(req.params.id);
+        if (!usuarios) {
+            return res.status(404).json({ msg: 'La marca no existe' });
+        }
 
-    if (!usuarios) {
-      return res.status(404).json({ msg: 'La marca no existe' });
+        // Actualizar los campos de la marca
+        if (contra!="") {
+          usuarios.contra = contra;
+          usuarios.estado=estado; 
+        }else{
+          usuarios.estado=estado; 
+        }
+      
+      
+
+        // Guardar los cambios en la base de datos
+        await usuarios.save();
+
+        res.json(usuarios);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Hubo un error al actualizar la pass');
     }
 
     // Actualizar los campos de la marca

@@ -83,9 +83,37 @@ export class CrearCuentaComponent {
     idplan: any,
   ) {
     this._serviceUsuario.usuarioExistente(email,rut).subscribe(data=>{
-      console.log(data);
-      
-      this._servicioToast.errorSuccess("Error","El correo ya está en uso o el rut")
+
+      console.log(data.length);
+      if (data.length==0) {
+        this._serviceUsuario
+        .postUsuario({
+          idusaurio: '',
+          nombre: nombre,
+          apellido: apellido,
+          rut: rut,
+          contra: this._serviceUsuario.encryptContra(contra),
+          telefono: telefono,
+          idplan: idplan,
+          email: email,
+          rol: 1,
+          estado:0
+        }).subscribe()
+  
+          this._serviceUsuario.setUserActive(email).then(res => {
+            console.log(res);
+            
+            if(res){
+              this._servicioToast.showSuccess("Cuenta Creda","cuenta creada con existo")
+              this.route.navigate(['/CrearJefe']);
+            }
+            
+          })
+      }
+      if (data.length==1) {
+        this._servicioToast.errorSuccess("Error","El correo ya está en uso o el rut")
+      }
+     
       
     },(error)=>{
       console.error('Error al obtener los datos del usuario:', error);
@@ -100,6 +128,7 @@ export class CrearCuentaComponent {
         idplan: idplan,
         email: email,
         rol: 1,
+        estado:0
       }).subscribe()
 
         this._serviceUsuario.setUserActive(email).then(res => {
