@@ -85,14 +85,14 @@ exports.obtenerUsuariosId = async (req, res) => {
 
 exports.usuarioExistenete = async(req,res)=>{
   try {
-    const { email ,rut} = req.query; // Get the email from request parameters
+    const { email ,rut} = req.query; 
     const usuario = await Usuarios.findAll({ 
       where: {
         [Op.or]: [{email:email }, { rut: rut }],
       },
-     }); // Find the user by email
+     }); 
   
-    if (!usuario) { // If user not found
+    if (!usuario) { 
       return res.status(404).json({ error: 'Usuario no encontrado' });
     }
   

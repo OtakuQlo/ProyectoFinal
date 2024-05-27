@@ -1,6 +1,7 @@
 const Productos = require("../model/productos")
 const Marca = require("../model/marca")
-const Stock = require("../model/stockproducts")
+const Stock = require("../model/stockproducts");
+const { Op } = require("sequelize");
 exports.creandoProductos = async (req, res) => {
     try {
         let productos;
@@ -25,6 +26,7 @@ exports.obtenerProducto = async (req, res) => {
 
 exports.obtenerProductosMarca = async (req, res) => {
     try {
+        const { id } = req.params;
         const reporte = await Productos.findAll({
             include: [{
                 model: Marca,
@@ -32,7 +34,9 @@ exports.obtenerProductosMarca = async (req, res) => {
             },
             {
                 model: Stock,
-                require: false
+                where: {idusuario: id} ,
+                require: false,
+               
             }
             ]
         }
@@ -40,7 +44,7 @@ exports.obtenerProductosMarca = async (req, res) => {
         res.json(reporte)
     } catch (error) {
         console.log(error);
-        res.status(500).send('HUBO UN ERROR EN ENCONTRAR MARCA')
+        res.status(500).send('HUBO UN ERROR EN LOS PRODUCTOS')
     }
 }
 

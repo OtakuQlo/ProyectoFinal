@@ -9,9 +9,12 @@ export class ProductoService {
 
   constructor(private http: HttpClient) { }
   url = environment.url+'productos';
-
+// manuel debes cambiar esta parte para la get stock
   getProductos(): Observable<any>{
-    return this.http.get(this.url);
+    return this.http.get(this.url+'/stock/');
+  }
+  getProductostock(idusuario:any): Observable<any>{
+    return this.http.get(this.url+'/stock/'+idusuario);
   }
 
   async getProductoVenta(barcode:any){
