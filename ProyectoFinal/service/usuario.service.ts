@@ -63,6 +63,7 @@ export class UsuarioService {
   desencryptContra(pass: any) {
     const secretKey = environment.key;
     const simpleCrypto = new SimpleCrypto(secretKey);
+    console.log(simpleCrypto.decrypt(pass))
     return simpleCrypto.decrypt(pass);
   }
 
@@ -75,12 +76,10 @@ export class UsuarioService {
   getUsuarioId(id:any): Observable<any>{
     return this.http.get(this.url+"/usuarioid/"+id)
   }
-
   actualizarContra(id:any,pass:any): Observable<any>{
     console.log("actualizar contra");
     
     return this.http.put(this.url+"/"+id,pass)
-
   }
   usuarioExistente(email:any,rut:any): Observable<any>{
     return this.http.get(this.url+"/existente?email="+email+"&rut="+rut)
