@@ -56,7 +56,7 @@ exports.obtenerUsuariosId = async (req, res) => {
   };
   exports.actualizarContra = async (req, res) => {
     try {
-        const { contra } = req.body;
+        const { contra, estado } = req.body;
         let usuarios = await Usuarios.findByPk(req.params.id);
 
         if (!usuarios) {
@@ -64,8 +64,14 @@ exports.obtenerUsuariosId = async (req, res) => {
         }
 
         // Actualizar los campos de la marca
-       usuarios.contra = contra;
-        
+        if (contra!="") {
+          usuarios.contra = contra;
+          usuarios.estado=estado; 
+        }else{
+          usuarios.estado=estado; 
+        }
+      
+      
 
         // Guardar los cambios en la base de datos
         await usuarios.save();

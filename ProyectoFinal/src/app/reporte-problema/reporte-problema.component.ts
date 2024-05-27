@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ReportesService } from '../../../service/reportes.service';
 import { UsuarioService } from '../../../service/usuario.service';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-reporte-problema',
@@ -45,7 +46,8 @@ export class ReporteProblemaComponent {
       idusuario : user.idusuario,
       descripcion : this.reporte,
       respuesta : '',
-      solucion : false
+      solucion : false,
+      fecha: formatDate(new Date(), 'yyyy-MM-dd', 'en')
     }).subscribe((response) => {
       console.log('Si',response);
     },

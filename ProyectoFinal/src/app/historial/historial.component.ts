@@ -4,6 +4,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastService } from '../../../service/toast.service';
 import { HistorialService } from '../../../service/historial.service';
 import { VentaService } from '../../../service/venta.service';
+import { ProdcutosllegadaService } from '../../../service/prodcutosllegada.service';
+import { UsuarioService } from '../../../service/usuario.service';
 
 @Component({
   selector: 'app-historial',
@@ -30,8 +32,9 @@ export class HistorialComponent {
   detalleSelected:any[]=[];
   constructor(
     private _serviceToast : ToastService,
-    private _serviceHistoria:HistorialService,
-    private _serviceVenta:VentaService
+    private _serviceUsuario: UsuarioService,
+    private _serviceVenta:VentaService,
+    private _serviceProcutollegada:ProdcutosllegadaService
   ){}
   ngOnInit() {
     this.getProductoLLegada();
@@ -83,20 +86,19 @@ export class HistorialComponent {
     }
   }
   // funcion para obtener producto de llegada
-  getProductoLLegada(){
-    this._serviceHistoria.getProductoLLegadas().subscribe(data=>{
+  getProductoLLegada(){   
+    this._serviceProcutollegada.getProduct(this._serviceUsuario.getUserActive().idusuario).subscribe(data=>{
       this.productoLLegada=data;
       this.tablaActivo=data;
       this.totalPages = this.totalPage();
     })
   }
   getVentas(){
-    this._serviceVenta.getBoletas().subscribe(data=>{
+    this._serviceVenta.getBoletas(this._serviceUsuario.getUserActive().idusuario).subscribe(data=>{
       this.ventasRealizadas = data;
       this.tablaActivo=data;
       this.totalPages = this.totalPage();
       console.log(data);
-      
     })
   }
   // funciones en tabla

@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PerdidasService } from '../../../service/perdidas.service';
 import { ToastService } from '../../../service/toast.service';
+import { UsuarioService } from '../../../service/usuario.service';
 
 @Component({
   selector: 'app-inventario',
@@ -84,7 +85,8 @@ export class InventarioComponent {
     private router: Router,
     private _serviceProduto: ProductoService,
     private _servicePerdidas: PerdidasService,
-    private _serviceToast: ToastService
+    private _serviceToast: ToastService,
+    private _serviceUsuario:UsuarioService
   ) { }
 
   ngOnInit(): void {
@@ -161,7 +163,7 @@ export class InventarioComponent {
     if (this.cant >= 1) {
       if (this.barcode != "") {
         this._servicePerdidas.postPerdidas(
-          { idperdidas: '', idproducto: 1, fecha: this.fechaFormateada, descripcion: this.desc, cantidad: this.cant },
+          { idperdidas: '', idproducto: 1, fecha: this.fechaFormateada, descripcion: this.desc, cantidad: this.cant,idusuario: this._serviceUsuario.getUserActive().idusuario},
           this.barcode
         ).then(res => {
           console.log(res);

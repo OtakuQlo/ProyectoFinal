@@ -13,7 +13,7 @@ import { AjustePlanesComponent } from './ajuste-planes/ajuste-planes.component';
 import { HistorialComponent } from './historial/historial.component';
 import { InventarioComponent } from './inventario/inventario.component';
 import { HistorialReportesComponent } from './historial-reportes/historial-reportes.component';
-import { AdminGuard, HomeGuard, authGuard } from '../authGard/auth.guard';
+import { AdminGuard, AdminOrdenaloGuard, HomeGuard, authGuard } from '../authGard/auth.guard';
 
 export const routes: Routes = [
     { path: 'Home', component: HomeComponent, }, 
@@ -30,6 +30,6 @@ export const routes: Routes = [
     { path: 'AjustePlan', component: AjustePlanesComponent ,canActivate:[authGuard]},
     { path: 'Historial', component: HistorialComponent ,canActivate:[authGuard]},
     { path: 'Inventario', component: InventarioComponent ,canActivate:[authGuard]},
-    { path: 'HistorialReportes', component: HistorialReportesComponent ,canActivate:[authGuard]},
+    { path: 'HistorialReportes', component: HistorialReportesComponent ,canActivate:[authGuard,AdminOrdenaloGuard]},
     { path: '**', redirectTo: 'Home', pathMatch: 'full' }
 ];
