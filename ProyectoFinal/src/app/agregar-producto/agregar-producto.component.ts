@@ -139,10 +139,9 @@ export class AgregarProductoComponent {
       info = data;
 
       for (let i = 0; i < info.length; i++) {
-        console.log(info[i].nombremarca);
+
         if (this.postmarca.toUpperCase() === info[i].nombremarca.toUpperCase()) {
           bandera = false;
-          console.log(bandera)
           break;
         }
       }
@@ -169,7 +168,6 @@ export class AgregarProductoComponent {
       for (let i = 0; i < info.length; i++) {
         if (this.postempresa.toUpperCase() === info[i].nombreempresa.toUpperCase()) {
           bandera = false;
-          console.log(bandera)
           break;
         }
       }

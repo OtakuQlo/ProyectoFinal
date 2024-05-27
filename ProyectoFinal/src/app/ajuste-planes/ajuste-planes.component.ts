@@ -55,7 +55,6 @@ export class AjustePlanesComponent {
   }
 
   planSeleccionado(dato: any){
-    console.log(dato)
     this.plancambio = dato;
   }
 

@@ -30,7 +30,6 @@ export class CrearPerfilJefeComponent {
   labelpass2: string = '';
 
   ngOnInit() {
-    console.log(this.usuarios.getUserActive());
     
     this.labelnombre = this.usuarios.getUserActive().nombre
   }
@@ -41,7 +40,6 @@ export class CrearPerfilJefeComponent {
 
   crearPerfil(){
      let bandera = true;
-     console.log(this.pass1,this.pass2)
     if (this.pass1 != this.pass2) {
       bandera = false;
       this.labelpass2 = 'Deben coincidir las contraseñas';
