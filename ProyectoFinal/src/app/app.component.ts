@@ -17,6 +17,7 @@ export class AppComponent {
   title = 'ProyectoFinal';
 
   userA: any ; 
+  perfilA :any;
   plan:any;
   cantperfiles:any;
   
@@ -37,13 +38,15 @@ export class AppComponent {
     if (this.perfilS.getPerfilActivo()){
       // Llama a la función del servicio para obtener el valor del LocalStorage cada 5 segundos (por ejemplo)
         this.getLocalStorageValuePeriodically(100).subscribe(value => {
-        this.userA = value;
+        this.perfilA = value;
         // Haz lo que necesites con el valor del LocalStorage aquí
       });
       this.planEnUso();
       this.cantidadDePlanes();
-    }else{
-      
+    }
+   let a:any = this.userS.getUserActive()
+    if (a) {
+      this.userA = this.userS.getUserActive()
     }
   }
 

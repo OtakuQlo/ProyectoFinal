@@ -88,8 +88,7 @@ export class HomeComponent implements OnInit {
             
             this._serviceUsuario.setUserActive(userInfo.correo).then(res => {
               if (data.rol==2) {
-                this.route.navigate(['./HistorialReportes']);
-                
+                window.location.href="/HistorialReportes"                
               }else{
                 if (res) {
                   this.route.navigate(['./Perfiles']);
@@ -113,8 +112,7 @@ export class HomeComponent implements OnInit {
     this.route.navigate(['./Registro']);
   }
   irHome() {
-    this.route.navigate(['./Home']);
-
+    window.location.href="http://localhost:4200/Home"
   }
   reestablecePass() {
     console.log(this.userPass);
