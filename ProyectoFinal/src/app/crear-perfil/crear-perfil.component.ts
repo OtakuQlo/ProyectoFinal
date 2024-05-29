@@ -46,7 +46,7 @@ export class CrearPerfilComponent {
   
 
   regexname: RegExp =
-    /^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]{2,100}$/;
+    /^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]{2,50}$/;
 
 
   crearPerfil(){
@@ -55,7 +55,7 @@ export class CrearPerfilComponent {
    if (!this.regexname.test(this.nombre)) {
      bandera = false;
      this.labelnombre =
-       'El nombre debe ser sin caracteres epeciales ni numeros.';
+       'El nombre debe ser sin caracteres epeciales ni numeros';
    } else {
      this.labelnombre = '';
    }

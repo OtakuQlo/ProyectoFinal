@@ -54,6 +54,7 @@ export class CrearPerfilJefeComponent {
       this.labelpass1 = '';
     }
 
+    
 
     if (bandera) {
       

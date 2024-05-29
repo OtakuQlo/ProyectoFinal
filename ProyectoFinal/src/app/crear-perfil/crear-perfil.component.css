@@ -75,3 +75,7 @@ button:focus{
     left: 0;
     z-index: -100;
 }
+
+.letraA{
+    color: rgb(207, 157, 91);
+}

@@ -198,9 +198,9 @@ export class AgregarProductoComponent {
 
     // validacion que nombre del producto no este vacio
 
-    if (this.nombre.length <= 0) {
+    if (this.nombre.length <= 0 || this.nombre.length > 50) {
       bandera = false;
-      this.labelnombre = "El nombre del producto no debe estar vacio";
+      this.labelnombre = "El nombre del producto no debe estar vacio y no debe sobre pasar los 50 caracteres";
     } else {
       this.labelnombre = ""
     }

@@ -19,41 +19,41 @@
                             <label class="letra mb-1">Codigo:</label>
                             <input [(ngModel)]="codebar" class="form-control colorBGC colorB letra" id="codigo"
                                 name="codigo" style="color: aliceblue;">
-                            <label class="letra"> {{labelcodebar}}</label>
+                            <label class="letraA"> {{labelcodebar}}</label>
                         </div>
 
                         <div class=" mt-2  w-75">
                             <label class="letra mb-1">Nombre:</label>
                             <input [(ngModel)]="nombre" class="form-control colorBGC colorB" id="nombre" name="nombre">
-                            <label class="letra"> {{labelnombre}}</label>
+                            <label class="letraA"> {{labelnombre}}</label>
                         </div>
 
                         <div class="mt-2  w-75" *ngIf = "edit == false ">
                             <label class="letra mb-1" >Fecha vencimiento:</label>
                             <input [(ngModel)]="fecha" min="{{fechaFormateada}}" max="20205-12-31" type="date"
                                 class="form-control colorBGC colorB" id="fecven" name="fecven">
-                            <label class="letra">{{labelfecha}}</label>
+                            <label class="letraA">{{labelfecha}}</label>
                         </div>
 
                         <div class="mt-2  w-75" *ngIf = "edit == false ">
                             <label class="letra mb-1">Cantidad:</label>
                             <input [(ngModel)]="cantidad" class="form-control colorBGC colorB" id="cantidad"
                                 name="cantidad" placeholder="Cantidad">
-                            <label for="" class="letra">{{labelcantidad}}</label>
+                            <label for="" class="letraA">{{labelcantidad}}</label>
                         </div>
 
                         <div class="mt-2  w-75">
                             <label class="letra mb-1">Precio a venta:</label>
                             <input [(ngModel)]="preven" class="form-control colorBGC colorB" id="preven" name="preven"
                                 placeholder="Precio a venta">
-                            <label for="" class="letra">{{labelpreven}}</label>
+                            <label for="" class="letraA">{{labelpreven}}</label>
                         </div>
 
                         <div class="mt-2  w-75" *ngIf = "edit == false ">
                             <label class="letra mb-1">Precio de llegada:</label>
                             <input [(ngModel)]="prelle" class="form-control colorBGC colorB" id="prelle" name="prelle"
                                 placeholder="Precio llegada">
-                            <label for="" class="letra">{{labelprelle}}</label>
+                            <label for="" class="letraA">{{labelprelle}}</label>
                         </div>
 
                     </form>
@@ -74,7 +74,7 @@
                                     </option>
                                 </select>
                                 <br>
-                                <label for="" class="letra ms-3">{{labelmarca}}</label>
+                                <label for="" class="letraA ms-3">{{labelmarca}}</label>
                             </div >
                             
                                 <button class="btn colorBGC colorB" type="button" data-bs-toggle="collapse"
@@ -106,7 +106,7 @@
                                         {{empresa.nombreempresa}}
                                     </option>
                                 </select>
-                                <label for="" class="letra ms-3">{{labelempresa}}</label>
+                                <label for="" class="letraA ms-3">{{labelempresa}}</label>
                                 
                                 
                                     
