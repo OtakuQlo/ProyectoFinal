@@ -17,10 +17,11 @@ import { Router } from '@angular/router';
 export class RealizarVentaComponent {
 
   constructor( private venta: VentaService, private alert: ToastService, private perfil: PerfilusuarioService, private productoS: ProductoService, private route:Router) {
-    this.alert.showSuccess('', 'Bienvenido ' + this.perfilV.nombre)
+    
   }
 
   ngOnInit(): void {
+    this.alert.showSuccess('', 'Bienvenido ' + this.perfilV.nombre)
     this.boletaVenta()
   }
 
@@ -33,7 +34,6 @@ export class RealizarVentaComponent {
 
   //Producto
   codebar: string = '';
-  nombre: String = '';
   cantidad: number = 0;
 
   //Perfil
@@ -44,7 +44,6 @@ export class RealizarVentaComponent {
   regexnumeros: RegExp = /^\d+$/;
 
   //label
-  labelnombre: string = '';
   labelcodebar: string = '';
   labelcantidad: string = '';
 
@@ -54,7 +53,7 @@ export class RealizarVentaComponent {
       bandera = false;
       this.labelcodebar = "Solo se pueden ingresar numeros y letras en el codigo de barras"
     } else {
-      this.labelcodebar = " ";
+      this.labelcodebar = "";
     }
     if (!this.regexnumeros.test(this.cantidad.toString()) || this.cantidad <= 0 || this.cantidad > 50) {
       bandera = false;
@@ -73,8 +72,17 @@ export class RealizarVentaComponent {
     if(this.total > 0){
       let boletin = this.boleta[0]
       boletin.preciototal = this.total
-      console.log(boletin.preciototal);
       await this.venta.actualizarBoleta(boletin.idboleta, {"preciototal" : boletin.preciototal}).subscribe()
+      for (let index = 0; index < this.detalle.length; index++) {
+        const element = this.detalle[index];
+        this.venta.realizarCompra({
+          "iddetalle": '',
+          "idboleta": element.idboleta,
+          "idproducto": element.idproducto.idproducto,
+          "cantidad": element.cantidad
+        }).subscribe()
+      }
+      
       this.cancelarPago()
       window.location.reload()
     }
@@ -89,26 +97,23 @@ export class RealizarVentaComponent {
         let index = this.detalle.findIndex(obj => obj.idproducto.idproducto === this.producto.idproducto)
         
         if (curr != undefined) {
-          let detallin : any [] = []
+          this.detalle[index].cantidad = this.detalle[index].cantidad + this.cantidad
+          console.log(Number(this.detalle[index].cantidad));
+          this.venta.actualizarDetalle(this.detalle[index].idboleta, {cantidad : this.detalle[index].cantidad ,idproducto : this.detalle[index].idproducto.idproducto})
+          this.cancelarVenta()
+          this.alert.showSuccess('', 'Detalle Actualizado');
+          /* let detallin : any [] = []
           this.venta.getDetalle(this.boleta[0].idboleta).subscribe(res => {
             detallin = res
             this.detalle[index].iddetalle = detallin.find(det => det.idproducto === this.producto.idproducto).iddetalle
             this.detalle[index].cantidad = this.detalle[index].cantidad + this.cantidad
-            console.log(this.detalle[index].iddetalle);
-            console.log(this.detalle[index].cantidad);
             this.venta.actualizarDetalle(this.detalle[index].iddetalle, {"cantidad" : this.detalle[index].cantidad}).subscribe()
             this.cancelarVenta()
             this.alert.showSuccess('', 'Detalle Actualizado');
-          })
+          }) */
         } 
         if(curr == undefined) {
-          this.boletaVenta().then(()=>{        
-            this.venta.realizarCompra({
-              "iddetalle": '',
-              "idboleta": this.boleta[0].idboleta,
-              "idproducto": this.producto.idproducto,
-              "cantidad": this.cantidad
-            }).subscribe()
+          this.boletaVenta().then(()=>{
             this.detalle.push({
               iddetalle: '',
               idboleta: this.boleta[0].idboleta,
@@ -125,8 +130,12 @@ export class RealizarVentaComponent {
     })
   }
 
-  borrarDetalles(){
-
+  borrarDetalles(idp : any){
+    console.log(idp);
+    let index = this.detalle.findIndex(detallin => detallin.idproducto.idproducto === idp);
+    let borrado = this.detalle.find(detallin => detallin.idproducto.idproducto === idp)
+    this.detalle.splice(index,1)
+    this.total = this.total - (borrado.idproducto.precio * borrado.cantidad);
   }
 
   cancelarPago() {
@@ -152,8 +161,6 @@ export class RealizarVentaComponent {
   }
 
   cancelarVenta() {
-    this.nombre = '';
-    this.labelnombre = '';
     this.cantidad = 0;
     this.labelcantidad = '';
     this.codebar = '';

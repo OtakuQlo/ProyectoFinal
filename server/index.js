@@ -6,8 +6,6 @@ connection.connect();
 app.use(cors())
 app.use(express.json())
 
-
-
 app.use('/api/marca',require('./routes/marca'));
 app.use('/api/plans',require('./routes/plans'));
 app.use('/api/usuarios',require('./routes/usuarios'));
@@ -20,13 +18,12 @@ app.use('/api/stockproducts',require('./routes/stockproducts'));
 app.use('/api/boletas',require('./routes/boletas'));
 app.use('/api/detalleventas',require('./routes/detalleVentas.js'));
 app.use('/api/reportes',require('./routes/reportes'));
-app.use('/api/mail',require('./resend/routesMail.js'))
+app.use('/api/mail',require('./resend/routesMail.js'));
+app.use('/api/users',require('./Informes/routesInformes.js'));
 app.get('/api/marca', (req, res) => {
   res.send('HOLA');
 });
-
 app.listen(3000, () => {
   console.log('El servidor está corriendo');
 });
 
-connection.end();

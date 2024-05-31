@@ -40,18 +40,6 @@
                                     </div>
                                 </div>
                                 <div class="mb-3 mt-2 align-items-center row">
-                                    <label for="Codigo" class="col-sm-3 col-form-label">Nombre del producto</label>
-                                    <div class="col-sm-9">
-                                        <input [(ngModel)]="nombre" disabled
-                                            class="form-control-plaintext text-white colorBGC colorB text-center"
-                                            id="nombreProducto" placeholder="Nombre del Producto"
-                                            style="border-radius: 10px; height: 45px;">
-                                    </div>
-                                    <div class="col-7 offset-4 text-center">
-                                        <label>{{labelnombre}}</label>
-                                    </div>
-                                </div>
-                                <div class="mb-3 mt-2 align-items-center row">
                                     <label for="Codigo" class="col-sm-3 col-form-label">Cantidad</label>
                                     <div
                                         class="col-2 offset-3 col-sm-2 offset-sm-1 col-md-1 offset-md-3 col-lg-2 offset-lg-1 col-xl-1 offset-xl-3 text-center">
@@ -107,7 +95,7 @@
                                         <td>{{i.cantidad}}</td>
                                         <td>{{i.cantidad*i.idproducto.precio}}</td>
                                         <td><img src="../../assets/Icon/borrar.png" alt="Basurero" width="20"
-                                                height="20" ></td>
+                                                height="20" (click)="borrarDetalles(i.idproducto.idproducto)"></td>
                                     </tr>
                                     
                                 </tbody>

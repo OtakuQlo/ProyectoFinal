@@ -38,12 +38,10 @@ export class AdministrarPerfilesComponent {
   }
 
   borrarPerfil(id:any){
-    console.log(id);
     if (id === 0) {
       return this.error.errorSuccess('No se puede eliminar el perfil de administrador','Error Borrando un Perfil')
     }
     this.perfilS.deletePerfil(parseInt(id)).subscribe();
-    console.log(this.perfiles);
     this.getUSERS();
     return this.error.showSuccess('Perfil Eliminado correctamente', '')    
   }
