@@ -11,6 +11,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastService } from '../../../service/toast.service';
 import { MailService } from '../../../service/mail.service';
+import { PerfilusuarioService } from '../../../service/perfilusuario.service';
 
 @Component({
   selector: 'app-home',
@@ -28,9 +29,12 @@ export class HomeComponent implements OnInit {
     private route: Router,
     private _activeroute: ActivatedRoute,
     private _serviceToast: ToastService,
-    private _serviceMail: MailService
+    private _serviceMail: MailService,
+    private _servicePerfil: PerfilusuarioService
   ) {
-    this._serviceUsuario.deletUserActive()
+    this._servicePerfil.setInactiveProfile(localStorage.getItem('pActivo'),{estado : false});
+    this._serviceUsuario.deletUserActive();
+    localStorage.removeItem('pActivo');
   }
 
   registroForm = new FormGroup({

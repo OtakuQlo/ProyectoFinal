@@ -19,11 +19,13 @@ app.use('/api/boletas',require('./routes/boletas'));
 app.use('/api/detalleventas',require('./routes/detalleVentas.js'));
 app.use('/api/reportes',require('./routes/reportes'));
 app.use('/api/mail',require('./resend/routesMail.js'));
-app.use('/api/users',require('./Informes/routesInformes.js'));
+app.use('/api/informes',require('./routes/informes.js'));
 app.get('/api/marca', (req, res) => {
   res.send('HOLA');
 });
+
 app.listen(3000, () => {
   console.log('El servidor está corriendo');
 });
 
+connection.end()

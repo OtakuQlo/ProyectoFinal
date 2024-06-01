@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-import { ProductoService } from '../../../service/producto.service';
 import ExcelJS from 'exceljs';
 import { saveAs } from 'file-saver';
-import { HistorialService } from '../../../service/historial.service';
-import { ProdcutosllegadaService } from '../../../service/prodcutosllegada.service';
 import { UsuarioService } from '../../../service/usuario.service';
+import { InformesService } from '../../../service/informes.service';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-generar-informe',
@@ -14,46 +13,49 @@ import { UsuarioService } from '../../../service/usuario.service';
   styleUrl: './generar-informe.component.css'
 })
 export class GenerarInformeComponent {
-  productozzz : any[] = [];
-  productoLLegada:any[] = [];
-  stock: any[] = [];
-  empleados: any [] = [];
-  
 
-  constructor(private productoS:ProductoService,private productLL: ProdcutosllegadaService,private userA:UsuarioService) {    
-    
-    this.productoS.getProductos().subscribe(data => {
-      console.log(data);
-      this.productozzz = data
-      console.log(this.productozzz);
+  informeEMP: any;
+  informeVentas: any;
+  informeProductoP: any;
+
+  date = formatDate(new Date(), 'dd-MM-yyyy', 'en')
+
+  constructor(private userA:UsuarioService,
+    private informes:InformesService) {  
+    this.informes.informeVentasEmp(this.userA.getUserActive().idusuario).subscribe(data =>{
+      this.informeEMP = data
+      console.log(this.informeEMP);
+    })  
+
+    this.informes.informeInventario(this.userA.getUserActive().idusuario).subscribe(data =>{
+      this.informeVentas = data
+      console.log(this.informeVentas);
     })
-    this.productLL.getProduct(this.userA.getUserActive().idusuario).subscribe(dataLLeg =>{
-      this.productoLLegada = dataLLeg;
-      console.log(this.productoLLegada);  
-    })       
+
+    this.informes.informeProductoP(this.userA.getUserActive().idusuario).subscribe(data =>{
+      this.informeProductoP = data
+      console.log(this.informeProductoP);
+      
+    })
   }
 
-  async generarInforme() {
+  async generarInformeVentasEMP() {
     // Crear un nuevo libro de trabajo
     const workbook = new ExcelJS.Workbook();
 
     // Agregar una hoja al libro de trabajo
-    const worksheet = workbook.addWorksheet('Informe Ingreso');
+    const worksheet = workbook.addWorksheet('Informe Ventas de Empleados');
 
     //Establecer Columnas
     worksheet.columns = [
-      { header: 'Codigo de Barras', key: 'codebar', width: 18 },
-      { header: 'Nombre Producto', key: 'nombreproducto', width: 30 },
-      { header: 'Precio', key: 'precio', width: 20 },
-      { header: 'Fecha llegada', key: 'fechallegada', width: 30 },
-      { header: 'Fecha Vencimiento', key: 'fechavencimiento', width: 30 },
-      { header: 'Stock Entrante', key: 'stockE', width: 30 },
-      { header: 'Stock Actual', key: 'stockA', width: 30 },
+      { header: 'Nombre del Empleado', key: 'nombre_empleado', width: 18 },
+      { header: 'Cantidad de Ventas Realizadas', key: 'cantidad_boletas', width: 30 },
+      { header: 'Total Vendido', key: 'precio', width: 20 }
     ];
     // Agregar datos a la hoja
-    this.productoLLegada.forEach(rowdata => {
-      worksheet.addRow([rowdata.barcode, rowdata.nombre, rowdata.precioaventa,rowdata.fechaingreso,rowdata.fechavencimiento,rowdata.cantidad,10]);
-    })
+    this.informeEMP.forEach((rowdata : any) =>{
+      worksheet.addRow([rowdata.nombre_empleado, rowdata.cantidad_boletas, parseInt(rowdata.total)])
+    } )
     try {
       const buffer = await workbook.xlsx.writeBuffer();
 
@@ -61,7 +63,7 @@ export class GenerarInformeComponent {
       const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
 
       //Usar file-saver para descargar el archivo
-      saveAs(blob, 'InformeIngre'+'21/05/2024'+'.xlsx')
+      saveAs(blob, 'InformeIngre'+this.date+'.xlsx')
 
       console.log('Archivo Excel guardado.');
     } catch (error) {
@@ -69,27 +71,66 @@ export class GenerarInformeComponent {
     }
   }
 
-  async generarInformeEmpleados() {
+  async generarInformeInventario() {
+    
     // Crear un nuevo libro de trabajo
     const workbook = new ExcelJS.Workbook();
+
     // Agregar una hoja al libro de trabajo
-    const worksheet = workbook.addWorksheet('Informe Ingreso');
+    const worksheet = workbook.addWorksheet('Informe Ventas de Empleados');
+
     //Establecer Columnas
     worksheet.columns = [
-      { header: 'Nombre del Empleado', key: 'nombre_emp', width: 20 },
-      { header: 'Cantidad de Ventas', key: 'cant_vent', width: 30 },
-      { header: 'Total', key: 'total', width: 16 }
+      { header: 'Nombre del Producto', key: 'nombre_pro', width: 20 },
+      { header: 'Valor en el inventario', key: 'v_inventario', width: 25 },
+      { header: 'Restante en el Inventario', key: 'r_inventario', width: 20 }
     ];
     // Agregar datos a la hoja
-    this.productoLLegada.forEach(rowdata => {
-      worksheet.addRow([rowdata.barcode, rowdata.nombre, rowdata.precioaventa]);
-    })
+    this.informeVentas.forEach((rowdata : any) =>{
+      worksheet.addRow([rowdata.nombreproducto, parseInt(rowdata.valor_inventario), parseInt(rowdata.restante)])
+    } )
     try {
       const buffer = await workbook.xlsx.writeBuffer();
+
       // Crear un Blob a partir del buffer
       const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+
       //Usar file-saver para descargar el archivo
-      saveAs(blob, 'InformeIngre'+'21/05/2024'+'.xlsx')
+      saveAs(blob, 'InformeIngre'+this.date+'.xlsx')
+
+      console.log('Archivo Excel guardado.');
+    } catch (error) {
+      console.error('Error al guardar el archivo Excel:', error);
+    }
+  }
+
+  async informeProductoPop(){
+    // Crear un nuevo libro de trabajo
+    const workbook = new ExcelJS.Workbook();
+
+    // Agregar una hoja al libro de trabajo
+    const worksheet = workbook.addWorksheet('Informe Ventas de Empleados');
+
+    //Establecer Columnas
+    worksheet.columns = [
+      { header: 'Nombre del Producto', key: 'nombre_prod', width: 20 },
+      { header: 'Marca del Producto', key: 'marca', width: 25 },
+      { header: 'Cantidad de Ventas', key: 'c_total', width: 20 },
+      { header: 'Valor total de las Ventas', key: 'v_total', width: 20 }
+    ];
+    // Agregar datos a la hoja
+    this.informeProductoP.forEach((rowdata : any) =>{
+      worksheet.addRow([rowdata.nombreproducto, rowdata.marca, parseInt(rowdata.c_total), parseInt(rowdata.v_total)])
+    } )
+    try {
+      const buffer = await workbook.xlsx.writeBuffer();
+
+      // Crear un Blob a partir del buffer
+      const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+
+      //Usar file-saver para descargar el archivo
+      saveAs(blob, 'InformeIngre'+this.date+'.xlsx')
+
       console.log('Archivo Excel guardado.');
     } catch (error) {
       console.error('Error al guardar el archivo Excel:', error);
