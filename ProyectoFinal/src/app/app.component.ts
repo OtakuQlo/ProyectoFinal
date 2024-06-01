@@ -44,7 +44,7 @@ export class AppComponent {
       this.planEnUso();
       this.cantidadDePlanes();
     }
-   let a:any = this.userS.getUserActive()
+    let a:any = this.userS.getUserActive()
     if (a) {
       this.userA = this.userS.getUserActive()
     }
@@ -63,7 +63,7 @@ export class AppComponent {
   }
 
   inactivateUser(){
-    this.perfilS.setInactiveProfile(parseInt(this.userA.id), {estado : false}).subscribe();
+    this.perfilS.setInactiveProfile(parseInt(this.perfilA.id), {estado : false}).subscribe();
     localStorage.removeItem('pActivo')
     window.location.href = '/Perfiles'
   }
