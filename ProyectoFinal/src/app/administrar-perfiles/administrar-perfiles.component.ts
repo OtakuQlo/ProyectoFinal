@@ -18,10 +18,11 @@ export class AdministrarPerfilesComponent {
   perfiles: any;
 
   constructor(private perfilS:PerfilusuarioService, private userS:UsuarioService, private error:ToastService){    
-    this.getUSERS();    
+        
   }
 
   ngOnInit(): void {
+    this.getUSERS();
   }
 
   /* editarPerfil(id:any){
@@ -42,7 +43,7 @@ export class AdministrarPerfilesComponent {
       return this.error.errorSuccess('No se puede eliminar el perfil de administrador','Error Borrando un Perfil')
     }
     this.perfilS.deletePerfil(parseInt(id)).subscribe();
-    this.getUSERS();
+    window.location.href = 'AdministrarPerfiles'
     return this.error.showSuccess('Perfil Eliminado correctamente', '')    
   }
 }
