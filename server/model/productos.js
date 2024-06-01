@@ -1,5 +1,6 @@
 const { Sequelize, DataTypes, Model } = require('sequelize');
-const Marca = require('./marca')
+const Marca = require('./marca');
+const Usuarios = require('./usuarios');
 const sequelize = new Sequelize('ordenalo', 'root', '', {
     host: 'localhost',
     dialect:'mysql',
@@ -29,6 +30,10 @@ Productos.init({
     barcode:{ 
         type: DataTypes.STRING,
         allowNull: false
+    },
+    idusuario:{
+        type: DataTypes.INTEGER,
+        allowNull: false
     }
 }, {
     sequelize, // Pasar la instancia de Sequelize aquí
@@ -41,6 +46,13 @@ Marca.hasMany(Productos,{
 });
 Productos.belongsTo(Marca,{
     foreignKey: 'idmarca'
+});
+
+Usuarios.hasMany(Productos,{
+    foreignKey: 'idusuario'
+});
+Productos.belongsTo(Usuarios,{
+    foreignKey: 'idusuario'
 });
 
 // Ahora el modelo está asociado con la instancia de Sequelize

@@ -16,7 +16,8 @@ exports.creandoProductosLlegada = async (req, res) => {
                 "nombreproducto": producto.nombre,
                 "idmarca": producto.idmarca,
                 "precio": producto.precioaventa,
-                "barcode": producto.barcode
+                "barcode": producto.barcode,
+                "idusuario": producto.idusuario
             });
             await productounico1.save();
             producto2 = productounico1;
