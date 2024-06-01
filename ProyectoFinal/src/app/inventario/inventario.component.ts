@@ -170,7 +170,7 @@ export class InventarioComponent {
     }
   }
   modalInventario(productModal: any) {
-    this.id = productModal.StockProducts[0].idstock
+    this.id = productModal.idproducto
     this.barcodeModal = productModal.barcode
     this.nombreMarModal = productModal.Marca.nombremarca
     this.nombrePrdModal = productModal.nombreproducto
