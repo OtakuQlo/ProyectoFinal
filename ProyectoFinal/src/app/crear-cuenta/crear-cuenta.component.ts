@@ -11,6 +11,8 @@ import { UsuarioService } from '../../../service/usuario.service';
 import { validateRut } from '@fdograph/rut-utilities';
 import { CommonModule } from '@angular/common';
 import { ToastService } from '../../../service/toast.service';
+import { WebpayService } from '../../../service/webpay.service';
+import { PlansService } from '../../../service/plans.service';
 @Component({
   selector: 'app-crear-cuenta',
   standalone: true,
@@ -27,15 +29,19 @@ export class CrearCuentaComponent {
   validarPass2: boolean = false;
   validartelefono: boolean = false;
   checkboxTermState: boolean = false;
-  checkboxFirst: boolean = false;
-  checkboxSecond: boolean = false;
-  checkboxThird: boolean = false;
-  plan: number = 0;
+  BASICO: boolean = true;
+  INTERMEDIO: boolean = false;
+  AVANZADO: boolean = false;
+  plan: number = 1;
+  plans: any[] = [];
+  procesosCrearCuenta: number = 1;
   constructor(
     private route: Router,
     private _serviceUsuario: UsuarioService,
-    private _servicioToast : ToastService
-  ) {}
+    private _servicioToast: ToastService,
+    private _servicePago: WebpayService,
+    private _servicePlanes: PlansService,
+  ) { }
 
   registroForm = new FormGroup({
     rut: new FormControl('202995470', [Validators.required]),
@@ -69,8 +75,35 @@ export class CrearCuentaComponent {
       ),
     ]),
   });
+  tarjetaForm = new FormGroup({
+    cardNumber: new FormControl('370000000002032', [
+      Validators.required,
+      Validators.max(999999999999999),
+    ]),
+    cvv: new FormControl('123', [
+      Validators.required,
+      Validators.max(999),
+      Validators.min(111),
+    ]),
+    mes: new FormControl('12', [
+      Validators.required,
+      Validators.max(12),
+      Validators.min(1),
+    ]),
+    ano: new FormControl('01', [
+      Validators.required,
+      Validators.max(99),
+      Validators.min(1),
+    ]),
+  });
   ngOnInit(): void {
-    
+    this._servicePlanes.getPlans().subscribe({
+      next: (data) => {
+        this.plans = data
+        console.log(this.plans);
+
+      },
+    })
   }
   // funcion de crear cuenta
   crearCuenta(
@@ -82,42 +115,7 @@ export class CrearCuentaComponent {
     telefono: any,
     idplan: any,
   ) {
-    this._serviceUsuario.usuarioExistente(email,rut).subscribe(data=>{
-
-      console.log(data.length);
-      if (data.length==0) {
-        this._serviceUsuario
-        .postUsuario({
-          idusaurio: '',
-          nombre: nombre,
-          apellido: apellido,
-          rut: rut,
-          contra: this._serviceUsuario.encryptContra(contra),
-          telefono: telefono,
-          idplan: idplan,
-          email: email,
-          rol: 1,
-          estado:0
-        }).subscribe()
-  
-          this._serviceUsuario.setUserActive(email).then(res => {
-            console.log(res);
-            
-            if(res){
-              this._servicioToast.showSuccess("Cuenta Creda","cuenta creada con existo")
-              this.route.navigate(['/CrearJefe']);
-            }
-            
-          })
-      }
-      if (data.length==1) {
-        this._servicioToast.errorSuccess("Error","El correo ya está en uso o el rut")
-      }
-     
-      
-    },(error)=>{
-      console.error('Error al obtener los datos del usuario:', error);
-      this._serviceUsuario
+    this._serviceUsuario
       .postUsuario({
         idusaurio: '',
         nombre: nombre,
@@ -128,22 +126,21 @@ export class CrearCuentaComponent {
         idplan: idplan,
         email: email,
         rol: 1,
-        estado:0
+        estado: 0
       }).subscribe()
 
-        this._serviceUsuario.setUserActive(email).then(res => {
-          console.log(res);
-          
-          if(res){
-            this._servicioToast.showSuccess("Cuenta Creda","cuenta creada con existo")
-            this.route.navigate(['/CrearJefe']);
-          }
-          
-        })
+    this._serviceUsuario.setUserActive(email).then(res => {
+      console.log(res);
 
-      
-     
+      if (res) {
+        this._servicioToast.showSuccess("Cuenta Creda", "cuenta creada con existo")
+        this.route.navigate(['/CrearJefe']);
+      }
+
     })
+
+
+
 
   }
 
@@ -192,38 +189,95 @@ export class CrearCuentaComponent {
       flag
     ) {
       if (this.checkboxTermState) {
-        if (this.checkboxFirst || this.checkboxSecond || this.checkboxThird) {
+        if (this.BASICO || this.INTERMEDIO || this.AVANZADO) {
           console.log(usuario.pass);
-          this.crearCuenta(
-            usuario.nombre,
-            usuario.apellido,
-            usuario.rut,
-            usuario.pass,
-            usuario.correo,
-            usuario.telefono,
-            this.plan,
-          );
-        }else{
-          this._servicioToast.errorSuccess("Error","Seleccione el plan a pagar")
+          this._serviceUsuario.usuarioExistente(usuario.correo, usuario.rut).subscribe(data => {
+
+            if (data.length == 0) {
+              console.log("se puede crear el usuario");
+              this.procesosCrearCuenta = 2;
+            }
+            if (data.length > 0) {
+              this._servicioToast.errorSuccess("Error", "El correo ya está en uso o el rut")
+            }
+
+
+          }, (error) => {
+
+          })
+          
+        } else {
+          this._servicioToast.errorSuccess("Error", "Seleccione el plan a pagar")
         }
-      }else{
-        this._servicioToast.errorSuccess("Error","Acepte los terminos")
+      } else {
+        this._servicioToast.errorSuccess("Error", "Acepte los terminos")
       }
     }
   }
   CheckboxChanges1() {
-    this.checkboxSecond = false;
-    this.checkboxThird = false;
+    console.log(this.BASICO);
+
+    this.INTERMEDIO = false;
+    this.AVANZADO = false;
     this.plan = 1;
   }
   CheckboxChanges2() {
-    this.checkboxFirst = false;
-    this.checkboxThird = false;
+
+    this.BASICO = false;
+    this.AVANZADO = false;
     this.plan = 2;
+    console.log(this.BASICO);
   }
   CheckboxChanges3() {
-    this.checkboxSecond = false;
-    this.checkboxFirst = false;
+    this.INTERMEDIO = false;
+    this.BASICO = false;
     this.plan = 3;
+  }
+  card() {
+    console.log("card");
+    let card = this.tarjetaForm.value
+    this._servicePago.realizarPago({
+      "buyOrder": 1,
+      "sessionId": 1,
+      "precio": 2,
+      "cvv": card.cvv,
+      "cardnumber": card.cardNumber?.toString(),
+      "month": card.mes?.toString().padStart(2, "0"),
+      "year": card.ano?.toString().padStart(2, "0")
+    }).subscribe({
+      next: (data) => {
+        console.log(data);
+        let token: any = data
+        this._servicePago.verificarPago({ token: token.token }).subscribe({
+          next: (curr) => {
+            console.log(curr);
+            let res: any = curr;
+            console.log(res.status);
+            if (res.status == "AUTHORIZED") {
+              this._servicioToast.showSuccess("Exito", "Tarjeta aprobada")
+              let usuario = this.registroForm.value;
+              this.crearCuenta(
+                usuario.nombre,
+                usuario.apellido,
+                usuario.rut,
+                usuario.pass,
+                usuario.correo,
+                usuario.telefono,
+                this.plan,
+              );
+            } else {
+              this._servicioToast.errorSuccess("ERROR", "Tarjeta rechazada")
+              this.procesosCrearCuenta = 1
+            }
+          },
+          error: (err) => {
+
+          }
+        })
+      },
+      error: (err) => {
+        this._servicioToast.errorSuccess("ERROR", "Valores no validos en tarjeta")
+      },
+    })
   }
 }

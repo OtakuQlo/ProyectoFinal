@@ -117,6 +117,7 @@ export class HomeComponent implements OnInit {
   }
   irHome() {
     window.location.href="http://localhost:4200/Home"
+    this.route.navigate(['./Home']);
   }
   reestablecePass() {
     console.log(this.userPass);

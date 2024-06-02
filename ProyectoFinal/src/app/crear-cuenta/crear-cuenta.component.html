@@ -1,7 +1,5 @@
-
-
-
 <div class="container">
+    <!-- ng if -->
     <div class="row mt-3">
         <div class="row ">
             <div class="alert d-flex align-items-center colorBGC colorB" role="alert"
@@ -12,7 +10,7 @@
             </div>
         </div>
 
-        <div class="row colorBGC colorB mt-2">
+        <div *ngIf="procesosCrearCuenta == 1" class="row colorBGC colorB mt-2">
             <!-- <div *ngIf="validarPlan;" class="alert alert-warning m-2" role="alert">
                 Debe de seleccionar un plan
             </div>
@@ -77,41 +75,22 @@
                 <div class="row mt-5">
                     <h3 class="text-center letra">Seleccion de Plan</h3>
                 </div>
-                <div class="row align-items-start mt-3">
-                    <div class="m-2 card col">
-                        <p><input [(ngModel)]="checkboxFirst" (change)="CheckboxChanges1()" type="checkbox"
-                                id="first_checkbox" value="first_checkbox" /> Plan Basico</p>
+                <div class="row  mt-3">
+                    <div *ngFor="let plan of plans" class="m-2 card col">
+                        <p *ngIf="plan.idplan ==1"><input [(ngModel)]="BASICO" (change)="CheckboxChanges1()"
+                                type="checkbox" id="first_checkbox" value="first_checkbox" /> {{plan.nombreplan}}</p>
+                        <p *ngIf="plan.idplan ==2"><input [(ngModel)]="INTERMEDIO" (change)="CheckboxChanges2()"
+                                type="checkbox" id="second_checkbox" value="second_checkbox" /> {{plan.nombreplan}}</p>
+                        <p *ngIf="plan.idplan ==3"><input [(ngModel)]="AVANZADO" (change)="CheckboxChanges3()"
+                                type="checkbox" id="third_checkbox" value="third_checkbox" /> {{plan.nombreplan}}</p>
                         <ol>
-                            <li>uno de ejecutivo</li>
-                            <li>perfiles empleado y </li>
-                            <li>no informes</li>
+                            <li>Cantidad de perfiles admin 1</li>
+                            <li>Cantidad de perfiles{{plan.cantidademp}}</li>
+                            <li>Generar informes en excel</li>
                         </ol>
                         <hr>
                         <p>total = $20.000</p>
                     </div>
-                    <div class="m-2 card col">
-                        <p><input (change)="CheckboxChanges2()" [(ngModel)]="checkboxSecond" type="checkbox"
-                                id="second_checkbox" value="second_checkbox" /> Plan Intermedio</p>
-                        <ol>
-                            <li>2 de ejecutivo</li>
-                            <li>4 perfiles empleado</li>
-                            <li>genera informes basicos</li>
-                        </ol>
-                        <hr>
-                        <p>total = $30.000</p>
-                    </div>
-                    <div class="m-2 card col">
-                        <p> <input (change)="CheckboxChanges3()" type="checkbox" [(ngModel)]="checkboxThird"
-                                id="third_checkbox" value="third_checkbox" /> Plan Premium</p>
-                        <ol>
-                            <li>3 de ejecutivo</li>
-                            <li>10 perfiles empleado</li>
-                            <li>genera informes detallados</li>
-                        </ol>
-                        <hr>
-                        <p>total = $65.000</p>
-                    </div>
-
                 </div>
                 <div class="row mt-4">
                     <p class="text-center  letra"> <input [(ngModel)]="checkboxTermState" type="checkbox"
@@ -122,6 +101,34 @@
 
             </div>
 
+        </div>
+        <div *ngIf="procesosCrearCuenta == 2" class="row colorBGC colorB mt-2">
+            <div class="row">
+                <form class="ms-3" [formGroup]="tarjetaForm" (ngSubmit)="card()">
+                    <div class="mb-3 mt-5  w-75  ">
+                        <input class="form-control colorBGC colorB size" id="cardN"
+                            placeholder="Ingrese su los numemros de tarjeta" minlength="15" maxlength="15" type="text" formControlName="cardNumber">
+                        <p *ngIf="validNombre;" style="color: yellow;">Nombre no valido</p>
+                    </div>
+                    <div class="mb-3 mt-5  w-75 row  ">
+                        <div class="col"><input class="form-control colorBGC colorB size" id="cvv" placeholder="CVV"
+                                type="text" formControlName="cvv"  minlength="3" maxlength="3">
+                            <p *ngIf="validNombre;" style="color: yellow;">Nombre no valido</p>
+                        </div>
+                        <div class="col"><input class="form-control colorBGC colorB size" id="mes"
+                                placeholder="MES" type="text"
+                                formControlName="mes" minlength="2" maxlength="2">
+                            <p *ngIf="validNombre;" style="color: yellow;">Nombre no valido</p>
+                        </div>
+                        <div class="col"><input step="01" class="form-control colorBGC colorB size" id="ano"
+                            placeholder="AÑO" type="text" formControlName="ano" minlength="2" maxlength="2">
+                        <p *ngIf="validNombre;" style="color: yellow;">Nombre no valido</p></div>
+                    </div>
+                    <div class="mt-2 mb-4 col-sm-5 col-md-4 col-lg-3 col-xl-2"><button type="submit"
+                            class="btn colorBGC colorB ">Confirmar</button>
+                    </div>
+                </form>
+            </div>
         </div>
 
     </div>
