@@ -1,5 +1,5 @@
 const { Sequelize, DataTypes, Model } = require('sequelize');
-const Perfiles = require('./perfiles');
+const Usuarios = require('./usuarios');
 
 const sequelize = new Sequelize('ordenalo', 'root', '', {
     host: 'localhost',
@@ -26,7 +26,7 @@ Boletas.init({
         type: DataTypes.BOOLEAN,
         allowNull:false
     },
-    idperfil:{
+    idusuario:{
         type: DataTypes.INTEGER,
         allowNull:false
     }
@@ -36,11 +36,11 @@ Boletas.init({
     timestamps: false // Deshabilitar las marcas de tiempo automáticas // Nombre del modelo
 });
 
-Perfiles.hasMany(Boletas,{
-    foreignKey: 'idperfil'
+Usuarios.hasMany(Boletas,{
+    foreignKey: 'idusuario'
 });
-Boletas.belongsTo(Perfiles,{
-    foreignKey: 'idperfil'
+Boletas.belongsTo(Usuarios,{
+    foreignKey: 'idusuario'
 });
 
 
