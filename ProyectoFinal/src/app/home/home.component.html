@@ -31,10 +31,7 @@
     <div class="container pt-3 pb-3">
 
         <div class="row">
-            <div class="col-8 mt-3">
-                <div *ngIf="validSesion;" class="alert alert-warning" role="alert">
-                    Contraseña o Correo incorrecto
-                </div>
+            <div class="col-8 d-none d-sm-block">
                 <div class="row mb-5">
                     <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
                         <div class="carousel-inner">
@@ -63,7 +60,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-8 col-sm-4 col-md-4">
                 <div class="h-100 d-flex justify-content-center align-items-center">
                     <div class="d-flex flex-column p-2 justify-content-center align-items-center card" id="">
                         <div class="col mt-1">
@@ -152,11 +149,11 @@
         </div>
     </div>
 </div>
-<footer class="footer" id="footer">
-    <div  class="container-fluid bg-dark text-light p-1 text-center mt-3 fixed-bottom">
+<footer class="footer">
+    <div  class=" bg-dark text-light p-1 text-center mt-3 fixed-bottom">
         <div class="row justify-content-start">
             <div class="col-8 text-center">
-                <p class="mt-3 sticky-bottom" style="font-size: 21px;">“Optimiza tu inventario y maximiza tus ventas
+                <p class="mt-3" style="font-size: 21px;">“Optimiza tu inventario y maximiza tus ventas
                     con OrdenaloTodo, tu bazar digital.”</p>
             </div>
         </div>

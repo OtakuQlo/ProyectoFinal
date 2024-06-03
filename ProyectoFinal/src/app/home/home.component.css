@@ -1,66 +1,81 @@
 #bar {
-    background-color: rgba(29, 49, 60, 0.9); /* Color con opacidad */
+    background-color: rgba(29, 49, 60, 0.9);
+    /* Color con opacidad */
     border-bottom: 2px solid rgba(196, 59, 57, 0.7);
-    color: white;   
-    text-shadow: 
-    -1px -1px 0 #C43B3950,  
-     1px -1px 0 #C43B3950,
-    -1px  1px 0 #C43B3950,
-     1px  1px 0 #C43B3950; 
+    color: white;
+    text-shadow:
+        -1px -1px 0 #C43B3950,
+        1px -1px 0 #C43B3950,
+        -1px 1px 0 #C43B3950,
+        1px 1px 0 #C43B3950;
 }
 
 #footer {
-    background-color: rgba(29, 49, 60, 0.9); /* Color con opacidad */
+    background-color: rgba(29, 49, 60, 0.9);
+    /* Color con opacidad */
     border-top: 2px solid rgba(196, 59, 57, 0.7);
-    color: white;   
-    text-shadow: 
-    -1px -1px 0 #C43B3950,  
-     1px -1px 0 #C43B3950,
-    -1px  1px 0 #C43B3950,
-     1px  1px 0 #C43B3950; 
+    color: white;
+    text-shadow:
+        -1px -1px 0 #C43B3950,
+        1px -1px 0 #C43B3950,
+        -1px 1px 0 #C43B3950,
+        1px 1px 0 #C43B3950;
     padding-bottom: 2px;
 }
 
-#fondo{
-    background-image: url('/assets/imagenes/Fondo.jpg'); /* Ruta de la imagen */
-    background-repeat: no-repeat; /* Ajustar el tamaño de la imagen para cubrir completamente el contenedor */
-    background-size: cover; /* Centrar la imagen dentro del contenedor */
+#fondo {
+    min-height: 100vh;
+    background-image: url('/assets/imagenes/Fondo.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
 }
-.container{
-    color:white
+
+.container {
+    color: white
 }
-.card{
-    background: rgba(29, 49, 60, 1); 
-    border-radius: 19px; 
+
+.card {
+    background: rgba(29, 49, 60, 1);
+    border-radius: 19px;
     border-color: rgba(196, 59, 57, 0.7);
 }
+
 .card hr {
-    width: 100%; /* Establece el ancho al 100% del contenedor */
-    height: 1px; /* Establece la altura de la línea */
-    background-color: #ffffff; /* Color de la línea */
-    margin: 10px 0; /* Margen superior e inferior para separar del contenido */
-    border: none; /* Elimina cualquier borde */
+    width: 100%;
+    /* Establece el ancho al 100% del contenedor */
+    height: 1px;
+    /* Establece la altura de la línea */
+    background-color: #ffffff;
+    /* Color de la línea */
+    margin: 10px 0;
+    /* Margen superior e inferior para separar del contenido */
+    border: none;
+    /* Elimina cualquier borde */
 }
 
-button:focus{
+button:focus {
     box-shadow: 0 0 10px rgba(196, 59, 57, 0.7);
 }
-.colorBGC{
-    background: rgba(29, 49, 60, 0.9); 
+
+.colorBGC {
+    background: rgba(29, 49, 60, 0.9);
 }
 
 
-.colorB{
-    background: rgba(29, 49, 60, 0.9); 
+.colorB {
+    background: rgba(29, 49, 60, 0.9);
     border-radius: 7px;
     color: antiquewhite;
     border-color: rgba(196, 59, 57, 0.7);
 }
-.colorB button:hover{
+
+.colorB button:hover {
     color: antiquewhite;
     background-color: #2e4f5f;
 
 }
-.colorB button:focus{
+
+.colorB button:focus {
     box-shadow: 0 0 10px rgba(196, 59, 57, 0.7);
 }
