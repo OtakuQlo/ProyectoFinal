@@ -42,6 +42,9 @@
     border: none; /* Elimina cualquier borde */
 }
 
+button:focus{
+    box-shadow: 0 0 10px rgba(196, 59, 57, 0.7);
+}
 .colorBGC{
     background: rgba(29, 49, 60, 0.9); 
 }
