@@ -87,7 +87,7 @@ export class InventarioComponent {
     this.totalPages = this.totalPage();
     this.actualPage = 1;
     this.pageGenerator();
-
+    this.search =""
   }
 
   addProduct() {
