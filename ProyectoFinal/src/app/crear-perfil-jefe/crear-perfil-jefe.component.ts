@@ -65,7 +65,7 @@ export class CrearPerfilJefeComponent {
         passadmin: this.usuarios.encryptContra(this.pass1),
         estado: 0
       }).subscribe();
-      this.route.navigate(['./Perfiles']);
+      this.route.navigate(['./AdministrarPerfiles']);
   
     }
 

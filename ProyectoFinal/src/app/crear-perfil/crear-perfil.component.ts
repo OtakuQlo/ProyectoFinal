@@ -46,7 +46,7 @@ export class CrearPerfilComponent {
   
 
   regexname: RegExp =
-    /^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]{2,50}$/;
+    /^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]{2,20}$/;
 
 
   crearPerfil(){
@@ -55,7 +55,7 @@ export class CrearPerfilComponent {
    if (!this.regexname.test(this.nombre)) {
      bandera = false;
      this.labelnombre =
-       'El nombre debe ser sin caracteres epeciales ni numeros';
+       'El nombre debe ser sin caracteres epeciales ni numeros con un maximo de 20 caracteres';
    } else {
      this.labelnombre = '';
    }
@@ -73,7 +73,7 @@ export class CrearPerfilComponent {
         // Manejar los errores aquí si la solicitud falla
       }
     );
-    this.route.navigate(['./Perfiles']);
+    this.route.navigate(['./AdministrarPerfiles']);
    }
 
  }
