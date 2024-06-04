@@ -22,6 +22,10 @@ Plans.init({
     cantidademp:{
         type:DataTypes.INTEGER,
         allowNull:false
+    },
+    precio:{
+        type:DataTypes.INTEGER,
+        allowNull:false
     }
 }, {
     sequelize, // Pasar la instancia de Sequelize aquí

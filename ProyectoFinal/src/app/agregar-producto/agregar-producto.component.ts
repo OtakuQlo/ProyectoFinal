@@ -188,13 +188,7 @@ export class AgregarProductoComponent {
   agregarProducto() {
     let bandera = true;//bandera que permite guardar un articulo, en caso de ser true es porque las validaciones son correctas y se añade el producto
 
-    // validacion de que se seleccione una fecha de vencimiento
-    if (!this.fecha) {
-      bandera = false;
-      this.labelfecha = "Debe haber una fecha selecionada";
-    } else {
-      this.labelfecha = "";
-    }
+    
 
     // validacion que nombre del producto no este vacio
 

@@ -28,7 +28,7 @@ ProductoLlegadas.init({
     },
     fechavencimiento:{
         type:DataTypes.DATE,
-        allowNull:false
+        allowNull:true
     },
     idempresa:{
         type: DataTypes.INTEGER,
