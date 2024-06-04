@@ -1,15 +1,14 @@
-
-
 <div class="container">
-    <div class="col-md-4 mt-3">
-        <button type="button" (click)="irHome()" class="btn-close" aria-label="Close"></button>
-        <p>Cerrar Sesion</p>
+    <div class="row text-center mt-3 align-items-center">
+        <button type="button" (click)="irHome()" name="close" id="close" class="btn-close" aria-label="Close"></button>
+        <div class="col-md-1">
+            <h5 for="close">Cerrar Sesion</h5>
+        </div>
+        <div class="col-md-2 offset-8">
+            <button type="button" class="btn"><h5>+ Crear Jefe</h5></button>
+        </div>
     </div>
-    <div class="col-md-4 offset-2 mt-3">
-        <button type="button" class="btn"> + Crear Jefe</button>
-        
-    </div>
-        
+
     <div class="row mt-4 justify-content-center">
         <div class="col-sm-8 col-md-6 col-lg-4 col-xl-4 text-center">
             <h1 class="txtT">¿Quién eres?</h1>
