@@ -6,5 +6,7 @@ const informeVentasEmp = require('../controller/informeController');
 router.get('/ventasEMP/:id_user', informeVentasEmp.informeVentasEmp);
 router.get('/ventas/:idusuario', informeVentasEmp.informeVentas);
 router.get('/productoP/:idusuario', informeVentasEmp.informeProductoP);
+router.get('/productoMP/:idusuario', informeVentasEmp.informeProductoMP);
+router.get('/mermas/:idusuario', informeVentasEmp.informeMermas);
 
 module.exports = router;

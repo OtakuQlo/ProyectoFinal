@@ -52,6 +52,7 @@ export class SeccionPerfilesComponent {
   }
 
   activarAdmin(idP:any){
+    this.perfilS.setInactiveProfile(parseInt(idP), {estado : false}).subscribe();
     this.perfilS.getPerfil(idP).subscribe(data=>{
       let perfil = data
       if (perfil.estado == false) {

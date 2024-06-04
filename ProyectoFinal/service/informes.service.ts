@@ -22,4 +22,12 @@ export class InformesService {
   informeProductoP(id:any){
     return this.http.get(this.url+"/productoP/"+id);
   }
+
+  informeProductoMP(id:any){
+    return this.http.get(this.url+"/productoMP/"+id)
+  }
+
+  informeMermas(id:any){
+    return this.http.get(this.url+"/mermas/"+id)
+  }
 }

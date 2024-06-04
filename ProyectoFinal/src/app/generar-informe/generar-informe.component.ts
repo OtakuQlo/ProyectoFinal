@@ -17,6 +17,8 @@ export class GenerarInformeComponent {
   informeEMP: any;
   informeVentas: any;
   informeProductoP: any;
+  informeProductoMenP: any;
+  informeMerm: any;
 
   date = formatDate(new Date(), 'dd-MM-yyyy', 'en')
 
@@ -26,16 +28,21 @@ export class GenerarInformeComponent {
       this.informeEMP = data
       console.log(this.informeEMP);
     })  
-
     this.informes.informeInventario(this.userA.getUserActive().idusuario).subscribe(data =>{
       this.informeVentas = data
       console.log(this.informeVentas);
     })
-
     this.informes.informeProductoP(this.userA.getUserActive().idusuario).subscribe(data =>{
       this.informeProductoP = data
       console.log(this.informeProductoP);
-      
+    })
+    this.informes.informeProductoMP(this.userA.getUserActive().idusuario).subscribe(data =>{
+      this.informeProductoMenP = data;
+      console.log(this.informeProductoMenP);
+    })
+    this.informes.informeMermas(this.userA.getUserActive().idusuario).subscribe(data =>{
+      this.informeMerm = data
+      console.log(this.informeMerm);
     })
   }
 
@@ -77,7 +84,7 @@ export class GenerarInformeComponent {
     const workbook = new ExcelJS.Workbook();
 
     // Agregar una hoja al libro de trabajo
-    const worksheet = workbook.addWorksheet('Informe Ventas de Empleados');
+    const worksheet = workbook.addWorksheet('Informe de Inventario');
 
     //Establecer Columnas
     worksheet.columns = [
@@ -96,7 +103,7 @@ export class GenerarInformeComponent {
       const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
 
       //Usar file-saver para descargar el archivo
-      saveAs(blob, 'InformeIngre'+this.date+'.xlsx')
+      saveAs(blob, 'Informe_Inventario_'+this.date+'.xlsx')
 
       console.log('Archivo Excel guardado.');
     } catch (error) {
@@ -109,7 +116,7 @@ export class GenerarInformeComponent {
     const workbook = new ExcelJS.Workbook();
 
     // Agregar una hoja al libro de trabajo
-    const worksheet = workbook.addWorksheet('Informe Ventas de Empleados');
+    const worksheet = workbook.addWorksheet('Informe Productos Populares');
 
     //Establecer Columnas
     worksheet.columns = [
@@ -129,7 +136,74 @@ export class GenerarInformeComponent {
       const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
 
       //Usar file-saver para descargar el archivo
-      saveAs(blob, 'InformeIngre'+this.date+'.xlsx')
+      saveAs(blob, 'Informe_Pro_Popul_'+this.date+'.xlsx')
+
+      console.log('Archivo Excel guardado.');
+    } catch (error) {
+      console.error('Error al guardar el archivo Excel:', error);
+    }
+  }
+
+  async informeProductoMP(){
+    // Crear un nuevo libro de trabajo
+    const workbook = new ExcelJS.Workbook();
+
+    // Agregar una hoja al libro de trabajo
+    const worksheet = workbook.addWorksheet('Informe Productos Menos Populares');
+
+    //Establecer Columnas
+    worksheet.columns = [
+      { header: 'Nombre del Producto', key: 'nombre_prod', width: 20 },
+      { header: 'Cantidad de Ventas', key: 'c_ventas', width: 20 },
+    ];
+    // Agregar datos a la hoja
+    this.informeProductoMenP.forEach((rowdata : any) =>{
+      worksheet.addRow([rowdata.nombreproducto, parseInt(rowdata.total_vendido)])
+    } )
+    try {
+      const buffer = await workbook.xlsx.writeBuffer();
+
+      // Crear un Blob a partir del buffer
+      const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+
+      //Usar file-saver para descargar el archivo
+      saveAs(blob, 'Informe_Menos_Pop_'+this.date+'.xlsx')
+
+      console.log('Archivo Excel guardado.');
+    } catch (error) {
+      console.error('Error al guardar el archivo Excel:', error);
+    }
+  }
+
+  async informeMermas(){
+    // Crear un nuevo libro de trabajo
+    const workbook = new ExcelJS.Workbook();
+
+    // Agregar una hoja al libro de trabajo
+    const worksheet = workbook.addWorksheet('Informe de Mermas');
+
+    //Establecer Columnas
+    worksheet.columns = [
+      { header: 'Nombre del Producto', key: 'nombre_prod', width: 20 },
+      { header: 'Codigo de Barras', key: 'barcode', width: 20 },
+      { header: 'Precio', key: 'precio', width: 15 },
+      { header: 'Cantidad', key: 'cantidad', width: 15 },
+      { header: 'Total de perdidas', key: 'total_perdido', width: 20},
+      { header: 'Fecha de la merma', key: 'fecha', width: 20 },
+      { header: 'Descripción', key: 'descripcion', width: 30 },
+    ];
+    // Agregar datos a la hoja
+    this.informeMerm.forEach((rowdata : any) =>{
+      worksheet.addRow([rowdata.nombreproducto, rowdata.barcode, parseInt(rowdata.precio), parseInt(rowdata.cantidad), parseInt(rowdata.total_perdido), rowdata.fecha, rowdata.descripcion])
+    } )
+    try {
+      const buffer = await workbook.xlsx.writeBuffer();
+
+      // Crear un Blob a partir del buffer
+      const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+
+      //Usar file-saver para descargar el archivo
+      saveAs(blob, 'Informe_mermas_'+this.date+'.xlsx')
 
       console.log('Archivo Excel guardado.');
     } catch (error) {
