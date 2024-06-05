@@ -102,15 +102,6 @@ export class RealizarVentaComponent {
           this.venta.actualizarDetalle(this.detalle[index].idboleta, {cantidad : this.detalle[index].cantidad ,idproducto : this.detalle[index].idproducto.idproducto})
           this.cancelarVenta()
           this.alert.showSuccess('', 'Detalle Actualizado');
-          /* let detallin : any [] = []
-          this.venta.getDetalle(this.boleta[0].idboleta).subscribe(res => {
-            detallin = res
-            this.detalle[index].iddetalle = detallin.find(det => det.idproducto === this.producto.idproducto).iddetalle
-            this.detalle[index].cantidad = this.detalle[index].cantidad + this.cantidad
-            this.venta.actualizarDetalle(this.detalle[index].iddetalle, {"cantidad" : this.detalle[index].cantidad}).subscribe()
-            this.cancelarVenta()
-            this.alert.showSuccess('', 'Detalle Actualizado');
-          }) */
         } 
         if(curr == undefined) {
           this.boletaVenta().then(()=>{
@@ -145,16 +136,17 @@ export class RealizarVentaComponent {
   }
 
   async boletaVenta() {
-    await this.venta.getboleta(this.perfilV.id).then(boleta =>{
+    await this.venta.getboleta(this.perfilV.idusuario).then(boleta =>{
       this.boleta = boleta
       if (this.boleta.length === 0){
         let datebol = formatDate(new Date(), 'yyyy-MM-dd', 'en')
         this.venta.crearBoleta({
           "idboleta": '',
+          "nombre": this.perfilV.nombre,
           "fecha": datebol,
           "preciototal": this.total,
           "estado": false,
-          "idperfil": this.perfilV.id
+          "idusuario": this.perfilV.idusuario
         }).subscribe()
       }
     })

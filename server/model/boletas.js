@@ -14,6 +14,10 @@ Boletas.init({
         type: DataTypes.INTEGER,
         primaryKey:true,
     },
+    nombre:{
+        type: DataTypes.STRING,
+        allowNull: false
+    },
     fecha:{
         type: DataTypes.DATE,
         allowNull:false
