@@ -1,7 +1,7 @@
 const Productos = require("../model/productos")
 const Marca = require("../model/marca")
 const Stock = require("../model/stockproducts");
-const { Op } = require("sequelize");
+const { Op, Sequelize } = require("sequelize");
 exports.creandoProductos = async (req, res) => {
     try {
         let productos;
@@ -50,11 +50,21 @@ exports.obtenerProductosMarca = async (req, res) => {
 
 exports.obtenerProductoBarcode = async (req, res) => {
     try {
-        const { barcode} = req.params
-        const productos = await Productos.findOne({
+        const idusuario = req.query.idusuario;
+        const barcode = req.params.barcode;
+        
+        const productos = await Productos.findAll({
             where: {
                 barcode: barcode,
-            }
+            },
+            include: [{
+                model: Stock,
+                attributes: ['cantidadtotal'],
+                where: {
+                    idusuario : idusuario
+                },
+                required: false // Esto asegura que los productos sin stock todavía se incluyan
+            }]
         });
         res.json(productos)
 

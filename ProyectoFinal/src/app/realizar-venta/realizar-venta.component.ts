@@ -6,6 +6,7 @@ import { PerfilusuarioService } from '../../../service/perfilusuario.service';
 import { ProductoService } from '../../../service/producto.service';
 import { CommonModule, formatDate } from '@angular/common';
 import { Router } from '@angular/router';
+import { UsuarioService } from '../../../service/usuario.service';
 
 @Component({
   selector: 'app-realizar-venta',
@@ -16,7 +17,7 @@ import { Router } from '@angular/router';
 })
 export class RealizarVentaComponent {
 
-  constructor( private venta: VentaService, private alert: ToastService, private perfil: PerfilusuarioService, private productoS: ProductoService, private route:Router) {
+  constructor( private venta: VentaService, private alert: ToastService, private perfil: PerfilusuarioService, private productoS: ProductoService) {
     
   }
 
@@ -89,40 +90,42 @@ export class RealizarVentaComponent {
   }
 
   agregarProducto() {
-    this.productoS.getProductoVenta(this.codebar).then(res => {
+    this.productoS.getProductoVenta(this.codebar,{idusuario : this.perfilV.idusuario}).subscribe(res => {
       this.producto = res
-      if (this.producto && this.producto.precio !== undefined) {
-        this.total = this.total + (this.producto.precio * this.cantidad);
-        let curr = this.detalle.find(p => p.idproducto.idproducto === this.producto.idproducto)
-        let index = this.detalle.findIndex(obj => obj.idproducto.idproducto === this.producto.idproducto)
-        
-        if (curr != undefined) {
-          this.detalle[index].cantidad = this.detalle[index].cantidad + this.cantidad
-          console.log(Number(this.detalle[index].cantidad));
-          this.venta.actualizarDetalle(this.detalle[index].idboleta, {cantidad : this.detalle[index].cantidad ,idproducto : this.detalle[index].idproducto.idproducto})
-          this.cancelarVenta()
-          this.alert.showSuccess('', 'Detalle Actualizado');
-        } 
-        if(curr == undefined) {
-          this.boletaVenta().then(()=>{
-            this.detalle.push({
-              iddetalle: '',
-              idboleta: this.boleta[0].idboleta,
-              idproducto: this.producto,
-              cantidad: this.cantidad
-            })
-            this.alert.showSuccess('', 'Producto Agregado');
+      if (this.producto[0] && this.producto[0].precio !== undefined) {
+        if(parseInt(this.producto[0].StockProducts[0].cantidadtotal) > 0 && parseInt(this.producto[0].StockProducts[0].cantidadtotal) >= this.cantidad){
+          this.total = this.total + (this.producto[0].precio * this.cantidad);
+          let curr = this.detalle.find(p => p.idproducto.idproducto === this.producto[0].idproducto)
+          let index = this.detalle.findIndex(obj => obj.idproducto.idproducto === this.producto[0].idproducto)
+          if (curr != undefined) {
+            this.detalle[index].cantidad = this.detalle[index].cantidad + this.cantidad
+            this.venta.actualizarDetalle(this.detalle[index].idboleta, {cantidad : this.detalle[index].cantidad ,idproducto : this.detalle[index].idproducto.idproducto})
             this.cancelarVenta()
-          })
-        }
+            this.alert.showSuccess('', 'Detalle Actualizado');
+          } 
+          if(curr == undefined) {
+            this.boletaVenta().then(()=>{
+              this.detalle.push({
+                iddetalle: '',
+                idboleta: this.boleta[0].idboleta,
+                idproducto: this.producto[0],
+                cantidad: this.cantidad
+              })
+              this.alert.showSuccess('', 'Producto Agregado');
+              this.cancelarVenta()
+            })
+          }
+        }else{
+          this.alert.errorSuccess('','El Producto tiene un stock actual de: '+ (parseInt(this.producto[0].StockProducts[0].cantidadtotal)-this.detalle.find(detallin => detallin.idproducto.idproducto === this.producto[0].idproducto).cantidad))
+      }
       } else {
         this.alert.errorSuccess('', 'Producto no encontrado');
       }
+      
     })
   }
 
   borrarDetalles(idp : any){
-    console.log(idp);
     let index = this.detalle.findIndex(detallin => detallin.idproducto.idproducto === idp);
     let borrado = this.detalle.find(detallin => detallin.idproducto.idproducto === idp)
     this.detalle.splice(index,1)
@@ -139,7 +142,7 @@ export class RealizarVentaComponent {
     await this.venta.getboleta(this.perfilV.idusuario).then(boleta =>{
       this.boleta = boleta
       if (this.boleta.length === 0){
-        let datebol = formatDate(new Date(), 'yyyy-MM-dd', 'en')
+        let datebol = formatDate(new Date(), 'yyyy-MM-dd', 'en')        
         this.venta.crearBoleta({
           "idboleta": '',
           "nombre": this.perfilV.nombre,

@@ -3,8 +3,7 @@ const router = express.Router();
 const productosController = require('../controller/productosController')
 
 router.post('/',productosController.creandoProductos);
-// router.get('/',productosController.obtenerProducto);
-router.get('/:barcode',productosController.obtenerProductoBarcode)
+router.get('/producto/:barcode',productosController.obtenerProductoBarcode)
 router.put('/:id',productosController.actualizarProducto);
 router.get('/stock/:id',productosController.obtenerProductosMarca)
 router.get('/id/:id',productosController.obtenerProductoId)

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../src/environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, lastValueFrom } from 'rxjs';
 @Injectable({
   providedIn: 'root'
@@ -17,14 +17,9 @@ export class ProductoService {
     return this.http.get(this.url+'/stock/'+idusuario);
   }
 
-  async getProductoVenta(barcode:any){
-    try{
-      const producto = await lastValueFrom(this.http.get(this.url+ "/" +barcode))
-      console.log(producto);
-      return producto
-    }catch(error){
-      return console.error('Error al encontrar el producto:', error);
-    }
+  getProductoVenta(barcode:any, datos:any){
+    const params = new HttpParams().set('idusuario', datos.idusuario);
+    return this.http.get(this.url+'/producto/'+barcode , { params });  
   }
 
   getProductoId(id:any):Observable<any>{

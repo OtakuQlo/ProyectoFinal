@@ -23,7 +23,6 @@ export class VentaService {
   async getboleta(id: any){
     try{
       const boleta = await lastValueFrom(this.http.get(this.url+'boletas/'+id))
-      console.log(boleta);
       return boleta
     }catch(error){
       return console.error('Error al encontrar el producto:', error);

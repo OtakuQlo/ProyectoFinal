@@ -126,7 +126,7 @@ export class InventarioComponent {
     if (this.cant >= 1) {
       if (this.barcode != "") {
         
-        this._serviceProduto.getProductoVenta(this.barcode).then(res=>{
+        this._serviceProduto.getProductoVenta(this.barcode,{}).subscribe(res=>{
           let producto:any;
           producto=res
           if (res) {

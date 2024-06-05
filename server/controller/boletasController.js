@@ -15,10 +15,10 @@ exports.creandoBoletas= async (req,res)=>{
 }
 exports.obtenerBoleta= async(req,res)=>{
     try{
-        const { idperfil } = req.params
+        const { idusuario } = req.params
         const boleta = await Boletas.findAll({
             where : {
-                idperfil : idperfil,
+                idusuario : idusuario,
                 estado : 0
             }
         });
@@ -42,7 +42,7 @@ exports.obtenerBoletas= async(req,res)=>{
                 }]
             }],
             where:{
-                idperfil: req.params.id,
+                idusuario: req.params.id,
                 estado : 1
             }
         });
