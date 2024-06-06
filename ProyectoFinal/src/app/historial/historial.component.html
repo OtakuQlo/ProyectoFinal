@@ -2,27 +2,41 @@
     <div class="row ms-4 me-4 mt-3">
 
         <div class="row">
-            <div class="col-9">
-                <input *ngIf="opcionHistorial ==1" [(ngModel)]="opcionFecha" (ngModelChange)="setFecha()" min=""
-                    max="20205-12-31" type="date" class="btn colorB me-2" id="fecven" name="fecven">
-                <label class="letra"></label>
+            <div class="col-9 ">
+                <div class="row align-items-end ">
+                    <div *ngIf="opcionHistorial ==1" class="col">
+                        <input [(ngModel)]="opcionFecha" (ngModelChange)="setFecha()" min=""
+                            max="20205-12-31" type="date" class="btn colorB me-2 " id="fecven" name="fecven">
+                        <label class="letra"></label>
+                    </div>
 
+                    <div *ngIf="opcionHistorial ==2" class="col-4">
+                        <div ><label class="letra">Fecha Ingreso :</label></div>
+                        <div ><input *ngIf="opcionHistorial ==2" [(ngModel)]="opcionFechaIngreso"
+                                (ngModelChange)="setFecha()" min="" max="20205-12-31" type="date"
+                                class="btn colorB me-2" id="fecven" name="fecven">
+                        </div>
+                        <label class="letra">
+                            Fecha Vencimiento :
+                        </label>
+                        <div ><input [(ngModel)]="opcionFechaVencimiento" (ngModelChange)="setFecha()"
+                                min="" max="20205-12-31" type="date" class="btn colorB me-2" id="fecven" name="fecven">
+                        </div>
 
-                <input *ngIf="opcionHistorial ==2" [(ngModel)]="opcionFechaIngreso" (ngModelChange)="setFecha()" min=""
-                    max="20205-12-31" type="date" class="btn colorB me-2" id="fecven" name="fecven">
-                <label class="letra"></label>
+                    </div>
 
+                    <div *ngIf="opcionHistorial == 2" class="col">
+                        <button type="button" class="btn btn-primary colorB ms-2" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal">
+                            Buscar Monto
+                        </button>
+                    </div>
+                    <!-- Button trigger modal -->
 
-                <input *ngIf="opcionHistorial ==2" [(ngModel)]="opcionFechaVencimiento" (ngModelChange)="setFecha()"
-                    min="" max="20205-12-31" type="date" class="btn colorB me-2" id="fecven" name="fecven">
-                <label class="letra"></label>
-
-                <!-- Button trigger modal -->
-                <button *ngIf="opcionHistorial == 2" type="button" class="btn btn-primary colorB ms-2"
-                    data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    Buscar Monto
-                </button>
-                <button class="btn colorB me-2 ms-2" (click)="cleanFilter()">Limpiar Filtros</button>
+                    <div class="col">
+                        <button class="btn colorB me-2 ms-2" (click)="cleanFilter()">Limpiar Filtros</button>
+                    </div>
+                </div>
                 <!-- Modal -->
                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                     aria-hidden="true">
@@ -34,12 +48,9 @@
                                     aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <h5>Minimo</h5>
-                                <input [(ngModel)]="opcioNumeroMinimo" type="number"
-                                    class="form-control-plaintext text-white  colorB">
-                                <h5>Maximo</h5>
-                                <input [(ngModel)]="opcioNumeroMaximo" type="number"
-                                    class="form-control-plaintext text-white  colorB">
+                                <label for="customRange2" class="form-label">Rango 0 - {{opcioNumeroMaximo}}</label>
+                                <input type="range" [(ngModel)]="opcioNumeroMaximo" class="form-range" min="0"
+                                    max="500000" id="customRange2">
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">cerrar</button>
@@ -52,7 +63,7 @@
             </div>
 
 
-            <div class="col-3 text-center">
+            <div class="col-3 text-center align-self-end">
                 <select [(ngModel)]="opcionHistorial" (ngModelChange)="changeTable()" class="form-select card"
                     aria-label="Default select example">
                     <option value="1">Ventas</option>
@@ -68,6 +79,7 @@
                         <th scope="col" *ngIf="opcionHistorial == 2">Nombre</th>
                         <th scope="col" *ngIf="opcionHistorial == 2">Fecha Ingreso</th>
                         <th scope="col" *ngIf="opcionHistorial == 2">Fecha Venc</th>
+                        <th scope="col" *ngIf="opcionHistorial == 2">Precio llegada</th>
                         <th scope="col" *ngIf="opcionHistorial == 1">#</th>
                         <th scope="col" *ngIf="opcionHistorial == 1">id</th>
                         <th scope="col" *ngIf="opcionHistorial == 1">Fecha de la venta</th>
@@ -76,8 +88,8 @@
                 <tbody>
                     <tr *ngFor="let product of tablaActivo.slice(displacement, displacement+10)">
                         <th *ngIf="opcionHistorial == 1" scope="row">
-                            <button  (click)="setTablaDetalle(product.DetalleVentas)" type="button" class="btn btn-primary colorB" data-bs-toggle="modal"
-                                data-bs-target="#ModalInventario">
+                            <button (click)="setTablaDetalle(product.DetalleVentas)" type="button"
+                                class="btn btn-primary colorB" data-bs-toggle="modal" data-bs-target="#ModalInventario">
                                 <span class="material-symbols-outlined">
                                     open_in_full
                                 </span>
@@ -87,6 +99,8 @@
                         <td *ngIf="opcionHistorial ==2">{{ product.nombre}}</td>
                         <td *ngIf="opcionHistorial ==2">{{ product.fechaingreso}}</td>
                         <td *ngIf="opcionHistorial ==2">{{ product.fechavencimiento}}</td>
+                        <td *ngIf="opcionHistorial ==2">{{ product.preciollegada}}</td>
+
                         <td scope="col" *ngIf="opcionHistorial == 1">{{product.idboleta}}</td>
                         <td scope="col" *ngIf="opcionHistorial == 1">{{ product.fecha}}</td>
                     </tr>
@@ -105,23 +119,23 @@
                     <div class="modal-body">
                         <div style="color: aliceblue;">
 
-                                <table class="table text-center " style="color: white;">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">Producto</th>
-                                            <th scope="col">Cantidad</th>
+                            <table class="table text-center " style="color: white;">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Producto</th>
+                                        <th scope="col">Cantidad</th>
 
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr *ngFor="let detalle of detalleSelected">
-                                            <td>{{detalle.Producto.nombreproducto}}</td>
-                                            <td>
-                                                {{detalle.cantidad}}
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let detalle of detalleSelected">
+                                        <td>{{detalle.Producto.nombreproducto}}</td>
+                                        <td>
+                                            {{detalle.cantidad}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                     <div class="modal-footer">
