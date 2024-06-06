@@ -13,10 +13,6 @@ informeVentasEmp.init({
         type: DataTypes.INTEGER,
         primaryKey : true
     },
-    id_perfil: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-    },
     nombre_empleado: {
         type: DataTypes.STRING,
         allowNull: true
