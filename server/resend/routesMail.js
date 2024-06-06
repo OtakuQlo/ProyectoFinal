@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const { recuperarCuenta } = require('../resend/controllerMail');
+const controllerMail = require('../resend/controllerMail');
 
-router.post('/', recuperarCuenta);
+router.post('/recuperarcuenta', controllerMail.recuperarCuenta);
+router.post('/respuestaError', controllerMail.respuestaError);
+
 
 module.exports = router;
