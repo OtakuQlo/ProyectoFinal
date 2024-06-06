@@ -2,7 +2,7 @@
   <div class="container">
 
     <div class="row">
-      <div class="alert d-flex align-items-center colorBGC colorB" role="alert"
+      <div class="alert d-flex align-items-center colorBGC colorB mt-3" role="alert"
         style="width: 250px; height: 70px; border-radius: 26px;">
         <div class="text-white">
           <h2>Ajusta un plan</h2>
@@ -14,7 +14,7 @@
 
       <div *ngFor ="let plan of planes" class="col-lg-4 col-md-4 col-sm-4 col-xl-4 mt-5 mb-5 ">
 
-        <div  class="card ms-xl-4" style="width: 18rem;">
+        <div  class="card col-lg-4 col-md-3 col-sm-4 col-xl-4 largo" style="width: 18rem;">
           <img class="card-img-top" src="../../assets/imagenes/Fondo.jpg" alt="Card image cap">
           <div class="card-body colorBGC">
             <h5 class="card-title letra">Plan {{plan.nombreplan}}</h5>
@@ -54,8 +54,8 @@
         ...
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary" (click)="ajustarPlan(plancambio)" data-bs-dismiss="modal">Aceptar</button>
+        <button type="button " class="btn btn-secondary colorB" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary colorB" (click)="ajustarPlan(plancambio)" data-bs-dismiss="modal">Aceptar</button>
       </div>
     </div>
   </div>

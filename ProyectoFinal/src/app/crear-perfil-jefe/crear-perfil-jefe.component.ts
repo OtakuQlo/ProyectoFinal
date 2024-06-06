@@ -47,7 +47,7 @@ export class CrearPerfilJefeComponent {
       this.labelpass2 = '';
     }
 
-    if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%#?^&])[A-Za-z\d@$!#%^?&]{8,50}$/.test(this.pass1)){
+    if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%#?^&])[A-Za-z\d@$!#%^?&]{8,20}$/.test(this.pass1)){
       bandera = false;
       this.labelpass1 = "Debe ingresar una contraseña con carateres especiales, mayuscula y numero con minimo de 8 y maximo de 50 caracteres"
     }else{
