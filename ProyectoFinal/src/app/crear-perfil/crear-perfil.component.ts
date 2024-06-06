@@ -73,7 +73,7 @@ export class CrearPerfilComponent {
         // Manejar los errores aquí si la solicitud falla
       }
     );
-    this.route.navigate(['./AdministrarPerfiles']);
+    window.location.href = '/AdministrarPerfiles';
    }
 
  }

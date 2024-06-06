@@ -66,15 +66,6 @@ button:focus{
     height: 50px;
 }
 
-.fondo{
-    background-image: url('/assets/imagenes/Fondo.jpg'); /* Ruta de la imagen */
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: -100;
-}
 
 .letraA{
     color: yellow;

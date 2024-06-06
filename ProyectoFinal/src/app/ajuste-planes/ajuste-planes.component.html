@@ -12,18 +12,23 @@
 
     <div class="row colorBGC colorB mt-3" style="border-radius: 20px;">
 
-      <div *ngFor ="let plan of planes" class="col-lg-4 col-md-4 col-sm-4 col-xl-4 mt-5 mb-5 ">
+      <div *ngFor="let plan of planes" class="col-lg-4 col-md-4 col-sm-4 col-xl-4 mt-5 mb-5 ">
 
-        <div  class="card col-lg-4 col-md-3 col-sm-4 col-xl-4 largo" style="width: 18rem;">
+        <div class="card col-lg-4 col-md-3 col-sm-4 col-xl-4 largo" style="width: 18rem;">
           <img class="card-img-top" src="../../assets/imagenes/Fondo.jpg" alt="Card image cap">
           <div class="card-body colorBGC">
             <h5 class="card-title letra">Plan {{plan.nombreplan}}</h5>
-            <p class="card-text letra">Este plan contiene hasta un maximo de {{plan.cantidademp}} trabajadores</p>
-            <p class="card-text letra" *ngIf="planactual.idplan == plan.idplan">Usted ya posee este plan </p>
-            <!-- <a class="btn  colorBGC colorB letra" *ngIf="planactual.idplan != plan.idplan" data-bs-toggle="modal">Elegir</a> -->
+            <p class="card-text letra">Este plan contiene hasta un maximo de {{plan.cantidademp}} trabajadores a un precio de ${{plan.precio}}</p>
+            <p class="card-text letra" *ngIf="planactual.idplan == plan.idplan && rol == 1" >Usted ya posee este plan </p>
+            
 
-            <button  (click)="planSeleccionado(plan.idplan)" type="button" class="btn colorBGC colorB letra" data-bs-toggle="modal" data-bs-target="#exampleModal" *ngIf="planactual.idplan != plan.idplan">
+            <button (click)="planSeleccionado(plan)" type="button" class="btn colorBGC colorB letra"
+              data-bs-toggle="modal" data-bs-target="#exampleModal1" *ngIf="planactual.idplan != plan.idplan && rol == 1">
               Elegir
+            </button>
+            <button (click)="planSeleccionado(plan)" type="button" class="btn colorBGC colorB letra"
+              data-bs-toggle="modal" data-bs-target="#exampleModal2" *ngIf="rol == 2">
+              administrar
             </button>
             <!-- (click)="ajustarPlan(plan.idplan) -->
           </div>
@@ -31,7 +36,7 @@
 
       </div>
 
-      
+
 
     </div>
 
@@ -43,7 +48,7 @@
 
 
 
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -55,7 +60,40 @@
       </div>
       <div class="modal-footer">
         <button type="button " class="btn btn-secondary colorB" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary colorB" (click)="ajustarPlan(plancambio)" data-bs-dismiss="modal">Aceptar</button>
+        <button type="button" class="btn btn-primary colorB" (click)="ajustarPlan(plancambio.idplan)"
+          data-bs-dismiss="modal">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content card">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Editar plan</h5>
+
+      </div>
+      <div class="modal-body">
+        <div>
+
+        </div>
+        <div>
+          <h4>Nombre del plan</h4>
+          <input  class="form-control " [(ngModel)]="nombrep">
+          <h4>Cantidad empleados</h4>
+          <input  class="form-control " [(ngModel)]="cantp">
+          <h4>Precio</h4>
+          <input  class="form-control " [(ngModel)]="preciop">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">cerrar</button>
+        <button type="button" class="btn btn-secondary" 
+          data-bs-dismiss="modal" (click) = "editarPlan(plancambio)">Editar</button>
       </div>
     </div>
   </div>

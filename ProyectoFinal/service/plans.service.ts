@@ -20,4 +20,10 @@ export class PlansService {
   getPlans(): Observable<any>{
     return this.http.get(this.url+"/");
   }
+
+
+  updatePlans(idplan:any,datos:any): Observable<any>{
+      return this.http.put(this.url+"/"+idplan,datos);
+    }
+  
 }
