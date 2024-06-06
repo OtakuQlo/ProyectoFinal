@@ -70,7 +70,7 @@ export class GenerarInformeComponent {
       const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
 
       //Usar file-saver para descargar el archivo
-      saveAs(blob, 'InformeIngre'+this.date+'.xlsx')
+      saveAs(blob, 'Informe_Ventas_EMP'+this.date+'.xlsx')
 
       console.log('Archivo Excel guardado.');
     } catch (error) {
