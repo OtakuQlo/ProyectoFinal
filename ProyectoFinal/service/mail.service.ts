@@ -8,6 +8,9 @@ export class MailService {
   url = 'http://localhost:3000/api/mail';
   constructor(private http: HttpClient) { }
   recuperarCuenta(id:any): Observable<any>{
-    return this.http.post(this.url,{id:id})
+    return this.http.post(this.url+"/recuperarcuenta",{id:id})
+  }
+  respuestaProblema(res:any): Observable<any>{
+    return this.http.post(this.url+"/respuestaError",res);
   }
 }
