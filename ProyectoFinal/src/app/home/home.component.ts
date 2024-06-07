@@ -23,7 +23,7 @@ import { PerfilusuarioService } from '../../../service/perfilusuario.service';
 export class HomeComponent implements OnInit {
 
   validSesion: boolean = false;
-  setPage: boolean = true;
+  setPage: number = 0;
   userPass: any;
   constructor(private _serviceUsuario: UsuarioService,
     private route: Router,
@@ -32,7 +32,7 @@ export class HomeComponent implements OnInit {
     private _serviceMail: MailService,
     private _servicePerfil: PerfilusuarioService
   ) {
-    this._servicePerfil.setInactiveProfile(localStorage.getItem('pActivo'),{estado : false});
+    this._servicePerfil.setInactiveProfile(localStorage.getItem('pActivo'), { estado: false });
     this._serviceUsuario.deletUserActive();
     localStorage.removeItem('pActivo');
   }
@@ -60,21 +60,21 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     console.log(this.setPage);
-    
+
     localStorage.removeItem('token');
     this._serviceUsuario.deletUserActive()
     this._activeroute.queryParams.subscribe(data => {
       this._serviceUsuario.getUsuarioId(data['id']).subscribe(data1 => {
-        console.log( data1);
-        
+        console.log(data1);
+
         if (data['id'] && data1.estado == 1) {
 
           this.userPass = data['id']
 
-          
-          this.setPage = false;
+
+          this.setPage = 1;
         } else {
-          this.setPage = true;
+          this.setPage = 0;
         }
       })
 
@@ -87,36 +87,47 @@ export class HomeComponent implements OnInit {
     if (this.registroForm.status == 'VALID') {
       this._serviceUsuario.getUserEmail(userInfo.correo).subscribe({
         next: (data) => {
-          if (this._serviceUsuario.desencryptContra(data.contra) == userInfo.pass) {
-            
-            
-            this._serviceUsuario.setUserActive(userInfo.correo).then(res => {
-              if (data.rol==2) {
-                window.location.href="/HistorialReportes"                
-              }else{
-                if (res) {
-                  this.route.navigate(['./Perfiles']);
+          if (data.habilitado == 1) {
+            if (this._serviceUsuario.desencryptContra(data.contra) == userInfo.pass) {
+              this._serviceUsuario.setUserActive(userInfo.correo).then(res => {
+                if (data.rol == 2) {
+                  window.location.href = "/HistorialReportes"
+                } else {
+                  if (res) {
+                    this.route.navigate(['./Perfiles']);
+                  }
                 }
-              }
 
 
-            })
-            // 
+              })
+            }
+            else {
+              this._serviceToast.errorSuccess("Error", "Usuario invalido")
+            }
           }
-          else {
-            this._serviceToast.errorSuccess("Error", "Usuario invalido")
+          if (data.habilitado == 0) {
+            console.log("habilitar tu cuenta");
+            this.setPage = 2;
           }
+
         },
         error: (e) => { this._serviceToast.errorSuccess("Error", "Usuario no valido") },
       }
       )
     }
   }
+  rehabilitarCuenta(res:boolean){
+    if(res){
+
+    }else{
+      this.irHome()
+    }
+  }
   irCrearCuenta() {
     this.route.navigate(['./Registro']);
   }
   irHome() {
-    window.location.href="http://localhost:4200/Home"
+    window.location.href = "http://localhost:4200/Home"
     this.route.navigate(['./Home']);
   }
   reestablecePass() {
@@ -143,7 +154,7 @@ export class HomeComponent implements OnInit {
                 },
               }
               )
-            }else{
+            } else {
               this._serviceToast.errorSuccess("Error", "Error en los datos")
               this.irHome()
             }
@@ -171,15 +182,15 @@ export class HomeComponent implements OnInit {
             this._serviceToast.errorSuccess("Error", "Error en los datos")
           },
           complete: () => {
-            this._serviceToast.showSuccess("Exito", "Revisar correo electronico") 
+            this._serviceToast.showSuccess("Exito", "Revisar correo electronico")
             this._serviceMail.recuperarCuenta(data.idusuario).subscribe({
-              next: (data) => {},
+              next: (data) => { },
               error: (e) => {
                 this._serviceToast.errorSuccess("Error", "Error en los datos")
               },
-              complete: () => {this._serviceToast.showSuccess("Exito", "Revisar correo electronico")}
+              complete: () => { this._serviceToast.showSuccess("Exito", "Revisar correo electronico") }
             })
-            
+
           },
         })
       }, error: (e) => {

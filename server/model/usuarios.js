@@ -50,7 +50,10 @@ Usuarios.init({
         type:DataTypes.INTEGER,
         allowNull:false
     },
-
+    habilitado:{
+        type:DataTypes.INTEGER,
+        allowNull:false
+    },
 }, {
     sequelize, // Pasar la instancia de Sequelize aquí
     modelName: 'Usuarios',
