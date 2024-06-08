@@ -18,6 +18,7 @@ export class SeccionPerfilesComponent {
   usuario: any;
   perfiles: any;
   pass: any;
+  perfiladmin:any;
 
   constructor(private route:Router, private perfilS:PerfilusuarioService, private userS:UsuarioService, private alert:ToastService){ 
     
@@ -31,6 +32,8 @@ export class SeccionPerfilesComponent {
   getPerfiles(){
     this.perfilS.getPerfiles(parseInt(this.usuario.idusuario)).subscribe((perfiles) => {
       this.perfiles = perfiles
+      this.perfiladmin = this.perfiles.find((perfil:any) => perfil.passadmin != null);
+      console.log(this.perfiladmin)
     })
   }
 

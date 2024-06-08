@@ -4,8 +4,8 @@
         <div class="col-md-2">
             <button type="button" (click)="irHome()" class="btn btn-outline-dark" style="font-size: 20px;"><b>Cerrar Sesion</b></button>
         </div>
-        <div class="col-md-2 offset-8">
-            <button type="button"class="btn btn-outline-dark" style="font-size: 20px;"><b>Crear Jefe</b></button>
+        <div class="col-md-2 offset-8" *ngIf="!perfiladmin">
+            <a href="/CrearJefe" class="btn btn-outline-dark" style="font-size: 20px;">Crear Jefe</a>
         </div>
     </div>
 

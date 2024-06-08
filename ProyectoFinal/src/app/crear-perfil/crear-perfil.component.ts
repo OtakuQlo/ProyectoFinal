@@ -32,7 +32,7 @@ export class CrearPerfilComponent {
   
       // Realiza la validación aquí
       if (this.cantperfiles >= this.planuser.cantidademp) {
-        this.route.navigate(['./Perfiles']);
+        window.location.href = '/Perfiles';
       }
     });
   }

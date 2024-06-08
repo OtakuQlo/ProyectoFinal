@@ -15,7 +15,7 @@ import { PlansService } from '../../service/plans.service';
 })
 export class AppComponent {
   title = 'ProyectoFinal';
-
+  test:any;
   userA: any ; 
   perfilA :any;
   plan:any;
@@ -51,15 +51,20 @@ export class AppComponent {
   }
 
   planEnUso(){
-    this.planS.getPlansId(this.userS.getUserActive().idplan).subscribe(data => {
-      this.plan = data;
-    });
+    if (this.userS.getUserActive()) {
+      this.planS.getPlansId(this.userS.getUserActive().idplan).subscribe(data => {
+        this.plan = data;
+      });
+    }
   }
 
   cantidadDePlanes(){
-    this.perfilS.cantidadPerfiles(this.userS.getUserActive().idusuario).subscribe(data => {
-      this.cantperfiles = data;
-    });
+    if (this.userS.getUserActive()) {
+      this.perfilS.cantidadPerfiles(this.userS.getUserActive().idusuario).subscribe(data => {
+        this.cantperfiles = data;
+      });
+    }
+    
   }
 
   inactivateUser(){
