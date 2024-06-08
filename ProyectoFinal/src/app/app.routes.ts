@@ -25,7 +25,7 @@ export const routes: Routes = [
     { path: 'CrearPerfil', component: CrearPerfilComponent,canActivate:[authGuard] },
     { path: 'AdministrarPerfiles', component: AdministrarPerfilesComponent ,canActivate:[authGuard]},
     { path: 'ReportarProblema', component: ReporteProblemaComponent ,canActivate:[authGuard]},
-    { path: 'Informes', component: GenerarInformeComponent ,canActivate:[AdminGuard,AdminGuard]},
+    { path: 'Estado', component: GenerarInformeComponent ,canActivate:[AdminGuard,AdminGuard]},
     { path: 'AgregarProducto', component: AgregarProductoComponent ,canActivate:[authGuard]},
     { path: 'AgregarProducto/:id', component: AgregarProductoComponent ,canActivate:[authGuard]},
     { path: 'AjustePlan', component: AjustePlanesComponent ,canActivate:[authGuard]},
