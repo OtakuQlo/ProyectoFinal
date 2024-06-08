@@ -126,7 +126,8 @@ export class CrearCuentaComponent {
         idplan: idplan,
         email: email,
         rol: 1,
-        estado: 0
+        estado: 0,
+        habilitado:1,
       }).subscribe()
 
     this._serviceUsuario.setUserActive(email).then(res => {
