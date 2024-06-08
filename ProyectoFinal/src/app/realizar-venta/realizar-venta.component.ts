@@ -93,9 +93,8 @@ export class RealizarVentaComponent {
     this.productoS.getProductoVenta(this.codebar,{idusuario : this.perfilV.idusuario}).subscribe(res => {
       this.producto = res
       if (this.producto[0] && this.producto[0].precio !== undefined) {
-
         if(parseInt(this.producto[0].StockProducts[0].cantidadtotal) > 0 && parseInt(this.producto[0].StockProducts[0].cantidadtotal) >= this.cantidad){
-          
+          console.log('pasa');
           this.total = this.total + (this.producto[0].precio * this.cantidad);
           let curr = this.detalle.find(p => p.idproducto.idproducto === this.producto[0].idproducto)
           let index = this.detalle.findIndex(obj => obj.idproducto.idproducto === this.producto[0].idproducto)
@@ -119,7 +118,7 @@ export class RealizarVentaComponent {
           }
         }else{
           this.alert.errorSuccess('','El Producto tiene un stock actual de: '+this.producto[0].StockProducts[0].cantidadtotal)
-      }
+        }
       } else {
         this.alert.errorSuccess('', 'Producto no encontrado');
       }
