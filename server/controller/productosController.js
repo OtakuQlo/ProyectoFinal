@@ -63,7 +63,7 @@ exports.obtenerProductoBarcode = async (req, res) => {
                 where: {
                     idusuario : idusuario
                 },
-                required: false // Esto asegura que los productos sin stock todavía se incluyan
+                required: true // Esto asegura que los productos sin stock todavía se incluyan
             }]
         });
         res.json(productos)

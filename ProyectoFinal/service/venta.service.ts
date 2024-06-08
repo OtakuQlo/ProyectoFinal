@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../src/environments/environment';
 import { Observable, lastValueFrom } from 'rxjs';
@@ -20,9 +20,10 @@ export class VentaService {
     return this.http.post(this.url+'boletas', boletas)
   }
 
-  async getboleta(id: any){
+  async getboleta(id: any, datos: any){
     try{
-      const boleta = await lastValueFrom(this.http.get(this.url+'boletas/'+id))
+      const params = new HttpParams().set('nombre', datos.nombre);
+      const boleta = await lastValueFrom(this.http.get(this.url+'boletas/'+id, { params }))
       return boleta
     }catch(error){
       return console.error('Error al encontrar el producto:', error);

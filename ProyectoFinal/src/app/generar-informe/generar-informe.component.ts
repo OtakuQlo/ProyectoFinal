@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import ExcelJS from 'exceljs';
 import { saveAs } from 'file-saver';
 import { UsuarioService } from '../../../service/usuario.service';
 import { InformesService } from '../../../service/informes.service';
 import { formatDate } from '@angular/common';
+import { Chart, registerables } from 'chart.js';
 
 @Component({
   selector: 'app-generar-informe',
@@ -13,6 +14,7 @@ import { formatDate } from '@angular/common';
   styleUrl: './generar-informe.component.css'
 })
 export class GenerarInformeComponent {
+  public grafico: any;
 
   informeEMP: any;
   informeVentas: any;
@@ -20,33 +22,84 @@ export class GenerarInformeComponent {
   informeProductoMenP: any;
   informeMerm: any;
 
+  tituloG: any= 'Valor Estimado del Inventario';
+
   date = formatDate(new Date(), 'dd-MM-yyyy', 'en')
 
   constructor(private userA:UsuarioService,
     private informes:InformesService) {  
-    this.informes.informeVentasEmp(this.userA.getUserActive().idusuario).subscribe(data =>{
-      this.informeEMP = data
-      console.log(this.informeEMP);
-    })  
+    Chart.register(...registerables)
+  }
+
+  ngOnInit(): void{
+    
     this.informes.informeInventario(this.userA.getUserActive().idusuario).subscribe(data =>{
       this.informeVentas = data
-      console.log(this.informeVentas);
     })
     this.informes.informeProductoP(this.userA.getUserActive().idusuario).subscribe(data =>{
       this.informeProductoP = data
-      console.log(this.informeProductoP);
     })
     this.informes.informeProductoMP(this.userA.getUserActive().idusuario).subscribe(data =>{
       this.informeProductoMenP = data;
-      console.log(this.informeProductoMenP);
     })
     this.informes.informeMermas(this.userA.getUserActive().idusuario).subscribe(data =>{
       this.informeMerm = data
-      console.log(this.informeMerm);
     })
+    this.tipoGrafico(1);
+  }
+
+  tipoGrafico(id : any){
+    switch (id) {
+      case 1:
+        this.informes.informeVentasEmp(this.userA.getUserActive().idusuario).subscribe(data =>{
+          this.informeEMP = data;
+          let labels: any[] = [];
+          let datas: any[] = [];
+          this.informeEMP.forEach((element : any) => {
+            labels.push(element.nombre_empleado);
+            datas.push(element.total)
+          });
+          this.grafico = new Chart("grafico", {
+          type: 'bar', // Tipo de gráfico
+          data: {
+            // Datos que van en X
+            labels: labels,
+            datasets: [
+              {
+                //Datos que van en Y 
+                label: 'Total',
+                data: datas,
+                borderColor: 'rgb(75, 192, 192)'
+              }
+              ]
+              },
+              options: {
+                responsive: true,
+                plugins: {
+                  legend: {
+                    position: 'top',
+                  },
+                  title: {
+                    display: true,
+                    text: 'Ventas por Empleado'
+                  }
+                }
+              }
+            });
+        }); 
+        
+        break;
+      default:
+        break;
+    }
+
+    
+  
+
   }
 
   async generarInformeVentasEMP() {
+    this.tituloG = 'Ventas Por Empleado Totales';
     // Crear un nuevo libro de trabajo
     const workbook = new ExcelJS.Workbook();
 
@@ -79,7 +132,7 @@ export class GenerarInformeComponent {
   }
 
   async generarInformeInventario() {
-    
+    this.tituloG = 'Valor Estimado Del Inventario';
     // Crear un nuevo libro de trabajo
     const workbook = new ExcelJS.Workbook();
 

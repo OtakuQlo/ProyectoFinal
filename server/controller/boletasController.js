@@ -1,4 +1,5 @@
 
+const { Op } = require("sequelize");
 const Boletas = require("../model/boletas")
 const Detalle = require("../model/detalleventas")
 const Producto = require("../model/productos")
@@ -16,10 +17,14 @@ exports.creandoBoletas= async (req,res)=>{
 exports.obtenerBoleta= async(req,res)=>{
     try{
         const { idusuario } = req.params
+        const nombre = req.query.nombre
         const boleta = await Boletas.findAll({
             where : {
-                idusuario : idusuario,
-                estado : 0
+                [Op.and]: [
+                    { idusuario: idusuario },
+                    { estado: 0 },
+                    { nombre: nombre }
+                ]
             }
         });
         res.json(boleta)
