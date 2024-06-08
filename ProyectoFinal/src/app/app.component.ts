@@ -15,7 +15,6 @@ import { PlansService } from '../../service/plans.service';
 })
 export class AppComponent {
   title = 'ProyectoFinal';
-  test:any;
   userA: any ; 
   perfilA :any;
   plan:any;
