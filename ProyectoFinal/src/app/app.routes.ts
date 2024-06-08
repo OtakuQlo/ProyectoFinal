@@ -14,6 +14,7 @@ import { HistorialComponent } from './historial/historial.component';
 import { InventarioComponent } from './inventario/inventario.component';
 import { HistorialReportesComponent } from './historial-reportes/historial-reportes.component';
 import { AdminGuard, AdminOrdenaloGuard, HomeGuard, authGuard } from '../authGard/auth.guard';
+import { PerfilComponent } from './perfil/perfil.component';
 
 export const routes: Routes = [
     { path: 'Home', component: HomeComponent, }, 
@@ -31,5 +32,6 @@ export const routes: Routes = [
     { path: 'Historial', component: HistorialComponent ,canActivate:[authGuard]},
     { path: 'Inventario', component: InventarioComponent ,canActivate:[authGuard]},
     { path: 'HistorialReportes', component: HistorialReportesComponent ,canActivate:[authGuard,AdminOrdenaloGuard]},
+    { path: 'Perfil', component: PerfilComponent ,canActivate:[authGuard]},
     { path: '**', redirectTo: 'Home', pathMatch: 'full' }
 ];

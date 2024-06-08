@@ -82,7 +82,30 @@ exports.obtenerUsuariosId = async (req, res) => {
         res.status(500).send('Hubo un error al actualizar la pass');
     }
 };
+exports.actualizarUsuarioInformacion = async (req, res) => {
+  try {
+      const {correo,nombre,apellido} = req.body;
+      let usuario = await Usuarios.findByPk(req.params.id);
 
+      if (!usuario) {
+          return res.status(404).json({ msg: 'Usuario no existe' });
+      }
+
+      // Actualizar los campos de la marca
+      usuario.nombre = nombre
+      usuario.email = correo
+      usuario.apellido = apellido
+      
+
+      // Guardar los cambios en la base de datos
+      await usuario.save();
+
+      res.json(usuario);
+  } catch (error) {
+      console.error(error);
+      res.status(500).send('Hubo un error al actualizar usuario');
+  }
+};
 exports.usuarioExistenete = async(req,res)=>{
   try {
     const { email ,rut} = req.query; 

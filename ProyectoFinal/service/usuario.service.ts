@@ -81,6 +81,11 @@ export class UsuarioService {
     
     return this.http.put(this.url+"/"+id,pass)
   }
+  actualizarUsuario(id:any,user:any): Observable<any>{
+    console.log("idusuario",id);
+    console.log("usuario",user);
+    return this.http.put(this.url+"/actualizarUsuario/"+id,user)
+  }
   usuarioExistente(email:any,rut:any): Observable<any>{
     return this.http.get(this.url+"/existente?email="+email+"&rut="+rut)
   }
