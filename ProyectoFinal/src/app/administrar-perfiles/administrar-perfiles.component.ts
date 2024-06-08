@@ -46,4 +46,9 @@ export class AdministrarPerfilesComponent {
     window.location.href = 'AdministrarPerfiles'
     return this.error.showSuccess('Perfil Eliminado correctamente', '')    
   }
+
+  cerrarSesionPerfil(idP: any){
+    this.perfilS.setInactiveProfile(parseInt(idP.id), {estado : false}).subscribe()
+    this.error.showSuccess('','Sesion cerrada del perfil: '+ idP.nombre)
+  }
 }

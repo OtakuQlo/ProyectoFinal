@@ -17,12 +17,12 @@
                         style="margin-left: 33px">
                     <img (click)="borrarPerfil(p.id)" src="../../assets/Icon/borrar.png" alt="borrar" width="35"
                         style="margin-bottom: 110px;">
+                    
                     <h3 class="txt mt-3" *ngIf="p.passadmin == null">{{p.nombre}}</h3>
+                    <img (click)="cerrarSesionPerfil(p)" src="../../assets/Icon/cerrar-sesion.png" alt="desconectar" width="35">
                     <!-- <img (click)="editarPerfil(p.id)" src="../../assets/Icon/editar.png" alt="editar" width="35"
                     style="margin-left: 10px; margin-bottom: 8px;"> -->
-                </div>
-                
-            
+                </div>            
             </div>
         </div>
     </div>
