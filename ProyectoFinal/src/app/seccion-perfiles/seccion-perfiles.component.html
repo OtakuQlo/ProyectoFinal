@@ -16,7 +16,7 @@
     </div>
     <div class="row mt-5 text-center justify-content-center">
         <div *ngFor="let p of perfiles" class="col-sm-5 col-md-4 col-lg-4 col-xl-3 mt-5">
-            <a data-bs-toggle="modal" data-bs-target="#iniciosesionModal">
+            <a data-bs-toggle="modal" data-bs-target="#iniciosesionModal" (click)="inactivateUser(p.id)">
                 <img src="../../assets/Icon/usuario.png" *ngIf="p.passadmin != null" alt="FotoPerfil" width="150" height="150">
             </a>
             <a data-bs-toggle="modal" data-bs-target="#iniciosesionModal">

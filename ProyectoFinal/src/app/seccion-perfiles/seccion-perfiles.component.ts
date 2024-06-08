@@ -51,9 +51,13 @@ export class SeccionPerfilesComponent {
     })
   }
 
-  activarAdmin(idP:any){
+  inactivateUser(idP:any){
     this.perfilS.setInactiveProfile(parseInt(idP), {estado : false}).subscribe();
+  }
+  
+  activarAdmin(idP:any){
     this.perfilS.getPerfil(idP).subscribe(data=>{
+      
       let perfil = data
       if (perfil.estado == false) {
         if(this.userS.desencryptContra(perfil.passadmin) == this.pass){
