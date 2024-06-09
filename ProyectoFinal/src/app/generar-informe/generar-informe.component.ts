@@ -226,7 +226,7 @@ export class GenerarInformeComponent {
         if(this.grafico){
           this.grafico.destroy()
         }
-        this.informes.informeProductoP(this.userA.getUserActive().idusuario).subscribe(data =>{
+        this.informes.informeProductoMP(this.userA.getUserActive().idusuario).subscribe(data =>{
           this.informeProductoMenP = data;
 
           let labels: any[] = [];
@@ -289,7 +289,7 @@ export class GenerarInformeComponent {
                             if (label) {
                                 label += ': ';
                             }
-                            label += 'Cantidad aun No vendida: ' + context.raw;
+                            label += 'Cantidad vendida: ' + context.raw;
                             return label;
                         }
                     }
@@ -473,6 +473,30 @@ export class GenerarInformeComponent {
         this.tipoGrafico();
         break;
     }
+  }
+
+  descargarExcel(){
+    switch (this.tipogra){
+      case '1':
+        this.generarInformeVentasEMP()
+        break;
+      case '2':
+        this.informeProductoPop()
+        break;
+      case '3':
+        this.informeProductoMP()
+        break;
+      case '4':
+        this.generarInformeInventario()
+        break;
+      case '5':
+        this.informeMermas()
+        break;
+      default:
+          this.tipogra = '1';
+          break;
+    }
+    
   }
 
   async generarInformeVentasEMP() {
