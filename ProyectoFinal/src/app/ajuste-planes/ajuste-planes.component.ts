@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { ToastService } from '../../../service/toast.service';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { PerfilusuarioService } from '../../../service/perfilusuario.service';
 
 @Component({
   selector: 'app-ajuste-planes',
@@ -14,7 +15,7 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './ajuste-planes.component.css'
 })
 export class AjustePlanesComponent {
-  constructor(private usuarios: UsuarioService, private planS: PlansService, private toastS: ToastService, private router: Router,) {
+  constructor(private usuarios: UsuarioService, private planS: PlansService, private toastS: ToastService, private router: Router,private perfilS:PerfilusuarioService) {
     
 
   }
@@ -35,6 +36,10 @@ export class AjustePlanesComponent {
   nombrep: any;
   cantp:any;
   preciop:any;
+  plan:any;
+  cantperfiles:any;
+
+  
 
   
 
@@ -53,7 +58,7 @@ export class AjustePlanesComponent {
   }
 
   ngOnInit() {
-
+    this.cantidadDePlanes();
     this.planUser();
     this.planS.getPlans().subscribe(data => {
 
@@ -90,6 +95,28 @@ export class AjustePlanesComponent {
     this.planS.updatePlans(plan.idplan,{nombreplan: this.nombrep, cantidademp : this.cantp, precio:this.preciop}).subscribe();
     window.location.href = '/AjustePlan';
    
+  }
+
+
+  planEnUso(){
+    if (this.usuarios.getUserActive()) {
+      this.planS.getPlansId(this.usuarios.getUserActive().idplan).subscribe(data => {
+        this.plan = data;
+      });
+    }
+  }
+
+  cantidadDePlanes(){
+    if (this.usuarios.getUserActive()) {
+      this.perfilS.cantidadPerfiles(this.usuarios.getUserActive().idusuario).subscribe(data => {
+        this.cantperfiles = data;
+      });
+    }
+    
+  }
+
+  irPerfiles(){
+    window.location.href = '/AdministrarPerfiles'
   }
 
 

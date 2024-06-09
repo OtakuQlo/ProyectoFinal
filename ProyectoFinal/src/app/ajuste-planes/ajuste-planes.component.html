@@ -55,14 +55,29 @@
         <h5 class="modal-title" id="exampleModalLabel">Cambio de plan</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
-        ...
+      <div class="modal-body" *ngIf = "cantperfiles <= plancambio.cantidademp">
+        <p>¿Estás seguro que quieres cambiar al plan {{plancambio.nombreplan}}?</p>
       </div>
-      <div class="modal-footer">
+        
+      <div class="modal-body" *ngIf = "cantperfiles > plancambio.cantidademp ">
+        <p>
+          El plan {{plancambio.nombreplan}} le permite tener una menor cantidad de perfiles ({{plancambio.cantidademp}}), se necesita que borre perfiles antes de poder ser cambiado.
+        </p>
+      </div>
+
+      <div class="modal-footer" *ngIf = "cantperfiles <= plancambio.cantidademp">
         <button type="button " class="btn btn-secondary colorB" data-bs-dismiss="modal">Cancelar</button>
         <button type="button" class="btn btn-primary colorB" (click)="ajustarPlan(plancambio.idplan)"
           data-bs-dismiss="modal">Aceptar</button>
       </div>
+
+      <div class="modal-footer" *ngIf = "cantperfiles > plancambio.cantidademp">
+        <button type="button " class="btn btn-secondary colorB" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary colorB" (click)="irPerfiles()"
+          data-bs-dismiss="modal">Borrar perfiles</button>
+      </div>
+      
+
     </div>
   </div>
 </div>
