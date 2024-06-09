@@ -151,7 +151,7 @@ export class GenerarInformeComponent {
           let datas: any[] = [];
           this.informeProductoP.forEach((element : any) => {
             labels.push(element.nombreproducto);
-            datas.push(element.v_total)
+            datas.push(element.c_total)
           });
           
           const colors = [
@@ -195,28 +195,23 @@ export class GenerarInformeComponent {
                 responsive: true,
                 scales: {
                     y: {
-                        beginAtZero: true,
-                        ticks: {
-                            callback: function(value) {
-                                return '$' + value;
-                            }
-                        }
+                        beginAtZero: true
                     }
                 },
                 
                 plugins: {
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                let label = context.dataset.label || '';
-                                if (label) {
-                                    label += ': ';
-                                }
-                                label += '$' + context.raw;
-                                return label;
+                  tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            let label = context.dataset.label || '';
+                            if (label) {
+                                label += ': ';
                             }
+                            label += 'Cantidad Vendida: ' + context.raw;
+                            return label;
                         }
-                    },
+                    }
+                },
                     legend: {
                       display: false
                     }
@@ -287,6 +282,18 @@ export class GenerarInformeComponent {
                 },
                 
                 plugins: {
+                  tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            let label = context.dataset.label || '';
+                            if (label) {
+                                label += ': ';
+                            }
+                            label += 'Cantidad aun No vendida: ' + context.raw;
+                            return label;
+                        }
+                    }
+                },
                     legend: {
                       display: false
                     }
@@ -446,7 +453,7 @@ export class GenerarInformeComponent {
                                 if (label) {
                                     label += ': ';
                                 }
-                                label += 'En el Inventario: ' + context.raw;
+                                label += 'Perdidas: ' + context.raw;
                                 return label;
                             }
                         }
@@ -466,10 +473,6 @@ export class GenerarInformeComponent {
         this.tipoGrafico();
         break;
     }
-
-    
-  
-
   }
 
   async generarInformeVentasEMP() {
