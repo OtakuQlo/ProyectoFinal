@@ -3,13 +3,14 @@ import ExcelJS from 'exceljs';
 import { saveAs } from 'file-saver';
 import { UsuarioService } from '../../../service/usuario.service';
 import { InformesService } from '../../../service/informes.service';
-import { formatDate } from '@angular/common';
+import { CommonModule, formatDate } from '@angular/common';
 import { Chart, registerables } from 'chart.js';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-generar-informe',
   standalone: true,
-  imports: [],
+  imports: [CommonModule,FormsModule],
   templateUrl: './generar-informe.component.html',
   styleUrl: './generar-informe.component.css'
 })
@@ -22,7 +23,8 @@ export class GenerarInformeComponent {
   informeProductoMenP: any;
   informeMerm: any;
 
-  tituloG: any= 'Valor Estimado del Inventario';
+  tituloG: any= '';
+  tipogra: any;
 
   date = formatDate(new Date(), 'dd-MM-yyyy', 'en')
 
@@ -36,21 +38,26 @@ export class GenerarInformeComponent {
     this.informes.informeInventario(this.userA.getUserActive().idusuario).subscribe(data =>{
       this.informeVentas = data
     })
-    this.informes.informeProductoP(this.userA.getUserActive().idusuario).subscribe(data =>{
-      this.informeProductoP = data
-    })
-    this.informes.informeProductoMP(this.userA.getUserActive().idusuario).subscribe(data =>{
-      this.informeProductoMenP = data;
-    })
+    
+    
     this.informes.informeMermas(this.userA.getUserActive().idusuario).subscribe(data =>{
       this.informeMerm = data
     })
-    this.tipoGrafico(1);
+    this.tipoGrafico()
   }
 
-  tipoGrafico(id : any){
-    switch (id) {
-      case 1:
+  changeGraf(){
+    this.tipoGrafico();
+    console.log(this.tipogra);
+    
+  }
+
+  tipoGrafico(){
+    switch (this.tipogra) {
+      case '1':
+        if(this.grafico){
+          this.grafico.destroy()
+        }
         this.informes.informeVentasEmp(this.userA.getUserActive().idusuario).subscribe(data =>{
           this.informeEMP = data;
           let labels: any[] = [];
@@ -59,7 +66,6 @@ export class GenerarInformeComponent {
             labels.push(element.nombre_empleado);
             datas.push(element.total)
           });
-          console.log(datas);
           
           const colors = [
             'rgb(255, 0, 0)',   // Rojo
@@ -133,7 +139,331 @@ export class GenerarInformeComponent {
         }); 
         
         break;
+      
+      case '2':
+        if(this.grafico){
+          this.grafico.destroy()
+        }
+        this.informes.informeProductoP(this.userA.getUserActive().idusuario).subscribe(data =>{
+          this.informeProductoP = data;
+
+          let labels: any[] = [];
+          let datas: any[] = [];
+          this.informeProductoP.forEach((element : any) => {
+            labels.push(element.nombreproducto);
+            datas.push(element.v_total)
+          });
+          
+          const colors = [
+            'rgb(255, 0, 0)',   // Rojo
+            'rgb(0, 128, 0)',   // Verde
+            'rgb(0, 0, 255)',   // Azul
+            'rgb(255, 255, 0)', // Amarillo
+            'rgb(0, 255, 255)', // Cian
+            'rgb(255, 0, 255)', // Magenta
+            'rgb(255, 165, 0)', // Naranja
+            'rgb(255, 192, 203)', // Rosa
+            'rgb(128, 0, 128)', // Púrpura
+            'rgb(165, 42, 42)', // Marrón
+            'rgb(0, 255, 0)',   // Lima
+            'rgb(0, 0, 128)',   // Azul Marino
+            'rgb(128, 128, 0)', // Oliva
+            'rgb(128, 128, 128)', // Gris
+            'rgb(192, 192, 192)', // Plata
+            'rgb(255, 215, 0)', // Oro
+            'rgb(255, 127, 80)', // Coral
+            'rgb(64, 224, 208)', // Turquesa
+            'rgb(238, 130, 238)', // Violeta
+            'rgb(135, 206, 250)'  // Celeste
+          ];
+          this.grafico = new Chart("grafico", {
+          type: 'bar', // Tipo de gráfico
+          data: {
+            // Datos que van en X
+            labels: labels,
+            datasets: [
+              {
+                //Datos que van en Y 
+                data: datas,
+                borderColor: colors,
+                backgroundColor: colors,
+                hoverBorderWidth: 1
+              }
+              ]
+              },
+              options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return '$' + value;
+                            }
+                        }
+                    }
+                },
+                
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                label += '$' + context.raw;
+                                return label;
+                            }
+                        }
+                    },
+                    legend: {
+                      display: false
+                    }
+                }
+              }
+            });
+        })
+        
+        break;
+      
+      case '3':
+        if(this.grafico){
+          this.grafico.destroy()
+        }
+        this.informes.informeProductoP(this.userA.getUserActive().idusuario).subscribe(data =>{
+          this.informeProductoMenP = data;
+
+          let labels: any[] = [];
+          let datas: any[] = [];
+          this.informeProductoMenP.forEach((element : any) => {
+            labels.push(element.nombreproducto);
+            datas.push(element.total_vendido)
+          });
+          
+          const colors = [
+            'rgb(255, 0, 0)',   // Rojo
+            'rgb(0, 128, 0)',   // Verde
+            'rgb(0, 0, 255)',   // Azul
+            'rgb(255, 255, 0)', // Amarillo
+            'rgb(0, 255, 255)', // Cian
+            'rgb(255, 0, 255)', // Magenta
+            'rgb(255, 165, 0)', // Naranja
+            'rgb(255, 192, 203)', // Rosa
+            'rgb(128, 0, 128)', // Púrpura
+            'rgb(165, 42, 42)', // Marrón
+            'rgb(0, 255, 0)',   // Lima
+            'rgb(0, 0, 128)',   // Azul Marino
+            'rgb(128, 128, 0)', // Oliva
+            'rgb(128, 128, 128)', // Gris
+            'rgb(192, 192, 192)', // Plata
+            'rgb(255, 215, 0)', // Oro
+            'rgb(255, 127, 80)', // Coral
+            'rgb(64, 224, 208)', // Turquesa
+            'rgb(238, 130, 238)', // Violeta
+            'rgb(135, 206, 250)'  // Celeste
+          ];
+          this.grafico = new Chart("grafico", {
+          type: 'bar', // Tipo de gráfico
+          data: {
+            // Datos que van en X
+            labels: labels,
+            datasets: [
+              {
+                //Datos que van en Y 
+                data: datas,
+                borderColor: colors,
+                backgroundColor: colors,
+                hoverBorderWidth: 1
+              }
+              ]
+              },
+              options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                    }
+                },
+                
+                plugins: {
+                    legend: {
+                      display: false
+                    }
+                }
+              }
+            });
+        })
+
+        break;
+      
+      case '4':
+        if(this.grafico){
+          this.grafico.destroy()
+        }
+        this.informes.informeInventario(this.userA.getUserActive().idusuario).subscribe(data =>{
+          this.informeProductoP = data;
+
+          let labels: any[] = [];
+          let datas: any[] = [];
+          this.informeProductoP.forEach((element : any) => {
+            labels.push(element.nombreproducto);
+            datas.push(element.restante)
+          });
+          
+          const colors = [
+            'rgb(255, 0, 0)',   // Rojo
+            'rgb(0, 128, 0)',   // Verde
+            'rgb(0, 0, 255)',   // Azul
+            'rgb(255, 255, 0)', // Amarillo
+            'rgb(0, 255, 255)', // Cian
+            'rgb(255, 0, 255)', // Magenta
+            'rgb(255, 165, 0)', // Naranja
+            'rgb(255, 192, 203)', // Rosa
+            'rgb(128, 0, 128)', // Púrpura
+            'rgb(165, 42, 42)', // Marrón
+            'rgb(0, 255, 0)',   // Lima
+            'rgb(0, 0, 128)',   // Azul Marino
+            'rgb(128, 128, 0)', // Oliva
+            'rgb(128, 128, 128)', // Gris
+            'rgb(192, 192, 192)', // Plata
+            'rgb(255, 215, 0)', // Oro
+            'rgb(255, 127, 80)', // Coral
+            'rgb(64, 224, 208)', // Turquesa
+            'rgb(238, 130, 238)', // Violeta
+            'rgb(135, 206, 250)'  // Celeste
+          ];
+          this.grafico = new Chart("grafico", {
+          type: 'bar', // Tipo de gráfico
+          data: {
+            // Datos que van en X
+            labels: labels,
+            datasets: [
+              {
+                //Datos que van en Y 
+                data: datas,
+                borderColor: colors,
+                backgroundColor: colors,
+                hoverBorderWidth: 1
+              }
+              ]
+              },
+              options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                label += 'En el Inventario: ' + context.raw;
+                                return label;
+                            }
+                        }
+                    },
+                    legend: {
+                      display: false
+                    }
+                }
+              }
+            });
+        })
+
+        break;
+      
+      case '5':
+        if(this.grafico){
+          this.grafico.destroy()
+        }
+        this.informes.informeMermas(this.userA.getUserActive().idusuario).subscribe(data =>{
+          this.informeProductoP = data;
+
+          let labels: any[] = [];
+          let datas: any[] = [];
+          this.informeProductoP.forEach((element : any) => {
+            labels.push(element.nombreproducto);
+            datas.push(element.cantidad);
+          });
+          
+          const colors = [
+            'rgb(255, 0, 0)',   // Rojo
+            'rgb(0, 128, 0)',   // Verde
+            'rgb(0, 0, 255)',   // Azul
+            'rgb(255, 255, 0)', // Amarillo
+            'rgb(0, 255, 255)', // Cian
+            'rgb(255, 0, 255)', // Magenta
+            'rgb(255, 165, 0)', // Naranja
+            'rgb(255, 192, 203)', // Rosa
+            'rgb(128, 0, 128)', // Púrpura
+            'rgb(165, 42, 42)', // Marrón
+            'rgb(0, 255, 0)',   // Lima
+            'rgb(0, 0, 128)',   // Azul Marino
+            'rgb(128, 128, 0)', // Oliva
+            'rgb(128, 128, 128)', // Gris
+            'rgb(192, 192, 192)', // Plata
+            'rgb(255, 215, 0)', // Oro
+            'rgb(255, 127, 80)', // Coral
+            'rgb(64, 224, 208)', // Turquesa
+            'rgb(238, 130, 238)', // Violeta
+            'rgb(135, 206, 250)'  // Celeste
+          ];
+          this.grafico = new Chart("grafico", {
+          type: 'bar', // Tipo de gráfico
+          data: {
+            // Datos que van en X
+            labels: labels,
+            datasets: [
+              {
+                //Datos que van en Y 
+                data: datas,
+                borderColor: colors,
+                backgroundColor: colors,
+                hoverBorderWidth: 1
+              }
+              ]
+              },
+              options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                label += 'En el Inventario: ' + context.raw;
+                                return label;
+                            }
+                        }
+                    },
+                    legend: {
+                      display: false
+                    }
+                }
+              }
+            });
+        })
+
+        break;
+      
       default:
+        this.tipogra = '1';
+        this.tipoGrafico();
         break;
     }
 
