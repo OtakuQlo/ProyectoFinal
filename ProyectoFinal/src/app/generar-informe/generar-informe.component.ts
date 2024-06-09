@@ -59,6 +59,30 @@ export class GenerarInformeComponent {
             labels.push(element.nombre_empleado);
             datas.push(element.total)
           });
+          console.log(datas);
+          
+          const colors = [
+            'rgb(255, 0, 0)',   // Rojo
+            'rgb(0, 128, 0)',   // Verde
+            'rgb(0, 0, 255)',   // Azul
+            'rgb(255, 255, 0)', // Amarillo
+            'rgb(0, 255, 255)', // Cian
+            'rgb(255, 0, 255)', // Magenta
+            'rgb(255, 165, 0)', // Naranja
+            'rgb(255, 192, 203)', // Rosa
+            'rgb(128, 0, 128)', // Púrpura
+            'rgb(165, 42, 42)', // Marrón
+            'rgb(0, 255, 0)',   // Lima
+            'rgb(0, 0, 128)',   // Azul Marino
+            'rgb(128, 128, 0)', // Oliva
+            'rgb(128, 128, 128)', // Gris
+            'rgb(192, 192, 192)', // Plata
+            'rgb(255, 215, 0)', // Oro
+            'rgb(255, 127, 80)', // Coral
+            'rgb(64, 224, 208)', // Turquesa
+            'rgb(238, 130, 238)', // Violeta
+            'rgb(135, 206, 250)'  // Celeste
+          ];
           this.grafico = new Chart("grafico", {
           type: 'bar', // Tipo de gráfico
           data: {
@@ -67,22 +91,42 @@ export class GenerarInformeComponent {
             datasets: [
               {
                 //Datos que van en Y 
-                label: 'Total',
                 data: datas,
-                borderColor: 'rgb(75, 192, 192)'
+                borderColor: colors,
+                backgroundColor: colors,
+                hoverBorderWidth: 1
               }
               ]
               },
               options: {
                 responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return '$' + value;
+                            }
+                        }
+                    }
+                },
+                
                 plugins: {
-                  legend: {
-                    position: 'top',
-                  },
-                  title: {
-                    display: true,
-                    text: 'Ventas por Empleado'
-                  }
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                label += '$' + context.raw;
+                                return label;
+                            }
+                        }
+                    },
+                    legend: {
+                      display: false
+                    }
                 }
               }
             });
