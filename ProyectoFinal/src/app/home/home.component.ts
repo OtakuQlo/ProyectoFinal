@@ -107,6 +107,7 @@ export class HomeComponent implements OnInit {
           }
           if (data.habilitado == 0) {
             console.log("habilitar tu cuenta");
+            this._serviceUsuario.setUserActive(userInfo.correo);
             this.setPage = 2;
           }
 
@@ -199,6 +200,15 @@ export class HomeComponent implements OnInit {
     });
 
   }
-
+  HabilitarCuenta(){
+    console.log("Elminar Cuenta");
+    this._serviceUsuario.habilitarUsuario(this._serviceUsuario.getUserActive().idusuario,{habilitado:1}).subscribe({
+      next:(data)=>{
+        window.location.href = "http://localhost:4200/Home"
+        this.route.navigate(['./Home']);
+      }
+    })
+    
+  }
 }
 

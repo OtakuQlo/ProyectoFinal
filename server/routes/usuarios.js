@@ -11,5 +11,5 @@ router.get('/existente/',usuariosController.usuarioExistenete)
 router.put('/:id',usuariosController.actualizarContra);
 router.put('/actualizarUsuario/:id',usuariosController.actualizarUsuarioInformacion);
 router.put('/planes/:id',usuariosController.actualizarPlan);
-
+router.put('/habilitar/:id',usuariosController.habilitadoCuenta);
 module.exports = router;

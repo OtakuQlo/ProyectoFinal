@@ -63,12 +63,15 @@ exports.obtenerUsuariosId = async (req, res) => {
             return res.status(404).json({ msg: 'La marca no existe' });
         }
 
-        // Actualizar los campos de la marca
-        if (contra!="") {
+        if (contra!="" && estado !=3) {
           usuarios.contra = contra;
           usuarios.estado=estado; 
-        }else{
+        }
+        if(contra =="" && estado != 3){
           usuarios.estado=estado; 
+        }
+        if (estado==3) {
+          usuarios.contra = contra;
         }
       
       
@@ -149,4 +152,26 @@ exports.actualizarPlan = async (req, res) => {
   }
 };
 
+// suspender la cuenta
+exports.habilitadoCuenta = async (req, res) => {
+  try {
+      const { habilitado } = req.body;
+      let usuario = await Usuarios.findByPk(req.params.id);
+
+      if (!usuario) {
+          return res.status(404).json({ msg: 'El usuario no existe' });
+      }
+      // Actualizar los campos de la marca
+      usuario.habilitado = habilitado;
+      
+
+      // Guardar los cambios en la base de datos
+      await usuario.save();
+
+      res.json(usuario);
+  } catch (error) {
+      console.error(error);
+      res.status(500).send('Hubo un error al habiltar al usuario');
+  }
+};
 

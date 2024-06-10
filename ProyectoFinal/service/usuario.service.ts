@@ -77,8 +77,6 @@ export class UsuarioService {
     return this.http.get(this.url+"/usuarioid/"+id)
   }
   actualizarContra(id:any,pass:any): Observable<any>{
-    console.log("actualizar contra");
-    
     return this.http.put(this.url+"/"+id,pass)
   }
   actualizarUsuario(id:any,user:any): Observable<any>{
@@ -88,5 +86,8 @@ export class UsuarioService {
   }
   usuarioExistente(email:any,rut:any): Observable<any>{
     return this.http.get(this.url+"/existente?email="+email+"&rut="+rut)
+  }
+  habilitarUsuario(id:any,body:any): Observable<any>{
+    return this.http.put(this.url+"/habilitar/"+id,body);
   }
 }

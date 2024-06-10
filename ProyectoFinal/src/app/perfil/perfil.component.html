@@ -1,37 +1,57 @@
 <div class="container-fluid mt-2">
     <div class="row justify-content-center m-3 p-2 colorBGC colorB">
-        <form [formGroup]="PerfilForm" (ngSubmit)="actualizarDatos()">
-            <div class="form-group m-2">
-                <label for="nombre">Nombre</label>
-                <input formControlName="nombre" type="email" class="form-control" id="nombre" placeholder="Escriba su Nombre"  maxlength="25">
-            </div>
-            <div class="form-group m-2">
-                <label for="apellido">Apellido</label>
-                <input formControlName="apellido" type="text" class="form-control" id="apellido" placeholder="Escriba su apellido"  maxlength="25">
-            </div>
-            <div class="form-group m-2" >
-                <label for="correo">Correo electronico</label>
-                <input formControlName="correo" type="email" class="form-control" id="correo" placeholder="Escriba un correo">
-            </div>
-            <button type="submit" class="btn colorBGC colorB">Actualizar información</button>
-        </form>
+        <h1>Perfil</h1>
+        <div class="col-md-6">
+            <form [formGroup]="PerfilForm" (ngSubmit)="actualizarDatos()">
+                <div class="form-group m-2">
+                    <label for="nombre">Nombre</label>
+                    <input formControlName="nombre" type="email" class="form-control" id="nombre"
+                        placeholder="Escriba su Nombre" maxlength="25">
+                </div>
+                <div class="form-group m-2">
+                    <label for="apellido">Apellido</label>
+                    <input formControlName="apellido" type="text" class="form-control" id="apellido"
+                        placeholder="Escriba su apellido" maxlength="25">
+                </div>
+                <div class="form-group m-2">
+                    <label for="correo">Correo electronico</label>
+                    <input formControlName="correo" type="email" class="form-control" id="correo"
+                        placeholder="Escriba un correo">
+                </div>
+                <button type="submit" class="btn colorBGC colorB">Actualizar información</button>
+            </form>
+        </div>
+        <div class="col-md-6 ">
+            
+                <form [formGroup]="PassForm" (ngSubmit)="actualizarPass()">
+                    <div class="form-group m-2">
+                        <label for="apellido">Contraseña Actual</label>
+                        <input formControlName="passAnterior" type="password" class="form-control" id="passAnterior"
+                            placeholder="Escriba su Contraseña Actual" maxlength="25">
+                        <p *ngIf="validPassActual;" style="color: yellow;">No coinciden la contraseña actual</p>
+                    </div>
+                    <div class="form-group m-2">
+                        <label for="nombre">Nueva contraseña</label>
+                        <input formControlName="pass" type="password" class="form-control" id="pass"
+                            placeholder="Escriba su nueva contraseña" maxlength="25">
+                        <p *ngIf="validPass;" style="color: yellow;">Contraseña no valida</p>
+                    </div>
+                    <div class="form-group m-2">
+                        <label for="apellido">Repetir Contraseña</label>
+                        <input formControlName="pass1" type="password" class="form-control" id="pass1"
+                            placeholder="Repita su contraseña" maxlength="25">
+                        <p *ngIf="validPass1;" style="color: yellow;">No coincide con la contraseña nueva</p>
+                    </div>
+
+                    <button type="submit" class="btn colorBGC colorB">Actualizar Contraseña</button>
+                </form>
+            
+        </div>
     </div>
-<!-- Actualizar contraseña -->
-    <!-- <div class="row justify-content-center m-3 p-2 colorBGC colorB">
-        <form [formGroup]="PerfilForm" (ngSubmit)="actualizarDatos()">
-            <div class="form-group m-2">
-                <label for="nombre">Nombre</label>
-                <input formControlName="nombre" type="email" class="form-control" id="nombre" placeholder="Escriba su Nombre" maxlength="25">
-            </div>
-            <div class="form-group m-2">
-                <label for="apellido">Apellido</label>
-                <input formControlName="apellido" type="text" class="form-control" id="apellido" placeholder="Escriba su apellido" maxlength="25">
-            </div>
-            <div class="form-group m-2" >
-                <label for="correo">Correo electronico</label>
-                <input formControlName="correo" type="email" class="form-control" id="correo" placeholder="Escriba un correo">
-            </div>
-            <button type="submit" class="btn colorBGC colorB">Actualizar información</button>
-        </form>
-    </div> -->
+
+    <div class="row">
+        <div class="col align-self-end m-3">
+            <p class=" text-end" ><button type="button" class="btn text-danger btn-link" (click)="eliminarCuenta()">Elminar cuenta</button></p>
+        </div>
+    </div>
 </div>
