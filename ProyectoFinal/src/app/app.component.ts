@@ -72,6 +72,7 @@ export class AppComponent {
   }
 
   cerrarSesion(){
+    this.userS.deletUserActive();
     window.location.href = '/Home'
   }
 
