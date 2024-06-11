@@ -23,8 +23,8 @@
                 <h3 class="txt mt-3 ms-3" *ngIf="p.passadmin != null">{{p.nombre}} <img src="../../assets/Icon/candado.png" alt="Block" class="img"></h3>
             </a>
             <!-- modal -->
-            <div class="modal fade " id="iniciosesionModal" tabindex="-1"
-            aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade" id="iniciosesionModal" tabindex="-1"
+            aria-labelledby="exampleModalLabel" aria-hidden="true" *ngIf="p.passadmin != null">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content card">
                     <div class="modal-header">
@@ -41,8 +41,7 @@
                     <div class="modal-footer">
                         <button type="submit" class="btn colorB "
                             data-bs-dismiss="modal" (click)="activarAdmin(p.id)">Iniciar</button>
-                    </div>
-                    
+                    </div>  
                 </div>
             </div>
             </div>

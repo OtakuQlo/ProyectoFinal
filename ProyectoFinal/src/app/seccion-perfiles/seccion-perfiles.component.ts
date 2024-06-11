@@ -33,7 +33,6 @@ export class SeccionPerfilesComponent {
     this.perfilS.getPerfiles(parseInt(this.usuario.idusuario)).subscribe((perfiles) => {
       this.perfiles = perfiles
       this.perfiladmin = this.perfiles.find((perfil:any) => perfil.passadmin != null);
-      console.log(this.perfiladmin)
     })
   }
 
@@ -54,13 +53,12 @@ export class SeccionPerfilesComponent {
   }
 
   inactivateUser(idP:any){
-    this.perfilS.setInactiveProfile(parseInt(idP), {estado : false}).subscribe();
+    this.perfilS.setInactiveProfile(parseInt(idP), {estado : false}).subscribe();    
   }
   
-  activarAdmin(idP:any){
+  activarAdmin(idP:any){   
     this.perfilS.getPerfil(idP).subscribe(data=>{
-      
-      let perfil = data
+      let perfil = data     
       if (perfil.estado == false) {
         if(this.userS.desencryptContra(perfil.passadmin) == this.pass){
           this.perfilS.setActivateUser(idP,{estado : true}).subscribe(data=>{
@@ -79,9 +77,9 @@ export class SeccionPerfilesComponent {
   }
 
   irHome(){
-    this.userS.deletUserActive()
-    localStorage.removeItem('pActivo')
-    this.route.navigate(['/Home'])
+    this.userS.deletUserActive();
+    localStorage.removeItem('pActivo');
+    this.route.navigate(['/Home']);
   }
 
 }
