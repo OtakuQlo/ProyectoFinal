@@ -20,11 +20,10 @@ export class SeccionPerfilesComponent {
   pass: any;
   perfiladmin:any;
 
-  constructor(private route:Router, private perfilS:PerfilusuarioService, private userS:UsuarioService, private alert:ToastService){ 
-    
+  constructor(private route:Router, private perfilS:PerfilusuarioService, private userS:UsuarioService, private alert:ToastService){
   }
 
-  ngOnInit(){  
+  ngOnInit(){
     this.usuario = this.userS.getUserActive() 
     this.getPerfiles();
   }
@@ -41,6 +40,7 @@ export class SeccionPerfilesComponent {
       let perfil = data 
       if (perfil.estado ==false) {
         this.perfilS.setActivateUser(idP,{estado : true}).subscribe(data=>{
+          localStorage.setItem('tokenPerfil', this.userS.encryptContra('UserPerf'));
           localStorage.setItem('pActivo', JSON.stringify(this.perfiles.find(({id} : any) => id === idP)));
           this.perfilS.setActivateUser(parseInt(idP), {estado : true}).subscribe();
           window.location.href = '/Venta'
@@ -62,9 +62,10 @@ export class SeccionPerfilesComponent {
       if (perfil.estado == false) {
         if(this.userS.desencryptContra(perfil.passadmin) == this.pass){
           this.perfilS.setActivateUser(idP,{estado : true}).subscribe(data=>{
-            localStorage.setItem('pActivo', JSON.stringify(this.perfiles.find(({id} : any) => id === idP)))
+            localStorage.setItem('tokenPerfil', this.userS.encryptContra('AdminPerf'));
+            localStorage.setItem('pActivo', JSON.stringify(this.perfiles.find(({id} : any) => id === idP)));
             this.perfilS.setActivateUser(parseInt(idP), {estado : true}).subscribe();
-            window.location.href = '/Venta'
+            window.location.href = '/Venta';
           })
         }else{
           this.alert.errorSuccess('','Contraseña Incorrecta')
@@ -78,8 +79,10 @@ export class SeccionPerfilesComponent {
 
   irHome(){
     this.userS.deletUserActive();
+    localStorage.removeItem('tokenPerfil');
+    localStorage.removeItem('tokenUser');
     localStorage.removeItem('pActivo');
-    this.route.navigate(['/Home']);
+    window.location.href = '/Home';
   }
 
 }

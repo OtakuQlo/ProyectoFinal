@@ -32,9 +32,6 @@ export class HomeComponent implements OnInit {
     private _serviceMail: MailService,
     private _servicePerfil: PerfilusuarioService
   ) {
-    this._servicePerfil.setInactiveProfile(localStorage.getItem('pActivo'), { estado: false });
-    this._serviceUsuario.deletUserActive();
-    localStorage.removeItem('pActivo');
   }
 
   registroForm = new FormGroup({
@@ -60,9 +57,6 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     console.log(this.setPage);
-
-    localStorage.removeItem('token');
-    this._serviceUsuario.deletUserActive()
     this._activeroute.queryParams.subscribe(data => {
       this._serviceUsuario.getUsuarioId(data['id']).subscribe(data1 => {
         console.log(data1);
@@ -91,9 +85,11 @@ export class HomeComponent implements OnInit {
             if (this._serviceUsuario.desencryptContra(data.contra) == userInfo.pass) {
               this._serviceUsuario.setUserActive(userInfo.correo).then(res => {
                 if (data.rol == 2) {
+                  localStorage.setItem('tokenUser', this._serviceUsuario.encryptContra('AdminOrdenalo'))
                   window.location.href = "/HistorialReportes"
                 } else {
                   if (res) {
+                    localStorage.setItem('tokenUser',this._serviceUsuario.encryptContra('UsuarioOrdenalo'))
                     this.route.navigate(['./Perfiles']);
                   }
                 }

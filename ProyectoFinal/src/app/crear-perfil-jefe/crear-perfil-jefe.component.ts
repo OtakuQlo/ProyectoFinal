@@ -40,16 +40,16 @@ export class CrearPerfilJefeComponent {
     /^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]{2,100}$/;
 
 
-    getPerfilAdmin(){
-      this.perfiles.getPerfiles(this.usuarios.getUserActive().idusuario).subscribe(data => {
-        this.infoperfil = data;
-        this.perfiladmin = this.infoperfil.find((p:any) => p.passadmin != null);
-        if (this.perfiladmin) {
-          window.location.href = '/Perfiles';
-        }
-        
-      })
-    }
+  getPerfilAdmin(){
+    this.perfiles.getPerfiles(this.usuarios.getUserActive().idusuario).subscribe(data => {
+      this.infoperfil = data;
+      this.perfiladmin = this.infoperfil.find((p:any) => p.passadmin != null);
+      if (this.perfiladmin) {
+        window.location.href = '/Perfiles';
+      }
+      
+    })
+  }
 
   crearPerfil(){
      let bandera = true;

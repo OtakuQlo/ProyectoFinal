@@ -67,13 +67,16 @@ export class AppComponent {
 
   inactivateUser(){
     this.perfilS.setInactiveProfile(parseInt(this.perfilA.id), {estado : false}).subscribe();
-    localStorage.removeItem('pActivo')
-    window.location.href = '/Perfiles'
+    localStorage.removeItem('pActivo');
+    localStorage.removeItem('tokenPerfil');
+    window.location.href = '/Perfiles';
   }
 
   cerrarSesion(){
     this.userS.deletUserActive();
-    window.location.href = '/Home'
+    localStorage.removeItem('tokenPerfil');
+    localStorage.removeItem('tokenUser');
+    window.location.href = '/Home';
   }
 
 }
