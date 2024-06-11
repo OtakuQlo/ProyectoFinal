@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
+import { RouterOutlet } from '@angular/router';
 import { PerfilusuarioService } from '../../service/perfilusuario.service';
-import { Observable, interval, map, switchMap } from 'rxjs';
+import { Observable, interval, map } from 'rxjs';
 import { UsuarioService } from '../../service/usuario.service';
 import { PlansService } from '../../service/plans.service';
 
@@ -21,7 +21,6 @@ export class AppComponent {
   cantperfiles:any;
   
   constructor(private perfilS:PerfilusuarioService, private userS:UsuarioService, private planS: PlansService){
-
   }
 
   // Esta función devuelve un observable que emite el valor del LocalStorage cada cierto intervalo de tiempo
@@ -73,8 +72,7 @@ export class AppComponent {
   }
 
   cerrarSesion(){
-    this.userS.deletUserActive()
-    this.inactivateUser()
     window.location.href = '/Home'
   }
+
 }
