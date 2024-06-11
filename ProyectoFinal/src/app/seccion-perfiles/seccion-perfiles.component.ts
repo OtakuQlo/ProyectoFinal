@@ -46,7 +46,6 @@ export class SeccionPerfilesComponent {
           this.perfilS.setActivateUser(parseInt(idP), {estado : true}).subscribe();
           window.location.href = '/Venta'
         })
-
       }else{
         return this.alert.errorSuccess('Seleccione otro','Perfil ya en uso')
       }
