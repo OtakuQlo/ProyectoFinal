@@ -13,7 +13,7 @@ import { AjustePlanesComponent } from './ajuste-planes/ajuste-planes.component';
 import { HistorialComponent } from './historial/historial.component';
 import { InventarioComponent } from './inventario/inventario.component';
 import { HistorialReportesComponent } from './historial-reportes/historial-reportes.component';
-import { AdminGuard, AdminOrdenaloGuard, HomeGuard, PUGuard, authGuard } from '../authGard/auth.guard';
+import { AdminGuard, AdminORDGuard, HomeGuard, PUGuard, authGuard } from '../authGard/auth.guard';
 import { PerfilComponent } from './perfil/perfil.component';
 
 export const routes: Routes = [
@@ -21,17 +21,17 @@ export const routes: Routes = [
     { path: 'Registro', component: CrearCuentaComponent,canActivate:[HomeGuard]},
     { path: 'CrearJefe', component: CrearPerfilJefeComponent ,canActivate:[authGuard]},  
     { path: 'Venta', component: RealizarVentaComponent ,canActivate:[PUGuard]},
-    { path: 'Perfiles', component: SeccionPerfilesComponent,canActivate:[]},
-    { path: 'CrearPerfil', component: CrearPerfilComponent,canActivate:[] },
-    { path: 'AdministrarPerfiles', component: AdministrarPerfilesComponent ,canActivate:[]},
-    { path: 'ReportarProblema', component: ReporteProblemaComponent ,canActivate:[]},
-    { path: 'Estado', component: GenerarInformeComponent ,canActivate:[]},
-    { path: 'AgregarProducto', component: AgregarProductoComponent ,canActivate:[]},
-    { path: 'AgregarProducto/:id', component: AgregarProductoComponent ,canActivate:[]},
-    { path: 'AjustePlan', component: AjustePlanesComponent ,canActivate:[authGuard]},
-    { path: 'Historial', component: HistorialComponent ,canActivate:[]},
-    { path: 'Inventario', component: InventarioComponent ,canActivate:[]},
-    { path: 'HistorialReportes', component: HistorialReportesComponent ,canActivate:[authGuard]},
-    { path: 'Perfil', component: PerfilComponent ,canActivate:[]},
+    { path: 'Perfiles', component: SeccionPerfilesComponent,canActivate:[authGuard]},
+    { path: 'CrearPerfil', component: CrearPerfilComponent,canActivate:[AdminGuard] },
+    { path: 'AdministrarPerfiles', component: AdministrarPerfilesComponent ,canActivate:[AdminGuard]},
+    { path: 'ReportarProblema', component: ReporteProblemaComponent ,canActivate:[AdminGuard]},
+    { path: 'Estado', component: GenerarInformeComponent ,canActivate:[AdminGuard]},
+    { path: 'AgregarProducto', component: AgregarProductoComponent ,canActivate:[AdminGuard]},
+    { path: 'AgregarProducto/:id', component: AgregarProductoComponent ,canActivate:[AdminGuard]},
+    { path: 'AjustePlan', component: AjustePlanesComponent ,canActivate:[PUGuard]},
+    { path: 'Historial', component: HistorialComponent ,canActivate:[AdminGuard]},
+    { path: 'Inventario', component: InventarioComponent ,canActivate:[AdminGuard]},
+    { path: 'HistorialReportes', component: HistorialReportesComponent ,canActivate:[AdminORDGuard]},
+    { path: 'Perfil', component: PerfilComponent ,canActivate:[AdminGuard]},
     { path: '**', redirectTo: 'Home', pathMatch: 'full' }
 ];
