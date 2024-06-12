@@ -56,6 +56,12 @@ export class HomeComponent implements OnInit {
   });
 
   ngOnInit(): void {
+    this._servicePerfil.setInactiveProfile(localStorage.getItem('pActivo'), {estado : false});
+    this._serviceUsuario.deletUserActive();
+    localStorage.removeItem('tokenPerfil');
+    localStorage.removeItem('tokenUser');
+    localStorage.removeItem('pActivo')
+
     console.log(this.setPage);
     this._activeroute.queryParams.subscribe(data => {
       this._serviceUsuario.getUsuarioId(data['id']).subscribe(data1 => {

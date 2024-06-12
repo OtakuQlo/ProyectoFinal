@@ -17,7 +17,7 @@ import { AdminGuard, AdminORDGuard, HomeGuard, PUGuard, authGuard } from '../aut
 import { PerfilComponent } from './perfil/perfil.component';
 
 export const routes: Routes = [
-    { path: 'Home', component: HomeComponent,canActivate:[HomeGuard] }, 
+    { path: 'Home', component: HomeComponent}, 
     { path: 'Registro', component: CrearCuentaComponent,canActivate:[HomeGuard]},
     { path: 'CrearJefe', component: CrearPerfilJefeComponent ,canActivate:[authGuard]},  
     { path: 'Venta', component: RealizarVentaComponent ,canActivate:[PUGuard]},
