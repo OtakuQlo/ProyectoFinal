@@ -54,21 +54,20 @@ export const PUGuard:CanActivateFn = (route, state) => {
   if(localStorage.getItem('tokenPerfil') ){
     const token = user.desencryptContra(localStorage.getItem('tokenPerfil'));
     
-    if(token == 'AdminPerf'){
+    if(token == 'AdminPerf' || token == 'UserPerf'){
       return true;
     }else{
-      /* history.back(); */
+      history.back();
       return false;
     }
   }
   if(localStorage.getItem('tokenUser')){
     const token2 = user.desencryptContra(localStorage.getItem('tokenUser'));
     if(token2 == 'AdminOrdenalo'){
-      console.log(token2);
       return true;
     }
   }
-  /* window.location.href = '/Home'; */
+  history.back();
   return false
 };
 
