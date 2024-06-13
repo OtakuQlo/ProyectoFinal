@@ -13,6 +13,7 @@ import { CommonModule } from '@angular/common';
 import { ToastService } from '../../../service/toast.service';
 import { WebpayService } from '../../../service/webpay.service';
 import { PlansService } from '../../../service/plans.service';
+import { TarjetaService } from '../../../service/tarjeta.service';
 @Component({
   selector: 'app-crear-cuenta',
   standalone: true,
@@ -41,6 +42,7 @@ export class CrearCuentaComponent {
     private _servicioToast: ToastService,
     private _servicePago: WebpayService,
     private _servicePlanes: PlansService,
+    private _servieTarjeta:TarjetaService
   ) { }
 
   registroForm = new FormGroup({
@@ -128,16 +130,24 @@ export class CrearCuentaComponent {
         rol: 1,
         estado: 0,
         habilitado:1,
+      }).subscribe(data=>{
+        let card = this.tarjetaForm.value
+        this._servieTarjeta.postTarjeta({
+          numero: this._serviceUsuario.encryptContra(card.cardNumber?.toString()),
+          cvv: this._serviceUsuario.encryptContra(card.cvv),
+          month: this._serviceUsuario.encryptContra(card.mes?.toString().padStart(2, "0")),
+          year: this._serviceUsuario.encryptContra(card.ano?.toString().padStart(2, "0")),
+          idusuario: data.idusuario
       }).subscribe()
+      })
 
     this._serviceUsuario.setUserActive(email).then(res => {
+      localStorage.setItem('tokenUser',this._serviceUsuario.encryptContra('UsuarioOrdenalo'))
       console.log(res);
-
       if (res) {
         this._servicioToast.showSuccess("Cuenta Creda", "cuenta creada con existo")
         this.route.navigate(['/CrearJefe']);
       }
-
     })
 
 
@@ -266,6 +276,7 @@ export class CrearCuentaComponent {
                 usuario.telefono,
                 this.plan,
               );
+              
             } else {
               this._servicioToast.errorSuccess("ERROR", "Tarjeta rechazada")
               this.procesosCrearCuenta = 1
