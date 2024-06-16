@@ -32,9 +32,9 @@ export class InventarioComponent {
 
   id: number = 0;
   // modal datos
-  nombrePrdModal  : string = "";
-  nombreMarModal  : string = "";
-  barcodeModal    : string = "";
+  nombrePrdModal: string = "";
+  nombreMarModal: string = "";
+  barcodeModal: string = "";
   cantidadPrdModal: number = 0;
 
   //formato fecha para dar el minimo al input
@@ -49,7 +49,7 @@ export class InventarioComponent {
     private _serviceProduto: ProductoService,
     private _servicePerdidas: PerdidasService,
     private _serviceToast: ToastService,
-    private _serviceUsuario:UsuarioService
+    private _serviceUsuario: UsuarioService
   ) { }
 
   ngOnInit(): void {
@@ -87,11 +87,14 @@ export class InventarioComponent {
     this.totalPages = this.totalPage();
     this.actualPage = 1;
     this.pageGenerator();
-    this.search =""
+    this.search = ""
   }
 
   addProduct() {
     this.router.navigate(['/AgregarProducto'])
+  }
+  inventario(){
+    this.router.navigate(['/Inventario'])
   }
   editProduct() {
     this.router.navigate(['/AgregarProducto'], { queryParams: { id: this.id } });
@@ -125,41 +128,70 @@ export class InventarioComponent {
   postPerdidas() {
     if (this.cant >= 1) {
       if (this.barcode != "") {
-        
-        this._serviceProduto.getProductoVenta(this.barcode,{}).subscribe(res=>{
-          let producto:any;
-          producto=res
-          if (res) {
-            if (producto  !== undefined) {
-            
-              this._servicePerdidas.postPerdidas(
-                { idperdidas: '', idproducto: producto.idproducto, fecha: this.fechaFormateada, descripcion: this.desc, cantidad: this.cant,idusuario: this._serviceUsuario.getUserActive().idusuario},
-                this.barcode
-              ).then(res => {
-                console.log(res);
-      
-                if (res) {
-                  this.barcode = ''
-                  this.cant = 0
-                  this.desc = ''
-                  this._serviceToast.showSuccess("Con exito", "Reporte con exito")
-                } else {
-                  this._serviceToast.errorSuccess("Error", "Hubo un Error")
-                }
-              });
-      
-              
-            }else {
-              this._serviceToast.errorSuccess("Error", "Hubo un Error")
-            }
-          }else{
-            this._serviceToast.errorSuccess("Error", "Hubo un Error")
+        this._serviceProduto.getProductoVenta(this.barcode, { idusuario: this._serviceUsuario.getUserActive().idusuario }).subscribe({
+          next: (data) => {
 
-          }
-         
-          
+            
+            let producto: any = data;
+            
+            if (producto.length == 1) {
+              let perdida: any = {
+                idperdidas: '',
+                idproducto: producto[0].idproducto,
+                fecha: this.fechaFormateada,
+                descripcion: this.desc,
+                cantidad: this.cant,
+                idusuario: this._serviceUsuario.getUserActive().idusuario
+              }
+              this._servicePerdidas.postPerdidas(perdida).subscribe({
+                next:(value) =>{
+                  this.ngOnInit()
+                  this._serviceToast.showSuccess("Exito","Perdida realizada")
+                },
+              })
+            } else {
+              this._serviceToast.errorSuccess("Error", "Ocurrio un error con el codigo")
+            }
+
+          },
+          error: (err) => {
+            console.log(err);
+          },
         })
-        
+        // this._serviceProduto.getProductoVenta(this.barcode,{}).subscribe(res=>{
+        //   let producto:any;
+        //   producto=res
+        //   if (res) {
+        //     if (producto  !== undefined) {
+
+        //       this._servicePerdidas.postPerdidas(
+        //         { idperdidas: '', idproducto: producto.idproducto, fecha: this.fechaFormateada, descripcion: this.desc, cantidad: this.cant,idusuario: this._serviceUsuario.getUserActive().idusuario},
+        //         this.barcode
+        //       ).then(res => {
+        //         console.log(res);
+
+        //         if (res) {
+        //           this.barcode = ''
+        //           this.cant = 0
+        //           this.desc = ''
+        //           this._serviceToast.showSuccess("Con exito", "Reporte con exito")
+        //         } else {
+        //           this._serviceToast.errorSuccess("Error", "Hubo un Error")
+        //         }
+        //       });
+
+
+        //     }else {
+        //       this._serviceToast.errorSuccess("Error", "Hubo un Error")
+        //     }
+        //   }else{
+        //     this._serviceToast.errorSuccess("Error", "Hubo un Error")
+
+        //   }
+
+
+        // })
+
 
 
       } else {
