@@ -6,6 +6,7 @@ import { InformesService } from '../../../service/informes.service';
 import { CommonModule, formatDate } from '@angular/common';
 import { Chart, registerables } from 'chart.js';
 import { FormsModule } from '@angular/forms';
+import { ToastService } from '../../../service/toast.service';
 
 @Component({
   selector: 'app-generar-informe',
@@ -29,27 +30,16 @@ export class GenerarInformeComponent {
   date = formatDate(new Date(), 'dd-MM-yyyy', 'en')
 
   constructor(private userA:UsuarioService,
-    private informes:InformesService) {  
+    private informes:InformesService,private alertas:ToastService) {  
     Chart.register(...registerables)
   }
 
   ngOnInit(): void{
-    
-    this.informes.informeInventario(this.userA.getUserActive().idusuario).subscribe(data =>{
-      this.informeVentas = data
-    })
-    
-    
-    this.informes.informeMermas(this.userA.getUserActive().idusuario).subscribe(data =>{
-      this.informeMerm = data
-    })
     this.tipoGrafico()
   }
 
   changeGraf(){
-    this.tipoGrafico();
-    console.log(this.tipogra);
-    
+    this.tipoGrafico(); 
   }
 
   tipoGrafico(){
@@ -496,7 +486,6 @@ export class GenerarInformeComponent {
           this.tipogra = '1';
           break;
     }
-    
   }
 
   async generarInformeVentasEMP() {
@@ -525,8 +514,6 @@ export class GenerarInformeComponent {
 
       //Usar file-saver para descargar el archivo
       saveAs(blob, 'Informe_Ventas_EMP'+this.date+'.xlsx')
-
-      console.log('Archivo Excel guardado.');
     } catch (error) {
       console.error('Error al guardar el archivo Excel:', error);
     }
@@ -559,9 +546,9 @@ export class GenerarInformeComponent {
       //Usar file-saver para descargar el archivo
       saveAs(blob, 'Informe_Inventario_'+this.date+'.xlsx')
 
-      console.log('Archivo Excel guardado.');
+      this.alertas.showSuccess('','Excel guardado correctamente');
     } catch (error) {
-      console.error('Error al guardar el archivo Excel:', error);
+      this.alertas.errorSuccess('','Error al guardar excel');
     }
   }
 
@@ -592,9 +579,9 @@ export class GenerarInformeComponent {
       //Usar file-saver para descargar el archivo
       saveAs(blob, 'Informe_Pro_Popul_'+this.date+'.xlsx')
 
-      console.log('Archivo Excel guardado.');
+      this.alertas.showSuccess('','Excel guardado correctamente');
     } catch (error) {
-      console.error('Error al guardar el archivo Excel:', error);
+      this.alertas.errorSuccess('','Error al guardar excel');
     }
   }
 
@@ -623,9 +610,9 @@ export class GenerarInformeComponent {
       //Usar file-saver para descargar el archivo
       saveAs(blob, 'Informe_Menos_Pop_'+this.date+'.xlsx')
 
-      console.log('Archivo Excel guardado.');
+      this.alertas.showSuccess('','Excel guardado correctamente');
     } catch (error) {
-      console.error('Error al guardar el archivo Excel:', error);
+      this.alertas.errorSuccess('','Error al guardar excel');
     }
   }
 
@@ -658,10 +645,10 @@ export class GenerarInformeComponent {
 
       //Usar file-saver para descargar el archivo
       saveAs(blob, 'Informe_mermas_'+this.date+'.xlsx')
-
-      console.log('Archivo Excel guardado.');
+      this.alertas.showSuccess('','Excel guardado correctamente');
     } catch (error) {
-      console.error('Error al guardar el archivo Excel:', error);
+      this.alertas.errorSuccess('','Error al guardar excel');
     }
   }
+  
 }

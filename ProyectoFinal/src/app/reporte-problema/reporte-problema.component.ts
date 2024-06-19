@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ReportesService } from '../../../service/reportes.service';
 import { UsuarioService } from '../../../service/usuario.service';
 import { formatDate } from '@angular/common';
+import { ToastService } from '../../../service/toast.service';
 
 @Component({
   selector: 'app-reporte-problema',
@@ -20,7 +21,7 @@ export class ReporteProblemaComponent {
   labelReporte: string= '';
   
 
-  constructor(public router: Router, private reportar:ReportesService, private userS:UsuarioService){
+  constructor(public router: Router, private reportar:ReportesService, private userS:UsuarioService, private alertas:ToastService){
   }
 
   ngOnInit(): void {
@@ -38,9 +39,7 @@ export class ReporteProblemaComponent {
   }
 
   crearReporte(){
-    let user : any = this.userS.getUserActive();
-    console.log(user.idusuario);
-    
+    let user : any = this.userS.getUserActive();    
     this.reportar.crearReporte({
       idreporte: '',
       idusuario : user.idusuario,
@@ -49,11 +48,9 @@ export class ReporteProblemaComponent {
       solucion : false,
       fecha: formatDate(new Date(), 'yyyy-MM-dd', 'en')
     }).subscribe((response) => {
-      console.log('Si',response);
     },
     (error) => {
-      console.log('No', error);
+      this.alertas.errorSuccess('','Error al mandar el reporte, intente nuevamente más tarde');
     });
-    console.log('Si')
   }
 }
