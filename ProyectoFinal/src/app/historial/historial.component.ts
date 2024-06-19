@@ -46,7 +46,7 @@ export class HistorialComponent {
   // funcion de cabiar de tabla
   changeTable() {
     this.setTabla()
-    console.log("cabia la tabal" + this.opcionHistorial)
+    
   }
   // funcion para el apartado de numero
   setRangoPrecio() {
@@ -64,7 +64,7 @@ export class HistorialComponent {
       })
     }
 
-    console.log(this.productoLLegada);
+    
 
   }
   // funcion para seleccionar la fecha
@@ -117,7 +117,7 @@ export class HistorialComponent {
       this.ventasRealizadas = data;
       this.tablaActivo = data;
       this.totalPages = this.totalPage();
-      console.log(data);
+      
     })
   }
   // funciones en tabla
@@ -133,7 +133,7 @@ export class HistorialComponent {
     }
   }
   setTablaDetalle(detalle: any) {
-    console.log(detalle);
+    
 
     this.detalleSelected = detalle;
   }
@@ -144,12 +144,11 @@ export class HistorialComponent {
     this.displacement = (this.actualPage - 1) * 10;
   }
   nextPage() {
-    console.log(this.actualPage + 1);
-    console.log(this.totalPages);
+    
 
     if (this.actualPage + 1 <= this.totalPages) {
       this.actualPage = this.actualPage + 1;
-      console.log(this.actualPage);
+      
 
       this.pageGenerator();
     }

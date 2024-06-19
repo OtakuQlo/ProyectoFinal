@@ -62,10 +62,10 @@ export class HomeComponent implements OnInit {
     localStorage.removeItem('tokenUser');
     localStorage.removeItem('pActivo')
 
-    console.log(this.setPage);
+    
     this._activeroute.queryParams.subscribe(data => {
       this._serviceUsuario.getUsuarioId(data['id']).subscribe(data1 => {
-        console.log(data1);
+        
 
         if (data['id'] && data1.estado == 1) {
 
@@ -108,7 +108,7 @@ export class HomeComponent implements OnInit {
             }
           }
           if (data.habilitado == 0) {
-            console.log("habilitar tu cuenta");
+            
             this._serviceUsuario.setUserActive(userInfo.correo);
             this.setPage = 2;
           }
@@ -134,9 +134,9 @@ export class HomeComponent implements OnInit {
     this.route.navigate(['./Home']);
   }
   reestablecePass() {
-    console.log(this.userPass);
+    
     let pass = this.cambiarpass.value;
-    console.log(this.cambiarpass.status);
+    
 
     if (this.cambiarpass.status == 'VALID') {
       if (pass.pass == pass.passr) {
@@ -145,7 +145,7 @@ export class HomeComponent implements OnInit {
             if (data.estado == true) {
               this._serviceUsuario.actualizarContra(this.userPass, { contra: this._serviceUsuario.encryptContra(pass.pass), estado: false }).subscribe({
                 next: (data) => {
-                  console.log(data);
+                  
 
                 },
                 error: (e) => {
@@ -203,7 +203,7 @@ export class HomeComponent implements OnInit {
 
   }
   HabilitarCuenta(){
-    console.log("Elminar Cuenta");
+    
     this._serviceUsuario.habilitarUsuario(this._serviceUsuario.getUserActive().idusuario,{habilitado:1}).subscribe({
       next:(data)=>{
         window.location.href = "http://localhost:4200/Home"

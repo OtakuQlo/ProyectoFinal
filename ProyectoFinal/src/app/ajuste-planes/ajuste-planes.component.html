@@ -89,7 +89,7 @@
   <div class="modal-dialog">
     <div class="modal-content card">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Editar plan</h5>
+        <h5 class="modal-title letra" id="exampleModalLabel">Editar plan</h5>
 
       </div>
       <div class="modal-body">
@@ -97,17 +97,18 @@
 
         </div>
         <div>
-          <h4>Nombre del plan</h4>
-          <input  class="form-control " [(ngModel)]="nombrep">
-          <h4>Cantidad empleados</h4>
-          <input  class="form-control " [(ngModel)]="cantp">
-          <h4>Precio</h4>
-          <input  class="form-control " [(ngModel)]="preciop">
+          <h4 class="letra">Nombre del plan</h4>
+          <input  class="form-control " style="color:black;" [(ngModel)]="nombrep" maxlength="20">
+          <h4 class="letra">Cantidad empleados</h4>
+          <input  class="form-control " style="color:black;" [(ngModel)]="cantp">
+          <h4 class="letra">Precio</h4>
+          <input  class="form-control " style="color:black;" [(ngModel)]="preciop">
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">cerrar</button>
-        <button type="button" class="btn btn-secondary" 
+        
+          <button type="button" class="btn btn-secondary" 
           data-bs-dismiss="modal" (click) = "editarPlan(plancambio)">Editar</button>
       </div>
     </div>

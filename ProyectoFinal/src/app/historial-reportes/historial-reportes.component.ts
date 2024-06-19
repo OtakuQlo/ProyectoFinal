@@ -37,7 +37,7 @@ export class HistorialReportesComponent {
       this.reportes = data;
       this.reportesC = data;
       this.totalPages = this.totalPage();
-      console.log(data);
+      
     });
   }
 
@@ -61,7 +61,7 @@ export class HistorialReportesComponent {
         )
       },
       error(err) {
-        console.log(err);
+
 
       },
     });

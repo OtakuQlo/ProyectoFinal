@@ -61,14 +61,14 @@ export class InventarioComponent {
 
   getProduct() {
     this._serviceProduto.getProductostock(this._serviceUsuario.getUserActive().idusuario).subscribe(data => {
-      console.log(data);
+      
 
       this.productos = data;
-      console.log(this.productos);
+      
 
       this.productosO = data;
       this.totalPages = this.totalPage();
-      console.log(this.totalPages);
+      
     });
   }
 
@@ -83,7 +83,7 @@ export class InventarioComponent {
     this.productos = this.productosO.filter((product) => {
       return product.nombreproducto.includes(this.search.toLocaleLowerCase()) || product.precio == Number(this.search) || product.barcode == this.search
     });
-    console.log(this.productos);
+    
     this.totalPages = this.totalPage();
     this.actualPage = 1;
     this.pageGenerator();
@@ -102,7 +102,7 @@ export class InventarioComponent {
 
   // pagination
   totalPage() {
-    console.log(this.productos);
+    
 
     return Math.ceil(this.productos.length / 10);
   }
@@ -155,7 +155,7 @@ export class InventarioComponent {
 
           },
           error: (err) => {
-            console.log(err);
+            
           },
         })
         // this._serviceProduto.getProductoVenta(this.barcode,{}).subscribe(res=>{
@@ -168,7 +168,7 @@ export class InventarioComponent {
         //         { idperdidas: '', idproducto: producto.idproducto, fecha: this.fechaFormateada, descripcion: this.desc, cantidad: this.cant,idusuario: this._serviceUsuario.getUserActive().idusuario},
         //         this.barcode
         //       ).then(res => {
-        //         console.log(res);
+        //         
 
         //         if (res) {
         //           this.barcode = ''

@@ -37,7 +37,13 @@ export class AjustePlanesComponent {
   cantp:any;
   preciop:any;
   plan:any;
+  bandera : boolean = true;
+  habilitador:any = "disabled";
   cantperfiles:any;
+  regexnumeros: RegExp = /^\d+$/;
+  labelnombre: string = '';
+  labelcantidad:string = '';
+  labelprecio:string= '';
 
   
 
@@ -63,14 +69,13 @@ export class AjustePlanesComponent {
     this.planS.getPlans().subscribe(data => {
 
       this.planes = data;
-      console.log(this.planes);
+      
 
     })
 
     this.rol = this.usuarios.getUserActive().rol;
     
-    console.log(this.plancambio);
-    console.log(this.rol);
+    
 
   }
 
@@ -85,13 +90,50 @@ export class AjustePlanesComponent {
 
   planSeleccionado(dato: any) {
     this.plancambio = dato;
-    console.log(dato)
+    
     this.nombrep = this.plancambio.nombreplan;
     this.cantp = this.plancambio.cantidademp;
     this.preciop = this.plancambio.precio;
   }
 
+  // validarDatos(){
+
+  //   if (this.nombrep.length <= 0 || this.nombrep.length > 50) {
+
+  //     this.bandera = true;
+  //     this.labelnombre = "El nombre del plan no debe estar vacio y no debe sobre pasar los 20 caracteres";
+  //   } else {
+  //     this.labelnombre = " ";
+  //     this.bandera = false;
+  //   }
+
+    
+
+  //   if (!this.regexnumeros.test(this.cantp.toString())) {
+  //     this.bandera = true;
+  //     this.labelcantidad = "Solo se acepta numeros";
+  //   } else {
+  //     this.labelcantidad = " ";
+  //     this.bandera = false;
+  //   }
+
+
+  //   if (!this.regexnumeros.test(this.preciop.toString())) {
+  //     this.bandera = true;
+  //     this.labelcantidad = "Solo se acepta numeros";
+  //   } else {
+  //     this.labelprecio = " ";
+  //     this.bandera = false;
+  //   }
+
+
+  // }
+
   editarPlan(plan:any){
+    
+    
+    
+
     this.planS.updatePlans(plan.idplan,{nombreplan: this.nombrep, cantidademp : this.cantp, precio:this.preciop}).subscribe();
     window.location.href = '/AjustePlan';
    

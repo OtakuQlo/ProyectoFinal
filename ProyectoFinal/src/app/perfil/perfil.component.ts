@@ -32,7 +32,7 @@ export class PerfilComponent {
     this.PerfilForm.controls['correo'].setValue(this.usuario.email)
     this.PerfilForm.controls['nombre'].setValue(this.usuario.nombre)
     this.PerfilForm.controls['apellido'].setValue(this.usuario.apellido)
-    console.log(this.usuario.idusuario);
+    
 
     this.getTarjetaUsuario();
   }
@@ -81,7 +81,7 @@ export class PerfilComponent {
               , nombre: usuarioAct.nombre, apellido: usuarioAct.apellido
             }).subscribe({
               next: (data) => {
-                console.log(data);
+                
                 this._sericeUsuario.setUserActive(data.email);
                 this._serviceToast.showSuccess("Actualizacion", "Datos cambiado")
               }
@@ -91,15 +91,14 @@ export class PerfilComponent {
           }
         },
         error: (err) => {
-          console.log(err);
-          console.log(this.usuario.idusuario);
+          
 
           this._sericeUsuario.actualizarUsuario(this.usuario.idusuario, {
             correo: usuarioAct.correo
             , nombre: usuarioAct.nombre, apellido: usuarioAct.apellido
           }).subscribe({
             next: (data) => {
-              console.log(data);
+              
               this._sericeUsuario.setUserActive(data.email);
               this._serviceToast.showSuccess("Actualizacion", "Datos cambiado")
             }
@@ -132,11 +131,11 @@ export class PerfilComponent {
     }
   }
   putContra(pass: any) {
-    console.log(this._sericeUsuario.desencryptContra(pass));
+    
 
     this._sericeUsuario.actualizarContra(this.usuario.idusuario, { contra: pass, estado: 3 }).subscribe({
       next: (data) => {
-        console.log(data);
+        
         this._sericeUsuario.setUserActive(data.email).then(data => {
           window.location.href = "http://localhost:4200/Perfil"
           this.route.navigate(['./Perfil']);
@@ -146,13 +145,13 @@ export class PerfilComponent {
       },
       error: (err) => {
         this._serviceToast.errorSuccess("Informacion no valido", "ERROR")
-        console.log(err);
+        
 
       },
     })
   }
   eliminarCuenta() {
-    console.log("Elminar Cuenta");
+    
     this._sericeUsuario.habilitarUsuario(this.usuario.idusuario, { habilitado: 0 }).subscribe({
       next: (data) => {
         window.location.href = "http://localhost:4200/Home"
@@ -164,21 +163,20 @@ export class PerfilComponent {
   getTarjetaUsuario() {
     this._serviceTarjeta.getTarjeta(this.usuario.idusuario).subscribe({
       next: (data) => {
-        console.log(data[0]);
+        
         this.tarjeta = data[0];
         this.tarjeta.numero = Number(this._sericeUsuario.desencryptContra(this.tarjeta.numero))%10000
         this.tarjeta.month =this._sericeUsuario.desencryptContra(this.tarjeta.month)
         this.tarjeta.year =this._sericeUsuario.desencryptContra(this.tarjeta.year)
       },
       error: (err) => {
-        console.log(err);
+        
 
       },
     })
   }
   modificarTarjeta(idTarjeta: any) {
     let tarjetafrom = this.tarjetaForm.value
-    console.log(this._sericeUsuario.encryptContra(tarjetafrom.cardNumber));
     
     let tarjeta = {
       numero: this._sericeUsuario.encryptContra(tarjetafrom.cardNumber),
@@ -191,7 +189,6 @@ export class PerfilComponent {
 
       },
       error: (err) => {
-        console.log(err);
 
       },
     })
@@ -213,15 +210,14 @@ export class PerfilComponent {
       "year": card.ano?.toString().padStart(2, "0")
     }).subscribe({
       next: (data) => {
-        console.log(data);
         let token: any = data
         this._servicePago.verificarPago({ token: token.token }).subscribe({
           next: (curr) => {
-            console.log(curr);
+
             let res: any = curr;
-            console.log(res.status);
+            
             if (res.status == "AUTHORIZED") {
-              console.log(this._sericeUsuario.getUserActive().idusuario);
+              
               
               this._serviceTarjeta.postTarjeta({
                 numero: this._sericeUsuario.encryptContra(card.cardNumber?.toString()),

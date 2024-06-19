@@ -102,7 +102,7 @@ export class CrearCuentaComponent {
     this._servicePlanes.getPlans().subscribe({
       next: (data) => {
         this.plans = data
-        console.log(this.plans);
+        
 
       },
     })
@@ -143,7 +143,7 @@ export class CrearCuentaComponent {
 
     this._serviceUsuario.setUserActive(email).then(res => {
       localStorage.setItem('tokenUser',this._serviceUsuario.encryptContra('UsuarioOrdenalo'))
-      console.log(res);
+      
       if (res) {
         this._servicioToast.showSuccess("Cuenta Creda", "cuenta creada con existo")
         this.route.navigate(['/CrearJefe']);
@@ -201,11 +201,11 @@ export class CrearCuentaComponent {
     ) {
       if (this.checkboxTermState) {
         if (this.BASICO || this.INTERMEDIO || this.AVANZADO) {
-          console.log(usuario.pass);
+          
           this._serviceUsuario.usuarioExistente(usuario.correo, usuario.rut).subscribe(data => {
 
             if (data.length == 0) {
-              console.log("se puede crear el usuario");
+              
               this.procesosCrearCuenta = 2;
             }
             if (data.length > 0) {
@@ -226,7 +226,7 @@ export class CrearCuentaComponent {
     }
   }
   CheckboxChanges1() {
-    console.log(this.BASICO);
+    
 
     this.INTERMEDIO = false;
     this.AVANZADO = false;
@@ -237,7 +237,7 @@ export class CrearCuentaComponent {
     this.BASICO = false;
     this.AVANZADO = false;
     this.plan = 2;
-    console.log(this.BASICO);
+    
   }
   CheckboxChanges3() {
     this.INTERMEDIO = false;
@@ -245,7 +245,7 @@ export class CrearCuentaComponent {
     this.plan = 3;
   }
   card() {
-    console.log("card");
+    
     let card = this.tarjetaForm.value
     this._servicePago.realizarPago({
       "buyOrder": 1,
@@ -257,13 +257,13 @@ export class CrearCuentaComponent {
       "year": card.ano?.toString().padStart(2, "0")
     }).subscribe({
       next: (data) => {
-        console.log(data);
+        
         let token: any = data
         this._servicePago.verificarPago({ token: token.token }).subscribe({
           next: (curr) => {
-            console.log(curr);
+            
             let res: any = curr;
-            console.log(res.status);
+            
             if (res.status == "AUTHORIZED") {
               this._servicioToast.showSuccess("Exito", "Tarjeta aprobada")
               let usuario = this.registroForm.value;

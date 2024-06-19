@@ -26,9 +26,9 @@ export class AdministrarPerfilesComponent {
   }
 
   /* editarPerfil(id:any){
-    console.log(id);
+    
     this.perfilS.putPerfil(parseInt(id), {nombre : "Manuel" ,passadmin : null}).subscribe();
-    console.log(this.perfiles);
+    
     
   } */
   

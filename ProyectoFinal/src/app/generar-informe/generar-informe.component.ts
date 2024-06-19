@@ -515,7 +515,7 @@ export class GenerarInformeComponent {
       //Usar file-saver para descargar el archivo
       saveAs(blob, 'Informe_Ventas_EMP'+this.date+'.xlsx')
     } catch (error) {
-      console.error('Error al guardar el archivo Excel:', error);
+  
     }
   }
 
