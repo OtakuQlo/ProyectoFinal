@@ -29,15 +29,15 @@ export class UsuarioService {
   async setUserActive(email: any): Promise<boolean> {
     try {
       const data = await lastValueFrom(this.getUserEmail(email));
-      console.log(data);
+      
 
       localStorage.setItem('token', data.idusuario.toString());
       localStorage.setItem('usuario', JSON.stringify(data));
-      console.log(localStorage.getItem('usuario'));
+      
 
       return true;
     } catch (error) {
-      console.error('Error al establecer usuario activo:', error);
+      
       return false;
     }
   }
@@ -79,8 +79,7 @@ export class UsuarioService {
     return this.http.put(this.url+"/"+id,pass)
   }
   actualizarUsuario(id:any,user:any): Observable<any>{
-    console.log("idusuario",id);
-    console.log("usuario",user);
+    
     return this.http.put(this.url+"/actualizarUsuario/"+id,user)
   }
   usuarioExistente(email:any,rut:any): Observable<any>{

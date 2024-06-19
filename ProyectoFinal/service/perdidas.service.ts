@@ -11,7 +11,6 @@ export class PerdidasService {
   private url = environment.url + 'perdidas';
 
   postPerdidas(perdida: any):Observable<any> {
-    console.log(perdida);
     
     return this.http.post(this.url,perdida);
    }

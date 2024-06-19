@@ -26,7 +26,7 @@ export class VentaService {
       const boleta = await lastValueFrom(this.http.get(this.url+'boletas/'+id, { params }))
       return boleta
     }catch(error){
-      return console.error('Error al encontrar el producto:', error);
+      return;
     }
   }
   getBoletas(idPerfil:any): Observable<any>{
