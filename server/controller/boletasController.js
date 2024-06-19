@@ -36,6 +36,7 @@ exports.obtenerBoleta= async(req,res)=>{
 }
 
 exports.obtenerBoletas= async(req,res)=>{
+    console.log(req.params.idusuario);
     try{
         const boleta = await Boletas.findAll({
             include:[{
@@ -47,7 +48,7 @@ exports.obtenerBoletas= async(req,res)=>{
                 }]
             }],
             where:{
-                idusuario: req.params.id,
+                idusuario: req.params.idusuario,
                 estado : 1
             }
         });
