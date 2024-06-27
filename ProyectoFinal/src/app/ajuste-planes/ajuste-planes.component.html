@@ -98,18 +98,18 @@
         </div>
         <div>
           <h4 class="letra">Nombre del plan</h4>
-          <input  class="form-control " style="color:black;" [(ngModel)]="nombrep" maxlength="20">
+          <input  class="form-control " style="color:black;" [(ngModel)]="nombrep" maxlength="20" (ngModelChange)="validarDatos()" >
           <h4 class="letra">Cantidad empleados</h4>
-          <input  class="form-control " style="color:black;" [(ngModel)]="cantp">
+          <input  class="form-control " style="color:black;" [(ngModel)]="cantp" (ngModelChange)="validarDatos()">
           <h4 class="letra">Precio</h4>
-          <input  class="form-control " style="color:black;" [(ngModel)]="preciop">
+          <input  class="form-control " style="color:black;" [(ngModel)]="preciop" (ngModelChange)="validarDatos()">
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">cerrar</button>
         
           <button type="button" class="btn btn-secondary" 
-          data-bs-dismiss="modal" (click) = "editarPlan(plancambio)">Editar</button>
+          [disabled]="banderafinal" data-bs-dismiss="modal" (click) = "editarPlan(plancambio)"> Editar</button>
       </div>
     </div>
   </div>

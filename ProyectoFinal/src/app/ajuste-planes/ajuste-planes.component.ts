@@ -38,6 +38,9 @@ export class AjustePlanesComponent {
   preciop:any;
   plan:any;
   bandera : boolean = true;
+  bandera2 : boolean = true;
+  bandera3 : boolean = true;
+  banderafinal:boolean = false;
   habilitador:any = "disabled";
   cantperfiles:any;
   regexnumeros: RegExp = /^\d+$/;
@@ -96,38 +99,40 @@ export class AjustePlanesComponent {
     this.preciop = this.plancambio.precio;
   }
 
-  // validarDatos(){
+  validarDatos(){
+    
 
-  //   if (this.nombrep.length <= 0 || this.nombrep.length > 50) {
+    if (this.nombrep.length <= 0 || this.nombrep.length > 50) {
 
-  //     this.bandera = true;
-  //     this.labelnombre = "El nombre del plan no debe estar vacio y no debe sobre pasar los 20 caracteres";
-  //   } else {
-  //     this.labelnombre = " ";
-  //     this.bandera = false;
-  //   }
+      this.bandera = true;
+      this.labelnombre = "El nombre del plan no debe estar vacio y no debe sobre pasar los 20 caracteres";
+    } else {
+      this.labelnombre = " ";
+      this.bandera = false;
+    }
 
     
 
-  //   if (!this.regexnumeros.test(this.cantp.toString())) {
-  //     this.bandera = true;
-  //     this.labelcantidad = "Solo se acepta numeros";
-  //   } else {
-  //     this.labelcantidad = " ";
-  //     this.bandera = false;
-  //   }
+    if (!this.regexnumeros.test(this.cantp.toString())) {
+      this.bandera2 = true;
+      this.labelcantidad = "Solo se acepta numeros";
+    } else {
+      this.labelcantidad = " ";
+      this.bandera2 = false;
+    }
 
 
-  //   if (!this.regexnumeros.test(this.preciop.toString())) {
-  //     this.bandera = true;
-  //     this.labelcantidad = "Solo se acepta numeros";
-  //   } else {
-  //     this.labelprecio = " ";
-  //     this.bandera = false;
-  //   }
+    if (!this.regexnumeros.test(this.preciop.toString())) {
+      this.bandera3 = true;
+      this.labelcantidad = "Solo se acepta numeros";
+    } else {
+      this.labelprecio = " ";
+      this.bandera3 = false;
+    }
+    this.banderafinal = this.bandera || this.bandera2 || this.bandera3;
 
 
-  // }
+  }
 
   editarPlan(plan:any){
     
