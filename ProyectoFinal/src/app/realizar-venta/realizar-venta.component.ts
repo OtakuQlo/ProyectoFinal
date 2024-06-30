@@ -98,13 +98,13 @@ export class RealizarVentaComponent {
 
               this.oldstock.getOldStock(this.stockproducto.idstock).subscribe((data) => {
                 this.oldstockproducto = data;
-                console.log(this.oldstockproducto);
+                
 
                 if (this.oldstockproducto.estado == 0 && this.oldstockproducto.porcentaje <= 30) {
                   let nombreproducto: any;
                   this.productoS.getProductoId(producto.idproducto).subscribe((data) =>{
                     nombreproducto = data.nombreproducto;
-                    console.log(nombreproducto)
+              
                     this.correo.correoStock({producto : nombreproducto}).subscribe();
                     this.oldstock.actualizarEstado(this.oldstockproducto.id,this.stockproducto).subscribe();
                   })
