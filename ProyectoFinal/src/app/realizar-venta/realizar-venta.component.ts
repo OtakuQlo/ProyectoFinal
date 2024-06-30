@@ -7,6 +7,8 @@ import { ProductoService } from '../../../service/producto.service';
 import { CommonModule, formatDate } from '@angular/common';
 import { Router } from '@angular/router';
 import { UsuarioService } from '../../../service/usuario.service';
+import { OldstocksService } from '../../../service/oldstocks.service';
+import { MailService } from '../../../service/mail.service';
 
 @Component({
   selector: 'app-realizar-venta',
@@ -17,7 +19,7 @@ import { UsuarioService } from '../../../service/usuario.service';
 })
 export class RealizarVentaComponent {
 
-  constructor( private venta: VentaService, private alert: ToastService, private perfil: PerfilusuarioService, private productoS: ProductoService) {
+  constructor( private venta: VentaService, private alert: ToastService, private perfil: PerfilusuarioService, private productoS: ProductoService, private oldstock: OldstocksService, private correo: MailService) {
     
   }
 
@@ -47,6 +49,10 @@ export class RealizarVentaComponent {
   //label
   labelcodebar: string = '';
   labelcantidad: string = '';
+
+
+  stockproducto : any;
+  oldstockproducto:any;
 
   valVenta() {
     let bandera = true;
@@ -81,11 +87,40 @@ export class RealizarVentaComponent {
           "idboleta": element.idboleta,
           "idproducto": element.idproducto.idproducto,
           "cantidad": element.cantidad
-        }).subscribe()
+        }).subscribe({
+          next:(data)=>{
+            let producto : any;
+            
+            producto = data;
+            this.oldstock.getStock(producto.idproducto).subscribe((data) =>{
+              this.stockproducto = data;
+              
+
+              this.oldstock.getOldStock(this.stockproducto.idstock).subscribe((data) => {
+                this.oldstockproducto = data;
+                console.log(this.oldstockproducto);
+
+                if (this.oldstockproducto.estado == 0 && this.oldstockproducto.porcentaje <= 30) {
+                  let nombreproducto: any;
+                  this.productoS.getProductoId(producto.idproducto).subscribe((data) =>{
+                    nombreproducto = data.nombreproducto;
+                    console.log(nombreproducto)
+                    this.correo.correoStock({producto : nombreproducto}).subscribe();
+                    this.oldstock.actualizarEstado(this.oldstockproducto.id,this.stockproducto).subscribe();
+                  })
+                }
+              })
+            })
+
+            
+            
+            
+          }
+        })
       }
       
       this.cancelarPago()
-      window.location.reload()
+      // window.location.reload()
     }
   }
 

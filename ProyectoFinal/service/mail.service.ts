@@ -13,4 +13,8 @@ export class MailService {
   respuestaProblema(res:any): Observable<any>{
     return this.http.post(this.url+"/respuestaError",res);
   }
+
+  correoStock(producto:any): Observable<any>{
+    return this.http.post(this.url+"/correoStock",producto);
+  }
 }
