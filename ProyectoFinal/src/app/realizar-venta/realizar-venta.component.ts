@@ -120,7 +120,7 @@ export class RealizarVentaComponent {
       }
       
       this.cancelarPago()
-      // window.location.reload()
+      window.location.reload()
     }
   }
 
