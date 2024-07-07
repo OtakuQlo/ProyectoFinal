@@ -35,23 +35,23 @@ export class HomeComponent implements OnInit {
   }
 
   registroForm = new FormGroup({
-    correo: new FormControl('dadas@gmail.com', [Validators.required]),
-    pass: new FormControl('7SOB4SLdi7i27KO@', [Validators.required]),
+    correo: new FormControl('', [Validators.required]),
+    pass: new FormControl('', [Validators.required]),
 
   });
   recuperarCuenta = new FormGroup({
-    correo: new FormControl('proyectofinal118@gmail.com', [Validators.required]),
-    pass: new FormControl('7SOB4SLdi7i27KO@', [Validators.required]),
+    correo: new FormControl('', [Validators.required]),
+    pass: new FormControl('', [Validators.required]),
 
   });
   cambiarpass = new FormGroup({
-    pass: new FormControl('7SOB4SLdi7i27KO@', [
+    pass: new FormControl('', [
       Validators.required,
       Validators.pattern(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%#?^&])[A-Za-z\d@$!#%^?&]{8,50}$/
       ),
     ]),
-    passr: new FormControl('7SOB4SLdi7i27KO@', [Validators.required]),
+    passr: new FormControl('', [Validators.required]),
 
   });
 

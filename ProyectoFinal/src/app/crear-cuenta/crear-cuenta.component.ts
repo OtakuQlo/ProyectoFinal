@@ -46,31 +46,31 @@ export class CrearCuentaComponent {
   ) { }
 
   registroForm = new FormGroup({
-    rut: new FormControl('202995470', [Validators.required]),
-    correo: new FormControl('dadas@gmail.com', [
+    rut: new FormControl('', [Validators.required]),
+    correo: new FormControl('', [
       Validators.required,
       Validators.email,
       Validators.pattern(/^[a-zA-Z0-9\._-]+@[a-zA-Z0-9-]{2,}[.][a-zA-Z]{2,4}$/),
     ]),
-    telefono: new FormControl('56985420', [
+    telefono: new FormControl('', [
       Validators.required,
       Validators.max(99999999),
       Validators.min(10000000),
     ]),
-    pass: new FormControl('7SOB4SLdi7i27KO@', [
+    pass: new FormControl('', [
       Validators.required,
       Validators.pattern(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%#?^&])[A-Za-z\d@$!#%^?&]{8,50}$/
       ),
     ]),
-    pass1: new FormControl('7SOB4SLdi7i27KO@', [Validators.required]),
-    nombre: new FormControl('sadasd', [
+    pass1: new FormControl('', [Validators.required]),
+    nombre: new FormControl('', [
       Validators.required,
       Validators.pattern(
         /^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1])[a-zA-ZÀ-ÿ\u00f1\u00d1]{2,100}$/
       ),
     ]),
-    apellido: new FormControl('dasdsa', [
+    apellido: new FormControl('', [
       Validators.required,
       Validators.pattern(
         /^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1])[a-zA-ZÀ-ÿ\u00f1\u00d1]{2,100}$/
@@ -78,7 +78,7 @@ export class CrearCuentaComponent {
     ]),
   });
   tarjetaForm = new FormGroup({
-    cardNumber: new FormControl('370000000002032', [
+    cardNumber: new FormControl('37000000002032', [
       Validators.required,
       Validators.max(999999999999999),
     ]),

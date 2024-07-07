@@ -127,20 +127,20 @@ export class RealizarVentaComponent {
 
   agregarProducto() {
     this.productoS.getProductoVenta(this.codebar, { idusuario: this.perfilV.idusuario }).subscribe(res => {
-      this.producto = res
+      this.producto = res;
       if (this.producto[0] && this.producto[0].precio !== undefined) {
-        let curr = this.detalle.find(p => p.idproducto.idproducto === this.producto[0].idproducto)
-        let index = this.detalle.findIndex(obj => obj.idproducto.idproducto === this.producto[0].idproducto)
+        let curr = this.detalle.find(p => p.idproducto.idproducto === this.producto[0].idproducto);
+        let index = this.detalle.findIndex(obj => obj.idproducto.idproducto === this.producto[0].idproducto);
         if (curr != undefined) {
-          this.CA = (parseInt(this.producto[0].StockProducts[0].cantidadtotal) - this.detalle[index].cantidad)
+          this.CA = (parseInt(this.producto[0].StockProducts[0].cantidadtotal) - this.detalle[index].cantidad);
           if (parseInt(this.producto[0].StockProducts[0].cantidadtotal) > 0 && this.CA >= this.cantidad) {
             this.detalle[index].cantidad = this.detalle[index].cantidad + this.cantidad
             this.venta.actualizarDetalle(this.detalle[index].idboleta, { cantidad: this.detalle[index].cantidad, idproducto: this.detalle[index].idproducto.idproducto })
-            this.cancelarVenta()
+            this.cancelarVenta();
             this.alert.showSuccess('', 'Detalle Actualizado');
-            this.total = this.total + (this.producto[0].precio * this.cantidad)
+            this.total = this.total + (this.producto[0].precio * this.cantidad);
           } else {
-            this.alert.errorSuccess('', 'El Producto tiene un stock actual de: ' + this.CA)
+            this.alert.errorSuccess('', 'El Producto tiene un stock actual de: ' + this.CA);
           }
         } else if (curr == undefined) {
           this.CA = parseInt(this.producto[0].StockProducts[0].cantidadtotal)
@@ -152,6 +152,7 @@ export class RealizarVentaComponent {
                 idproducto: this.producto[0],
                 cantidad: this.cantidad
               })
+              this.total = this.total + (this.producto[0].precio * this.cantidad);
               this.alert.showSuccess('', 'Producto Agregado');
               this.cancelarVenta()
             })
